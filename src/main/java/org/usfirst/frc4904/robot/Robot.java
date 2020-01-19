@@ -7,8 +7,6 @@
 package org.usfirst.frc4904.robot;
 
 import org.usfirst.frc4904.standard.CommandRobotBase;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc4904.standard.LogKitten;
 
 public class Robot extends CommandRobotBase {
