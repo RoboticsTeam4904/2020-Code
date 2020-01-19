@@ -1,6 +1,5 @@
 package org.usfirst.frc4904.robot;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 
