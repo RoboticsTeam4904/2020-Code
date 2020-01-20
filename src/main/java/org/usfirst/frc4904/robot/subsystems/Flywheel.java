@@ -7,28 +7,18 @@ import org.usfirst.frc4904.standard.subsystems.motor.VelocitySensorMotor;
 import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.SpeedModifier;
 
 /**
- * TODO Summary
- * [ ] pid loop that spins flywheel to that rpm
- * [x] `getStaus()`: check if rpm is below target (public) used by indexer 
- * [ ] controlled by operator joystick
- * [ ] commands: 
- *    [ ] setspeedBasedOnDistance - activated when joystick hits a button, 
- *    [ ] setRpmBoxShot
- *    [ ] setPistonHigh
- *    [ ] setPistonLow
- *    [ ] humaninterface/operator binds commands to right joystick
- * [ ] robotmap needs ports for solenoid and motor
- * [ ] robotmap should run constructor for flywheel
- * [ ] might need a perodic method or something
+ * Flywheel Base Class
+ * ! **This class does not include a piston, use FlywheelSubsystem for the 2020 season specific flywheel subsystem**
+ * 
  */
 public class Flywheel extends VelocitySensorMotor {
-  public enum Status {
+  public enum FlywheelStatus {
     SPINNING_UP, AT_SPEED
   }
 
   public static final double boxShotSpeed = 10.0; // TODO: figure out the speed needed for the box shot
 
-  protected Status currentStatus = Status.AT_SPEED;
+  protected FlywheelStatus currentStatus = FlywheelStatus.AT_SPEED;
   protected double targetSpeed = 0.0;
 
   /**
@@ -57,13 +47,13 @@ public class Flywheel extends VelocitySensorMotor {
 
   protected void syncStatus() {
     if (motionController.onTarget()) {
-      currentStatus = Status.AT_SPEED;
+      currentStatus = FlywheelStatus.AT_SPEED;
     } else {
-      currentStatus = Status.SPINNING_UP;
+      currentStatus = FlywheelStatus.SPINNING_UP;
     }
   }
 
-  public Status getStatus() {
+  public FlywheelStatus getStatus() {
     syncStatus();
     return currentStatus;
   }
