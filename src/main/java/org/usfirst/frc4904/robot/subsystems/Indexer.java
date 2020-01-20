@@ -11,8 +11,8 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
  * Indexer - Wraps the indexer flippers and the run up belt.
  */
 public class Indexer extends SubsystemBase {
-  private static final double defaultOnSpeed = 0.7;
-  private static final double defaultOffSpeed = 0.0;
+  private static final double DEFAULT_ON_SPEED = 0.7;
+  private static final double DEFAULT_OFF_SPEED = 0.0;
 
   protected final SolenoidSubsystem flippers;
   protected final Motor belts;
@@ -21,29 +21,16 @@ public class Indexer extends SubsystemBase {
   /**
    * Indexer - Wraps the indexer flippers and the run up belt.
    * 
-   * @param name              The Indexer name
-   * @param solenoidSubsystem The SolenoidSubsystem controlling the flippers
-   * @param motor             The motor controlling the run up belt
-   * @param switch            The limit switch testing for balls
-   */
-  Indexer(String name, SolenoidSubsystem solenoidSubsystem, Motor motor, CustomDigitalLimitSwitch limitSwitch) {
-    super();
-    setName(name);
-    flippers = solenoidSubsystem;
-    belts = motor;
-    this.limitSwitch = limitSwitch;
-  }
-
-  /**
-   * Indexer - Wraps the indexer flippers and the run up belt.
-   * 
-   * @param name              The Indexer name
    * @param solenoidSubsystem The SolenoidSubsystem controlling the flippers
    * @param motor             The motor controlling the run up belt
    * @param switch            The limit switch testing for balls
    */
   Indexer(SolenoidSubsystem solenoidSubsystem, Motor motor, CustomDigitalLimitSwitch limitSwitch) {
-    this("Indexer", solenoidSubsystem, motor, limitSwitch);
+    super();
+    setName("Indexer");
+    flippers = solenoidSubsystem;
+    belts = motor;
+    this.limitSwitch = limitSwitch;
   }
 
   public SolenoidState getFlippersState() {
@@ -64,20 +51,10 @@ public class Indexer extends SubsystemBase {
 
   /**
    * Open the flippers and run the run up belt to advance balls to the flywheel.
-   * 
-   * @param speed Speed to run the run up belt at.
-   */
-  public void start(double speed) {
-    openFlippers();
-    setSpeed(speed);
-  }
-
-  /**
-   * Open the flippers and run the run up belt to advance balls to the flywheel.
    */
   public void start() {
     openFlippers();
-    setSpeed(defaultOnSpeed);
+    setSpeed(DEFAULT_ON_SPEED);
   }
 
   /**
@@ -85,6 +62,6 @@ public class Indexer extends SubsystemBase {
    */
   public void stop() {
     closeFlippers();
-    setSpeed(defaultOffSpeed);
+    setSpeed(DEFAULT_OFF_SPEED);
   }
 }
