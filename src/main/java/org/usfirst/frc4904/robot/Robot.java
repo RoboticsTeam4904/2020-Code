@@ -30,8 +30,6 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
-        teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
-        teleopCommand.schedule();
     }
 
     @Override
