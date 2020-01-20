@@ -2,8 +2,13 @@ package org.usfirst.frc4904.robot;
 
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
-
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
+import org.usfirst.frc4904.standard.subsystems.motor.Motor;
+import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
+import org.usfirst.frc4904.standard.custom.sensors.PDP;
+import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
+
 
 public class RobotMap {
     public static class Port {
@@ -13,6 +18,10 @@ public class RobotMap {
         }
 
         public static class CANMotor {
+            public static final int driveFLeft = 1; // TODO: possible config required 
+			public static final int driveBLeft = 2; // TODO: possible config required 
+			public static final int driveFRight = 3; // TODO: possible config required 
+			public static final int driveBRight = 4; // TODO: possible config required 
         }
 
         public static class PWM {
@@ -62,14 +71,32 @@ public class RobotMap {
 
     public static class PID {
         public static class Drive {
+            public static final double P = -1; // TODO: maybe TUNE
+			public static final double I = -1;
+			public static final double D = -1;
+			public static final double F = -1;
+			public static final double tolerance = -1;
+			public static final double dTolerance = -1;
         }
 
         public static class Turn {
+            public static final double P = -1; // TODO: TUNE
+			public static final double I = -1;
+			public static final double D = -1;
+			public static final double F = -1;
+			public static final double tolerance = -1;
+			public static final double dTolerance = -1;
         }
-
     }
 
     public static class Component {
+        public static PDP pdp;
+		public static Motor Motor_FL;
+		public static Motor Motor_FR;
+		public static Motor Motor_BL;
+		public static Motor Motor_BR;
+		public static TankDriveShifting chassis;
+		public static SolenoidShifters shifter;
     }
 
     public static class Input {
@@ -86,8 +113,15 @@ public class RobotMap {
     }
 
     public RobotMap() {
+        Component.pdp = new PDP();
+		Component.Motor_FL  = new Motor("Motor_FL", false, new CANTalonSRX(Port.CANMotor.driveFLeft));
+		Component.Motor_FR = new Motor("Motor_FR", false, new CANTalonSRX(Port.CANMotor.driveFRight));
+		Component.Motor_BL = new Motor("Motor_BL", false, new CANTalonSRX(Port.CANMotor.driveBLeft));
+		Component.Motor_BR = new Motor("Motor_BR", false, new CANTalonSRX(Port.CANMotor.driveBRight));
+		Component.Motor_BL.setInverted(true); // TODO: possible config required 
+        Component.Motor_FL.setInverted(true); // TODO: possible cnfig required 
+        Component.chassis = new TankDriveShifting(0d, RobotMap.Component.Motor_FL, RobotMap.Component.Motor_BL, RobotMap.Component.Motor_FR, RobotMap.Component.Motor_BR, Component.shifter);
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
-
     }
 }

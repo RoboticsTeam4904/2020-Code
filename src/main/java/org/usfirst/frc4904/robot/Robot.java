@@ -6,17 +6,22 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc4904.robot;
 
+import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.standard.CommandRobotBase;
+import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 
 public class Robot extends CommandRobotBase {
     private RobotMap map = new RobotMap();
 
     @Override
     public void initialize() {
+        driverChooser.setDefaultOption(new NathanGain());
     }
 
     @Override
     public void teleopInitialize() {
+        teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
+        teleopCommand.schedule();
     }
 
     @Override
@@ -25,10 +30,13 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
+        teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
+        teleopCommand.schedule();
     }
 
     @Override
     public void autonomousExecute() {
+
     }
 
     @Override
