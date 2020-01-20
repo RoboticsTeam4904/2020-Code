@@ -8,8 +8,9 @@ import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.SpeedModifie
 
 /**
  * Flywheel Base Class
- * ! **This class does not include a piston, use FlywheelSubsystem for the 2020 season specific flywheel subsystem**
  * 
+ * ! This class does not include a piston, use Shooter.java for the 2020-season
+ * ! specific flywheel subsystem.
  */
 public class Flywheel extends VelocitySensorMotor {
   public enum FlywheelStatus {
@@ -57,6 +58,14 @@ public class Flywheel extends VelocitySensorMotor {
   public FlywheelStatus getStatus() {
     syncStatus();
     return currentStatus;
+  }
+
+  public double getSpeed() {
+    return motionController.getSensorValue();
+  }
+
+  public double getTargetSpeed() {
+    return targetSpeed;
   }
 
   public void setSpeed() {
