@@ -16,36 +16,24 @@ public class Intake extends SubsystemBase {
   /**
    * Intake - Wraps the three intake SRXs (front intake, funnel, belt) and the
    * intake solenoid
-   * 
-   * @param name           The name of the Intake
+   *
    * @param intakeMotor    The front intake motor that extends with the intake
    *                       solenoid
    * @param intakeSolenoid The solenoid that controls the position of the
    *                       intakeMotor rollers
    */
-  Intake(String name, Motor intakeMotor, SolenoidSubsystem intakeSolenoid) {
+  Intake(Motor intakeMotor, SolenoidSubsystem intakeSolenoid) {
     super();
-    setName(name);
+    setName("Intake");
     intake = intakeMotor;
     solenoid = intakeSolenoid;
-  }
-
-  /**
-   * Intake - Wraps the three intake SRXs (front intake, funnel, belt) and the
-   * intake solenoid
-   * 
-   * @param intakeMotor    The front intake motor that extends with the intake
-   *                       solenoid
-   * @param intakeSolenoid The solenoid that controls the position of the
-   *                       intakeMotor rollers
-   */
-  Intake(Motor intakeMotor, Motor funnelMotor, Motor beltMotor, SolenoidSubsystem intakeSolenoid) {
-    this("Intake", intakeMotor, intakeSolenoid);
   }
 
   public void setSpeed(double speed) {
     intake.set(speed);
   }
+
+
 
   public void start(double speed) {
     setSpeed(speed);
