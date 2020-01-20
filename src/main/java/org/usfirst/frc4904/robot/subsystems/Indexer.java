@@ -11,6 +11,9 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
  * Indexer - Wraps the indexer flippers and the run up belt.
  */
 public class Indexer extends SubsystemBase {
+  private static final double defaultOnSpeed = 0.7;
+  private static final double defaultOffSpeed = 0.0;
+
   protected final SolenoidSubsystem flippers;
   protected final Motor belts;
   protected final CustomDigitalLimitSwitch limitSwitch;
@@ -55,7 +58,7 @@ public class Indexer extends SubsystemBase {
     flippers.set(SolenoidState.RETRACT);
   }
 
-  public void setMotorSpeed(double speed) {
+  public void setSpeed(double speed) {
     belts.set(speed);
   }
 
@@ -66,7 +69,7 @@ public class Indexer extends SubsystemBase {
    */
   public void start(double speed) {
     openFlippers();
-    setMotorSpeed(speed);
+    setSpeed(speed);
   }
 
   /**
@@ -74,7 +77,7 @@ public class Indexer extends SubsystemBase {
    */
   public void start() {
     openFlippers();
-    setMotorSpeed(0.7);
+    setSpeed(defaultOnSpeed);
   }
 
   /**
@@ -82,6 +85,6 @@ public class Indexer extends SubsystemBase {
    */
   public void stop() {
     closeFlippers();
-    setMotorSpeed(0.0);
+    setSpeed(defaultOffSpeed);
   }
 }
