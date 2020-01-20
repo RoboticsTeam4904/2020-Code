@@ -7,8 +7,8 @@ import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 public class Intake extends SubsystemBase {
-  private static final double defaultOnSpeed = 0.5; // TODO: test this value
-  private static final double defaultOffSpeed = 0.0;
+  private static final double DEFAULT_ON_SPEED = 0.5; // TODO: test this value
+  private static final double DEFAULT_OFF_SPEED = 0.0;
 
   protected final Motor intake;
   protected final SolenoidSubsystem solenoid;
@@ -34,11 +34,11 @@ public class Intake extends SubsystemBase {
   }
 
   public void start() {
-    setSpeed(defaultOnSpeed);
+    setSpeed(DEFAULT_ON_SPEED);
   }
 
   public void stop() {
-    setSpeed(defaultOffSpeed);
+    setSpeed(DEFAULT_OFF_SPEED);
   }
 
   /**
