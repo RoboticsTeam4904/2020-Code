@@ -33,12 +33,6 @@ public class Intake extends SubsystemBase {
     intake.set(speed);
   }
 
-
-
-  public void start(double speed) {
-    setSpeed(speed);
-  }
-
   public void start() {
     setSpeed(defaultOnSpeed);
   }
