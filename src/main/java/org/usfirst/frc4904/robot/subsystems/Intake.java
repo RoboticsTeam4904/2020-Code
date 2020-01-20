@@ -7,10 +7,10 @@ import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 public class Intake extends SubsystemBase {
-  private static final double defaultOnSpeed = 0.7;
+  private static final double defaultOnSpeed = 0.5; // TODO: test this value
   private static final double defaultOffSpeed = 0.0;
 
-  protected final Motor intake, funnel, belt;
+  protected final Motor intake;
   protected final SolenoidSubsystem solenoid;
 
   /**
@@ -20,17 +20,13 @@ public class Intake extends SubsystemBase {
    * @param name           The name of the Intake
    * @param intakeMotor    The front intake motor that extends with the intake
    *                       solenoid
-   * @param funnelMotor    The motor that controls the funnel rollers
-   * @param beltMotor      The motor that drives the base and lift belts
    * @param intakeSolenoid The solenoid that controls the position of the
    *                       intakeMotor rollers
    */
-  Intake(String name, Motor intakeMotor, Motor funnelMotor, Motor beltMotor, SolenoidSubsystem intakeSolenoid) {
+  Intake(String name, Motor intakeMotor, SolenoidSubsystem intakeSolenoid) {
     super();
     setName(name);
     intake = intakeMotor;
-    funnel = funnelMotor;
-    belt = beltMotor;
     solenoid = intakeSolenoid;
   }
 
@@ -40,19 +36,15 @@ public class Intake extends SubsystemBase {
    * 
    * @param intakeMotor    The front intake motor that extends with the intake
    *                       solenoid
-   * @param funnelMotor    The motor that controls the funnel rollers
-   * @param beltMotor      The motor that drives the base and lift belts
    * @param intakeSolenoid The solenoid that controls the position of the
    *                       intakeMotor rollers
    */
   Intake(Motor intakeMotor, Motor funnelMotor, Motor beltMotor, SolenoidSubsystem intakeSolenoid) {
-    this("Intake", intakeMotor, funnelMotor, beltMotor, intakeSolenoid);
+    this("Intake", intakeMotor, intakeSolenoid);
   }
 
   public void setSpeed(double speed) {
     intake.set(speed);
-    funnel.set(speed);
-    belt.set(speed);
   }
 
   public void start(double speed) {
