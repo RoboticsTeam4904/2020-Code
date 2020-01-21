@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * package org.usfirst.frc4904.robot.commands;
 */
 
-public class IndexOne extends CommandBase {
+public class IndexOne extends CommandGroupBase {
   protected final Indexer indexer;
   protected final Flywheel flywheel;
 
@@ -33,5 +33,7 @@ public class IndexOne extends CommandBase {
     addRequirements(indexer, flywheel);
   }
 
-  public void 
+  public void onInitialize() {
+    indexer.
+  }
 }

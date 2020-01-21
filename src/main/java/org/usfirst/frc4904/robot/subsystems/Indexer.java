@@ -2,13 +2,14 @@ package org.usfirst.frc4904.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import org.usfirst.frc4904.standard.custom.sensors.CustomDigitalLimitSwitch;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 /**
  * Indexer - Wraps the indexer flippers and the run up belt.
+ * 
+ * @deprecated
  */
 public class Indexer extends SubsystemBase {
   private static final double DEFAULT_ON_SPEED = 0.7;
