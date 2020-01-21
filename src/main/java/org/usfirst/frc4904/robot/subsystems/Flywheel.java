@@ -17,7 +17,7 @@ public class Flywheel extends VelocitySensorMotor {
     SPINNING_UP, AT_SPEED
   }
 
-  public static final double boxShotSpeed = 10.0; // TODO: figure out the speed needed for the box shot
+  public static final double BOX_SHOT_SPEED = 0.7; // TODO: figure out the speed needed for the box shot
 
   protected FlywheelStatus currentStatus = FlywheelStatus.AT_SPEED;
   protected double targetSpeed = 0.0;
@@ -47,7 +47,8 @@ public class Flywheel extends VelocitySensorMotor {
     this("Flywheel", speedModifier, motionController, motors);
   }
 
-  protected void syncStatus() {
+  @Override
+  public void periodic() {
     if (motionController.onTarget()) {
       currentStatus = FlywheelStatus.AT_SPEED;
     } else {
@@ -56,7 +57,6 @@ public class Flywheel extends VelocitySensorMotor {
   }
 
   public FlywheelStatus getStatus() {
-    syncStatus();
     return currentStatus;
   }
 
@@ -68,14 +68,13 @@ public class Flywheel extends VelocitySensorMotor {
     return targetSpeed;
   }
 
-  public void setSpeed() {
-    super.set(targetSpeed);
-    syncStatus();
-  }
-
   public void setSpeed(double speed) {
     targetSpeed = speed;
-    setSpeed();
+    super.set(targetSpeed);
+  }
+
+  public void setSpeedBoxshot() {
+    setSpeed(BOX_SHOT_SPEED);
   }
 
   public void setSpeedForDistance(double distance) {
