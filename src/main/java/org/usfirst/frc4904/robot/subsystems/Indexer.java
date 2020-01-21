@@ -16,7 +16,6 @@ public class Indexer extends SubsystemBase {
 
   protected final SolenoidSubsystem flippers;
   protected final Motor belts;
-  protected final CustomDigitalLimitSwitch limitSwitch;
 
   /**
    * Indexer - Wraps the indexer flippers and the run up belt.
@@ -25,12 +24,11 @@ public class Indexer extends SubsystemBase {
    * @param motor             The motor controlling the run up belt
    * @param switch            The limit switch testing for balls
    */
-  Indexer(SolenoidSubsystem solenoidSubsystem, Motor motor, CustomDigitalLimitSwitch limitSwitch) {
+  Indexer(SolenoidSubsystem solenoidSubsystem, Motor motor) {
     super();
     setName("Indexer");
     flippers = solenoidSubsystem;
     belts = motor;
-    this.limitSwitch = limitSwitch;
   }
 
   public SolenoidState getFlippersState() {

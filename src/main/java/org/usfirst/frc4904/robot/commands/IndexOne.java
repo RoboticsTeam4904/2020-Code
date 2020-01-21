@@ -1,5 +1,7 @@
 package org.usfirst.frc4904.robot.commands;
 
+import org.usfirst.frc4904.robot.subsystems.Indexer;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -17,21 +19,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * - bind the commands for the shooting routines in humaninterface
  * - have a button for spinning up the flywheel and a button for shooting once (aka calling this command)
  * package org.usfirst.frc4904.robot.commands;
+*/
 
-/**
- * previous TODO Summary - may be outdated
- * [x] `getStaus()`: check if rpm is below target (public) used by indexer 
- * [ ] controlled by operator joystick
- * [ ] commands: 
- *    [ ] setSpeedForDistance - activated when joystick hits a button, 
- *    [ ] shooterBoxShot
- *    [ ] shooterSetSpeed
- * [ ] humaninterface/operator binds commands to right joystick
- * [ ] robotmap needs ports for solenoid and motor
- * [ ] robotmap should run constructor for flywheel
- * [ ] might need a perodic method or something
- */
+public class IndexOne extends CommandBase {
+  protected final Indexer indexer;
+  protected final Flywheel flywheel;
 
-public class Shoot extends CommandBase {
-  Shoot(String name, )
+  IndexOne(Indexer indexer, Flywheel flywheel) {
+    super();
+    setName("IndexOne");
+    this.indexer = indexer;
+    this.flywheel = flywheel;
+    addRequirements(indexer, flywheel);
+  }
+
+  public void 
 }
