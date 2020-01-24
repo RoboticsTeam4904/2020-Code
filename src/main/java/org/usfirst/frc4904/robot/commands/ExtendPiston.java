@@ -12,5 +12,7 @@ import org.usfirst.frc4904.standard.commands.solenoid.SolenoidExtend;
 
 public class ExtendPiston extends SolenoidExtend {
   // this should take in a solenoidSet
-
+    public ExtendPiston(SolenoidSubsystem piston){
+        SolenoidExtend.solenoidSet
+    }
 }

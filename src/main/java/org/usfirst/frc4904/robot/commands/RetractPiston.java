@@ -8,9 +8,10 @@ import org.usfirst.frc4904.standard.commands.solenoid.SolenoidExtend;
 *
  */
 
-public class ExtendPiston extends SolenoidRetract {
+public class RetractPiston extends SolenoidRetract {
 
-    public ExtendPiston(SolenoidSubsystem piston){
+    public RetractPiston(SolenoidSubsystem piston){
+        
 
     }
 }
