@@ -1,7 +1,5 @@
 package org.usfirst.frc4904.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
@@ -10,25 +8,22 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
  * Indexer - Wraps the indexer flippers and the run up belt.
  * 
  */
-public class Indexer extends SubsystemBase {
-  private static final double DEFAULT_ON_SPEED = 0.7;
+public class Indexer {
+  private static final double DEFAULT_LIFT_SPEED = 0.7;
   private static final double DEFAULT_OFF_SPEED = 0.0;
 
-  protected final SolenoidSubsystem flippers;
-  protected final Motor belts;
+  public final SolenoidSubsystem flippers;
+  public final Motor liftBelts;
 
   /**
    * Indexer - Wraps the indexer flippers and the run up belt.
    * 
-   * @param solenoidSubsystem The SolenoidSubsystem controlling the flippers
-   * @param motor             The motor controlling the run up belt
-   * @param switch            The limit switch testing for balls
+   * @param flippers The SolenoidSubsystem controlling the flippers
+   * @param liftBelt The motor controlling the run up belt
    */
-  Indexer(SolenoidSubsystem solenoidSubsystem, Motor motor) {
-    super();
-    setName("Indexer");
-    flippers = solenoidSubsystem;
-    belts = motor;
+  Indexer(Motor liftBelts, SolenoidSubsystem flippers) {
+    this.liftBelts = liftBelts;
+    this.flippers = flippers;
   }
 
   public SolenoidState getFlippersState() {
@@ -44,7 +39,7 @@ public class Indexer extends SubsystemBase {
   }
 
   public void setSpeed(double speed) {
-    belts.set(speed);
+    liftBelts.set(speed);
   }
 
   /**
@@ -52,14 +47,14 @@ public class Indexer extends SubsystemBase {
    */
   public void start() {
     openFlippers();
-    setSpeed(DEFAULT_ON_SPEED);
+    setSpeed(DEFAULT_LIFT_SPEED);
   }
 
   /**
    * Close flippers and stop the run up belt.
    */
   public void stop() {
-    closeFlippers();
     setSpeed(DEFAULT_OFF_SPEED);
+    closeFlippers();
   }
 }
