@@ -6,21 +6,6 @@ import org.usfirst.frc4904.robot.subsystems.Flywheel.FlywheelStatus;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;	
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;	
 
-/**	
- * TODO Summary	
- * [x] `getStaus()`: check if rpm is below target (public) used by indexer 	
- * [ ] controlled by operator joystick	
- * [ ] commands: 	
- *    [ ] setspeedBasedOnDistance - activated when joystick hits a button, 	
- *    [ ] setRpmBoxShot	
- *    [ ] setPistonHigh	
- *    [ ] setPistonLow	
- *    [ ] humaninterface/operator binds commands to right joystick	
- * [ ] robotmap needs ports for solenoid and motor	
- * [ ] robotmap should run constructor for flywheel	
- * [ ] might need a perodic method or something	
- */	
-
 public class Shooter extends SubsystemBase {	
   protected final Flywheel flywheel;	
   protected final SolenoidSubsystem solenoidSubsystem;	

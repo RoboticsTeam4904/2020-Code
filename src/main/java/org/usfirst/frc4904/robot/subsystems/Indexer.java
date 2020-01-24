@@ -9,7 +9,6 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 /**
  * Indexer - Wraps the indexer flippers and the run up belt.
  * 
- * @deprecated
  */
 public class Indexer extends SubsystemBase {
   private static final double DEFAULT_ON_SPEED = 0.7;
