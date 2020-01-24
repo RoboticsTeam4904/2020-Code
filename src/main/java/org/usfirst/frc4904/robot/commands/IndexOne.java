@@ -4,6 +4,7 @@ import org.usfirst.frc4904.robot.subsystems.Indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+
 /**
  * TODO Summary
  * 
@@ -34,6 +35,7 @@ public class IndexOne extends CommandGroupBase {
   }
 
   public void onInitialize() {
-    indexer.
+    // indexer.
+    
   }
 }
