@@ -11,7 +11,7 @@ public class Intake extends SubsystemBase {
   private static final double DEFAULT_OFF_SPEED = 0.0;
 
   protected final Motor intake;
-  protected final SolenoidSubsystem piston;
+  protected final SolenoidSubsystem solenoid;
 
   /**
    * Intake - Wraps the three intake SRXs (front intake, funnel, belt) and the
@@ -26,7 +26,7 @@ public class Intake extends SubsystemBase {
     super();
     setName("Intake");
     intake = intakeMotor;
-    piston = intakeSolenoid;
+    solenoid = intakeSolenoid;
   }
 
   public void setSpeed(double speed) {
@@ -45,8 +45,13 @@ public class Intake extends SubsystemBase {
    * Extend the intake solenoid
    */
   public void extend() {
-    //call the ExtendPiston class because that is how we should extend pistons.
-      ExtendPiston.ExtendPiston(piston)
+    solenoid.set(SolenoidState.EXTEND);
   }
 
+  /**
+   * Retract the intake solenoid
+   */
+  public void retract() {
+    solenoid.set(SolenoidState.RETRACT);
+  }
 }
