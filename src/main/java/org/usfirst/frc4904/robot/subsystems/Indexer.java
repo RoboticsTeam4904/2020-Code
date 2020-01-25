@@ -1,5 +1,9 @@
 package org.usfirst.frc4904.robot.subsystems;
 
+import java.util.Set;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
@@ -9,8 +13,8 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
  * 
  */
 public class Indexer {
-  private static final double DEFAULT_LIFT_SPEED = 0.7;
-  private static final double DEFAULT_OFF_SPEED = 0.0;
+  public static final double DEFAULT_LIFT_SPEED = 0.7;
+  public static final double DEFAULT_OFF_SPEED = 0.0;
 
   public final SolenoidSubsystem flippers;
   public final Motor liftBelts;
@@ -24,6 +28,10 @@ public class Indexer {
   Indexer(Motor liftBelts, SolenoidSubsystem flippers) {
     this.liftBelts = liftBelts;
     this.flippers = flippers;
+  }
+
+  public Set<SubsystemBase> getSubsystems() {
+    return Set.of(liftBelts, flippers);
   }
 
   public SolenoidState getFlippersState() {
