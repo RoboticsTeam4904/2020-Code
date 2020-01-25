@@ -8,9 +8,9 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 
 public class Shooter {
-  protected final Flywheel flywheel;
-  protected final SolenoidSubsystem solenoidSubsystem;
-  protected final Motor motor;
+  public final Flywheel flywheel;
+  public final SolenoidSubsystem solenoidSubsystem;
+  public final Motor motor;
 
   /**
    * Shooter
