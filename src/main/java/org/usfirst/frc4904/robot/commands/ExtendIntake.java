@@ -18,7 +18,7 @@ public class ExtendIntake extends CommandBase {
     this.intake = intake;
   }
 
-  public void onInitialize() {
+  public void initialize() {
     intake.extend();
   }
 }
