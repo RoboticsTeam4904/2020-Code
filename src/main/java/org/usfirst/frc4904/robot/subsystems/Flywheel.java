@@ -49,7 +49,8 @@ public class Flywheel extends VelocitySensorMotor {
   }
 
   protected void syncStatus() {
-    if (currentStatus == FlywheelStatus.IDLE) {
+    if (Math.abs(targetSpeed) < motionController.getAbsoluteTolerance() || currentStatus == FlywheelStatus.IDLE) {
+      currentStatus = FlywheelStatus.IDLE;
       return;
     }
     if (motionController.onTarget()) {
@@ -62,10 +63,6 @@ public class Flywheel extends VelocitySensorMotor {
   public FlywheelStatus getStatus() {
     syncStatus();
     return currentStatus;
-  }
-
-  public boolean isSpunUp() {
-    return false;
   }
 
   public double getSpeed() {
