@@ -1,13 +1,17 @@
 package org.usfirst.frc4904.robot.subsystems;
 
+import java.util.Set;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 public class Intake {
-  private static final double DEFAULT_INTAKE_SPEED = 0.5; // TODO: test this value
-  private static final double DEFAULT_FUNNEL_SPEED = 0.5; // TODO: test this value
-  private static final double DEFAULT_OFF_SPEED = 0.0;
+  public static final double DEFAULT_INTAKE_SPEED = 0.5; // TODO: test this value
+  public static final double DEFAULT_FUNNEL_SPEED = 0.5; // TODO: test this value
+  public static final double DEFAULT_OFF_SPEED = 0.0;
 
   public final Motor intake;
   public final Motor funnel;
@@ -27,6 +31,10 @@ public class Intake {
     intake = intakeMotor;
     funnel = funnelMotor;
     solenoid = intakeSolenoid;
+  }
+
+  public Set<SubsystemBase> getSubsystems() {
+    return Set.of(intake, funnel, solenoid);
   }
 
   public void setIntakeSpeed(double speed) {
