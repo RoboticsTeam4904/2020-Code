@@ -16,12 +16,10 @@ import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.SpeedModifie
  */
 public class Flywheel extends VelocitySensorMotor {
   public enum FlywheelStatus {
-    SPINNING_UP, AT_SPEED
+    IDLE, SPINNING_UP, AT_SPEED
   }
 
-  public static final double boxShotSpeed = 10.0; // TODO: figure out the speed needed for the box shot
-
-  protected FlywheelStatus currentStatus = FlywheelStatus.AT_SPEED;
+  protected FlywheelStatus currentStatus = FlywheelStatus.IDLE;
   protected double targetSpeed = 0.0;
 
   /**
@@ -51,6 +49,9 @@ public class Flywheel extends VelocitySensorMotor {
   }
 
   protected void syncStatus() {
+    if (currentStatus == FlywheelStatus.IDLE) {
+      return;
+    }
     if (motionController.onTarget()) {
       currentStatus = FlywheelStatus.AT_SPEED;
     } else {
