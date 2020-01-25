@@ -1,6 +1,8 @@
 package org.usfirst.frc4904.robot.commands;
 
+import org.usfirst.frc4904.robot.subsystems.Flywheel;
 import org.usfirst.frc4904.robot.subsystems.Indexer;
+import org.usfirst.frc4904.robot.subsystems.Flywheel.FlywheelStatus;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -22,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * package org.usfirst.frc4904.robot.commands;
 */
 
-public class IndexOne extends CommandGroupBase {
+public class IndexOne extends CommandBase {
   protected final Indexer indexer;
   protected final Flywheel flywheel;
 
@@ -31,11 +33,20 @@ public class IndexOne extends CommandGroupBase {
     setName("IndexOne");
     this.indexer = indexer;
     this.flywheel = flywheel;
-    addRequirements(indexer, flywheel);
+    addRequirements(indexer.liftBelts);
+    addRequirements(indexer.flippers);
   }
 
-  public void onInitialize() {
-    // indexer.
+  public void execute() {
+    if (flywheel.getStatus() == FlywheelStatus.IDLE){
+      flywheel.setSpeed();
+    }
+    else if (flywheel.getStatus() == FlywheelStatus.SPINNING_UP){
+      return;
+    }
+    else if (flywheel.getStatus() == FlywheelStatus.AT_SPEED){
+      indexer.start();
+    }
     
   }
 }
