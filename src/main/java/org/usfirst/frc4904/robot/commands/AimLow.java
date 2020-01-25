@@ -14,7 +14,7 @@ public class AimLow extends CommandBase{
     public AimLow(Shooter aimer){
         super();
         setName("AimLow");
-        addRequirements(aimer.solenoidSubsystem);
+        addRequirements(aimer.aimSolenoid);
         this.aimer = aimer;
     }
 
