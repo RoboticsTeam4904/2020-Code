@@ -6,7 +6,9 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 public class Intake {
   private static final double DEFAULT_INTAKE_SPEED = 0.5; // TODO: test this value
+  private static final double DEFAULT_OUTTAKE_SPEED = -0.5; //TODO: test this value
   private static final double DEFAULT_FUNNEL_SPEED = 0.5; // TODO: test this value
+  private static final double DEFAULT_FUNNEL_REVERSE_SPEED = -0.5; // TODO: test this value
   private static final double DEFAULT_OFF_SPEED = 0.0;
 
   public final Motor intake;
@@ -52,6 +54,10 @@ public class Intake {
 
   public void stop() {
     setSpeed(DEFAULT_OFF_SPEED);
+  }
+
+  public void reverse(){
+    setSpeed(DEFAULT_OUTTAKE_SPEED, DEFAULT_FUNNEL_REVERSE_SPEED);
   }
 
   /**
