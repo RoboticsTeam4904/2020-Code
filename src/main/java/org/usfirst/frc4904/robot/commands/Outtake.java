@@ -16,7 +16,7 @@ public class Outtake extends CommandBase {
     Outtake(Intake intake){
         super();
         setName("Outtake");
-        addRequirements(intake.solenoid);
+        addRequirements(intake.intake, intake.funnel);
         this.intake = intake;
     }
 

@@ -16,7 +16,7 @@ public class RunIntake extends CommandBase {
     RunIntake(Intake intake){
         super();
         setName("RunIntake");
-        addRequirements(intake.solenoid);
+        addRequirements(intake.intake, intake.funnel);
         this.intake = intake;
     }
 
