@@ -9,7 +9,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 
 public class ExtendIntake extends CommandBase {
+  protected final Intake intake;
+
   public ExtendIntake(Intake intake) {
+    super();
+    setName("ExtendIntake");
+    addRequirements(intake.solenoid);
+    this.intake = intake;
+  }
+
+  public void onInitialize() {
     intake.extend();
   }
 }
