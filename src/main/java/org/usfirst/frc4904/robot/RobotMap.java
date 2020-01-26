@@ -7,9 +7,15 @@ import com.ctre.phoenix.sensors.SensorTimeBase;
 import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
-
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.AccelerationCap;
+import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.EnableableModifier;
+import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
+import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
+import org.usfirst.frc4904.standard.custom.sensors.NavX;
+import org.usfirst.frc4904.standard.custom.sensors.PDP;
+import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
 
 public class RobotMap {
     public static class Port {
@@ -19,8 +25,11 @@ public class RobotMap {
         }
 
         public static class CANMotor {
-            public static final int CANMotor = 0;
-
+            public static final int leftDriveA = -1;
+            public static final int leftDriveB = -1;
+            public static final int rightDriveA = -1;
+            public static final int rightDriveB = -1;
+            public static final int controlPanel = -1;
         }
 
         public static class PWM {
@@ -89,8 +98,6 @@ public class RobotMap {
         public static EncoderPair chassisEncoders;
         public static CANCoderConfiguration canCoderConfiguration;
         public static NavX navx;
-        public static Motor controlpanel;
-        }
     }
 
     public static class Input {
@@ -142,6 +149,5 @@ public class RobotMap {
 
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
-
     }
 }

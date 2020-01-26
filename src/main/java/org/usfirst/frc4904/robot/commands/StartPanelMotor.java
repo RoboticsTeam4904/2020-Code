@@ -1,4 +1,4 @@
-package org.usfirst.frc4904.standard.commands;
+package org.usfirst.frc4904.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc4904.robot.RobotMap;
