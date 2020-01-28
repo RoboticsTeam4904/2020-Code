@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import org.usfirst.frc4904.robot.subsystems.Flywheel;
 import org.usfirst.frc4904.robot.subsystems.Flywheel.FlywheelStatus;
+import org.usfirst.frc4904.standard.custom.sensors.CustomDigitalLimitSwitch;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
@@ -18,6 +19,7 @@ public class Shooter {
   public final Flywheel flywheel;
   public final SolenoidSubsystem aimSolenoid;
   public final Motor runUpBelt;
+  public final CustomDigitalLimitSwitch limitSwitch;
 
   /**
    * Shooter
@@ -29,10 +31,11 @@ public class Shooter {
    * @param solenoidSubsystem The SolenoidSubsystem for aiming the shooter
    */
 
-  Shooter(Flywheel flywheel, SolenoidSubsystem solenoidSubsystem, Motor motor) {
+  Shooter(Flywheel flywheel, SolenoidSubsystem solenoidSubsystem, Motor motor, CustomDigitalLimitSwitch limitSwitch) {
     this.flywheel = flywheel;
     this.aimSolenoid = solenoidSubsystem;
     this.runUpBelt = motor;
+    this.limitSwitch = limitSwitch;
   }
 
   public Set<SubsystemBase> getSubsystems() {

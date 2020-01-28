@@ -1,19 +1,15 @@
 package org.usfirst.frc4904.robot.commands;
 
-<<<<<<< HEAD
 import org.usfirst.frc4904.robot.subsystems.Flywheel;
 import org.usfirst.frc4904.robot.subsystems.Indexer;
 import org.usfirst.frc4904.robot.subsystems.Flywheel.FlywheelStatus;
-=======
 import java.util.function.BooleanSupplier;
->>>>>>> 6dadfb2f5423bb3a21bbd9ac5fc9e280437705ce
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
-import org.usfirst.frc4904.robot.subsystems.Indexer;
 import org.usfirst.frc4904.robot.subsystems.Shooter;
 import org.usfirst.frc4904.robot.commands.OpenIndexer;
 import org.usfirst.frc4904.robot.commands.CloseIndexer;
@@ -38,33 +34,15 @@ import org.usfirst.frc4904.robot.commands.CloseIndexer;
  */
 
 public class IndexOne extends SequentialCommandGroup {
-  protected final Indexer indexer;
-  protected final Shooter shooter;
-  protected final Flywheel flywheel;
+  public IndexOne(Indexer indexer, Shooter shooter) {
+    super(new OpenIndexer(indexer),
+        new MotorConstant("IndexerMotorConstant", indexer.liftBelts, Indexer.DEFAULT_LIFT_SPEED),
 
-  IndexOne(Indexer indexer, Shooter shooter) {
-    super(new OpenIndexer(indexer), new MotorConstant("IndexerMotorConstant", indexer.liftBelts, 0.5), //need to find value
-        new WaitUntilCommand(shooter.limitSwitchState), new CloseIndexer(indexer));
+        new WaitUntilCommand(() -> {
+          return shooter.limitSwitch.get();
+        }), new CloseIndexer(indexer));
     setName("IndexOne");
-    this.indexer = indexer;
-    this.flywheel = shooter.flywheel;
     addRequirements(indexer.liftBelts);
     addRequirements(indexer.flippers);
-  }
-
-  public void execute() {
-    if (flywheel.getStatus() == FlywheelStatus.IDLE){
-      flywheel.setSpeed();
-    }
-    else if (flywheel.getStatus() == FlywheelStatus.SPINNING_UP){
-      return;
-    }
-    else if (flywheel.getStatus() == FlywheelStatus.AT_SPEED){
-      indexer.start();
-    }
-    
-    for (SubsystemBase subsystem : indexer.getSubsystems()) {
-      addRequirements(subsystem);
-    }
   }
 }
