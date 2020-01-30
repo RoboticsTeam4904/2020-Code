@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ShooterAimHigh extends CommandBase{
     protected final Shooter shooter;
 
-    /**extending the aiming soleniod to shoot high
+    /**extending the aiming solenoid to shoot high
      * 
      * @param shooter 
      */

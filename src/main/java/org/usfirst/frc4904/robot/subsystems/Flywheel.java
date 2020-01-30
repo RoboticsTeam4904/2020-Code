@@ -15,7 +15,7 @@ import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.SpeedModifie
  * This class is designed to go into standard, eventually.
  */
 public class Flywheel extends VelocitySensorMotor {
-  public enum FlywheelStatus {
+  public static enum FlywheelStatus {
     IDLE, SPINNING_UP, AT_SPEED
   }
 
