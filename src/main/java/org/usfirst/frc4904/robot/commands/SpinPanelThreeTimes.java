@@ -1,4 +1,5 @@
 package org.usfirst.frc4904.robot.commands;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import org.usfirst.frc4904.standard.commands.WaitUntil;
@@ -15,10 +16,9 @@ public class SpinPanelThreeTimes extends SequentialCommandGroup {
     private final double SPEED = -1d;
     private final double CONTROL_PANEL_DIAMETER = -1d;
     private final double PANEL_SPINNER_DIAMETER = -1d;
-    private final double PANEL_SPINNER_RATIO = CONTROL_PANEL_DIAMETER/PANEL_SPINNER_DIAMETER;
+    private final double PANEL_SPINNER_RATIO = CONTROL_PANEL_DIAMETER / PANEL_SPINNER_DIAMETER;
     private final double DEGREES_IN_A_CIRCLE = 360d;
     private final double TOTAL_REVOLUTIONS = 3d;
-
 
     private final Motor motor;
     private final CANCoder encoder;
@@ -40,23 +40,22 @@ public class SpinPanelThreeTimes extends SequentialCommandGroup {
 
         Supplier<Boolean> isDone = () -> {
             double tempRelativeDistance = encoder.getPosition();
-            if (tempRelativeDistance < this.relativeDistance){
+            if (tempRelativeDistance < this.relativeDistance) {
                 this.revolutions += 1;
             }
             this.relativeDistance = tempRelativeDistance;
 
-            double totalDistance = (this.revolutions*360) + this.relativeDistance - this.initialRelativeDistance;
+            double totalDistance = (this.revolutions * 360) + this.relativeDistance - this.initialRelativeDistance;
 
-            return totalDistance >= (TOTAL_REVOLUTIONS*DEGREES_IN_A_CIRCLE)/PANEL_SPINNER_RATIO;
+            return totalDistance >= (TOTAL_REVOLUTIONS * DEGREES_IN_A_CIRCLE) / PANEL_SPINNER_RATIO;
         };
 
-        addCommands(new StartPanelMotor(this.motor), new WaitUntil(isDone),
-                new StopPanelMotor(this.motor));
+        addCommands(new StartPanelMotor(this.motor), new WaitUntil(isDone), new StopPanelMotor(this.motor));
 
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
         this.initialRelativeDistance = this.encoder.getPosition();
 
         super.initialize();

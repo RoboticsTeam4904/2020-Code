@@ -10,20 +10,27 @@ import org.usfirst.frc4904.robot.RobotMap;
 public class StopPanelMotor extends CommandBase {
     private Motor motor;
 
-	/**
-	 * @param motor The motor to spin the control panel.
-	 */
-    
+    /**
+     * @param motor The motor to spin the control panel.
+     */
+
     public StopPanelMotor(Motor motor) {
         super();
-		setName("StartPanelMotor");
+        setName("StopPanelMotor");
         addRequirements(motor);
-        
+
         this.motor = motor;
     }
 
+    public StopPanelMotor() {
+        super();
+        setName("StopPanelMotor");
+        this.motor = RobotMap.Component.controlPanel;
+        addRequirements(this.motor); // neccesary?
+    }
+
     @Override
-    public void initialize(){
+    public void initialize() {
         this.motor.stopMotor();
     }
 }

@@ -18,12 +18,18 @@ public class StartPanelMotor extends CommandBase {
 		super();
 		setName("StartPanelMotor");
 		addRequirements(motor);
-
 		this.motor = motor;
 	}
 
+	public StartPanelMotor() {
+		super();
+		setName("StartPanelMotor");
+		this.motor = RobotMap.Component.controlPanel;
+		addRequirements(this.motor); // necessary
+	}
+
 	@Override
-	public void initialize(){
+	public void initialize() {
 		this.motor.set(SPEED);
 	}
 }
