@@ -10,7 +10,6 @@ import org.usfirst.frc4904.robot.subsystems.Shooter;
 import org.usfirst.frc4904.robot.commands.OpenIndexer;
 import org.usfirst.frc4904.robot.commands.CloseIndexer;
 
-// TODO: Logic needs to be written
 public class IndexOne extends SequentialCommandGroup {
   public IndexOne(Indexer indexer, Shooter shooter) {
     super(new OpenIndexer(indexer),
@@ -19,6 +18,5 @@ public class IndexOne extends SequentialCommandGroup {
           return shooter.limitSwitch.get();
         }), new CloseIndexer(indexer));
     setName("IndexOne");
-    addRequirements(indexer.liftBelts, indexer.flippers);
   }
 }
