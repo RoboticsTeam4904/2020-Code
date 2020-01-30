@@ -8,19 +8,18 @@ public class RunIntake extends CommandBase {
     protected final Intake intake;
 
     /**
-     * Starts the intake.
+     * Start the intake
      * 
      * @param intake The intake to manipulate
-     * 
      */
-    RunIntake(Intake intake){
+    RunIntake(Intake intake) {
         super();
         setName("RunIntake");
-        addRequirements(intake.intake, intake.funnel);
+        addRequirements(intake.intake);
         this.intake = intake;
     }
 
-    public void initialize(){
+    public void initialize() {
         this.intake.start();
     }
 }
