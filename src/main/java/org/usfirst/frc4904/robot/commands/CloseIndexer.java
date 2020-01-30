@@ -7,7 +7,7 @@ public class CloseIndexer extends CommandBase {
   protected final Indexer indexer;
 
   /**
-   * Extend the indexer solenoid to open the indexer flippers.
+   * Retract the indexer solenoid to close the indexer flippers.
    * 
    * @param indexer The indexer to manipulate
    */

@@ -11,16 +11,15 @@ public class Outtake extends CommandBase {
      * Reverses the intake.
      * 
      * @param intake The intake to manipulate
-     * 
      */
-    Outtake(Intake intake){
+    Outtake(Intake intake) {
         super();
         setName("Outtake");
-        addRequirements(intake.intake, intake.funnel);
+        addRequirements(intake.intake);
         this.intake = intake;
     }
 
-    public void initialize(){
+    public void initialize() {
         this.intake.reverse();
     }
 }
