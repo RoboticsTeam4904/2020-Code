@@ -9,11 +9,11 @@ import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandGroupBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-class PickupAndShootCenter extends CommandGroupBase {
+class PickupAndShootCenter extends SequentialCommandGroup {
 
-    @Override
-    public void addCommands(Command... commands) {
+    public PickupAndShootCenter() {
         Trajectory goingToPowerCells = RobotMap.Component.sensorDrive
                 .generateQuinticTrajectory(Arrays.asList(Poses.currentPos, Poses.centerCollectStart));
         goingToPowerCells.relativeTo(Poses.currentPos);
@@ -25,6 +25,5 @@ class PickupAndShootCenter extends CommandGroupBase {
         goingToPowerCells.relativeTo(Poses.currentPos);
         SimpleSplines collectSpline = new SimpleSplines(RobotMap.Component.sensorDrive, collect);
         this.andThen(collectSpline);
-
     }
 }
