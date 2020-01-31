@@ -105,6 +105,7 @@ public class RobotMap {
 
   }
 
+
   public static class Component {
     public static Intake intake;
     public static Indexer indexer;
