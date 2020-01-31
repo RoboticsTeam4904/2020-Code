@@ -11,6 +11,7 @@ import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.AccelerationCap;
 import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.EnableableModifier;
+import org.usfirst.frc4904.standard.subsystems.chassis.SensorDrive;
 import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
 import org.usfirst.frc4904.standard.custom.sensors.NavX;
@@ -96,6 +97,7 @@ public class RobotMap {
         public static EncoderPair chassisEncoders;
         public static CANCoderConfiguration canCoderConfiguration;
         public static NavX navx;
+        public static SensorDrive sensorDrive;
     }
 
     public static class Input {
