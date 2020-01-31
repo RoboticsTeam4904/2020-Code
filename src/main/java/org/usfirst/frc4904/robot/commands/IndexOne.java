@@ -11,9 +11,15 @@ import org.usfirst.frc4904.robot.commands.OpenIndexer;
 import org.usfirst.frc4904.robot.commands.CloseIndexer;
 
 public class IndexOne extends SequentialCommandGroup {
+  /**
+   * Open the flippers, run the run up belt until the limit switch is activated,
+   * then close the flippers.
+   * 
+   * @param indexer
+   * @param shooter
+   */
   public IndexOne(Indexer indexer, Shooter shooter) {
-    super(new OpenIndexer(indexer),
-        new MotorConstant("IndexerMotorConstant", indexer.liftBelts, Indexer.DEFAULT_LIFT_SPEED),
+    super(new OpenIndexer(indexer), new MotorConstant("RunIndexer", indexer.liftBelts, Indexer.DEFAULT_LIFT_SPEED),
         new WaitUntilCommand(() -> {
           return shooter.limitSwitch.get();
         }), new CloseIndexer(indexer));

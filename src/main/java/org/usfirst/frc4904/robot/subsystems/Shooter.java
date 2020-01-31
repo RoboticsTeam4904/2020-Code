@@ -11,7 +11,6 @@ import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
-
 public class Shooter {
   public final static double DEFAULT_RUN_UP_BELT_SPEED = 0.3;
   public final static double DEFAULT_OFF_SPEED = 0.0;
@@ -30,8 +29,8 @@ public class Shooter {
    * @param flywheel          The actual flywheel for this subsystem
    * @param solenoidSubsystem The SolenoidSubsystem for aiming the shooter
    */
-
-  Shooter(Flywheel flywheel, SolenoidSubsystem solenoidSubsystem, Motor motor, CustomDigitalLimitSwitch limitSwitch) {
+  public Shooter(Flywheel flywheel, SolenoidSubsystem solenoidSubsystem, Motor motor,
+      CustomDigitalLimitSwitch limitSwitch) {
     this.flywheel = flywheel;
     this.aimSolenoid = solenoidSubsystem;
     this.runUpBelt = motor;

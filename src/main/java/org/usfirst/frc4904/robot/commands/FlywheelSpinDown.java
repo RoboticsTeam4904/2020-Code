@@ -19,7 +19,7 @@ public class FlywheelSpinDown extends CommandBase {
     this.flywheel = flywheel;
   }
 
-  public void initialize() {
+  public void execute() {
     this.flywheel.setSpeed(DEFAULT_OFF_SPEED);
   }
 }
