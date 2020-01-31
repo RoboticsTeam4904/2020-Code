@@ -25,5 +25,10 @@ class PickupAndShootCenter extends SequentialCommandGroup {
         goingToPowerCells.relativeTo(Poses.currentPos);
         SimpleSplines collectSpline = new SimpleSplines(RobotMap.Component.sensorDrive, collect);
         this.andThen(collectSpline);
+        Trajectory moveToShoot = RobotMap.Component.sensorDrive
+                .generateQuinticTrajectory(Arrays.asList(Poses.currentPos, Poses.shootingPose));
+        SimpleSplines moveToShootSpline = new SimpleSplines(RobotMap.Component.sensorDrive, moveToShoot);
+        this.andThen(moveToShootSpline);
+
     }
 }
