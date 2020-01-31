@@ -31,7 +31,8 @@ public class Winch extends CommandBase {
     this(winchMotor, DEFAULT_WINCH_SPEED);
   }
 
-  public void initialize() {
+  @Override
+  public void execute() {
     winchMotor.set(speed);
   }
 }

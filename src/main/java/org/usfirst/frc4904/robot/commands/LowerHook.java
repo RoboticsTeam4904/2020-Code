@@ -32,7 +32,8 @@ public class LowerHook extends CommandBase {
     this(tubeMotor, DEFAULT_DOWN_SPEED);
   }
 
-  public void initialize() {
+  @Override
+  public void execute() {
     tubeMotor.set(speed);
   }
 }
