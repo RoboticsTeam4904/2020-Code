@@ -5,6 +5,12 @@ import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
+/*
+Shooter: flywheel, solenoid subsystem, motor, limit switch
+Intake: motor, motor, solenoid subsystem
+Indexer: motor, solenoid subsystem
+
+*/
 public class RobotMap {
     public static class Port {
         public static class HumanInput {
