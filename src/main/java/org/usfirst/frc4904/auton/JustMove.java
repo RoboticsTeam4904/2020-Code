@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 class JustMove extends CommandGroupBase {
 
     public JustMove() {
-        this.andThen(new ChassisMoveDistance(null, 10, null));
+        this.andThen(new ChassisMoveDistance(RobotMap.Component.chassis, 10, null));
     }
 
     @Override
