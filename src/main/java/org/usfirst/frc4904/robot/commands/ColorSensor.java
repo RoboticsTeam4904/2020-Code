@@ -28,6 +28,7 @@ import org.usfirst.frc4904.standard.LogKitten;
 public class ColorSensor {
     private final Color[] colorOrder = new Color[] { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN };
 
+    // TODO: tweak values?
     private final int[] RED = new int[] { 255, 0, 0 };
     private final int[] YELLOW = new int[] { 255, 255, 0 };
     private final int[] BLUE = new int[] { 0, 0, 255 };
@@ -35,8 +36,8 @@ public class ColorSensor {
 
     private final int[][] ColorValuesArray = new int[][] { RED, YELLOW, BLUE, GREEN };
 
-    private Color currentColor;
-    private Color initialColor;
+    public Color currentColor;
+    private Color initialColor; // is this var necessary?
 
     private NetworkTableInstance inst = NetworkTableInstance.getDefault();
     private NetworkTable table = inst.getTable("controlPanelColor"); // TODO: get the actual name of the data table
@@ -46,16 +47,15 @@ public class ColorSensor {
 
     // TODO: compare the current color to the color detected and add to the
     public void checkColorOrder() {
-        if (currentColor != colorClassifier())
-        {
+        if (currentColor != colorClassifier()) {
             // different color!
             currentColor = colorClassifier();
             if (currentColor == colorOrder[(orderWeAreOn + 1) % 3]) {
-                // On correct trajectory!   
+                // On correct trajectory!
                 if (orderWeAreOn == 23) {
                     // it has traveled 3 times around
                     StopPanelMotor stopPanelMotor = new StopPanelMotor();
-                    // do we need to manually initialize the stopPanelMotorCommand? 
+                    // do we need to manually initialize the stopPanelMotorCommand?
                 }
             } else {
                 // We skipped one!
@@ -71,16 +71,15 @@ public class ColorSensor {
      * Classifies the rgb color value from the camera to red, yellow, blue, or green
      * 
      * @param colorString
-     * @return
+     * @return Color
      */
     public Color colorClassifier(String colorString) {
-        if (colorString == null)
-        {
+        if (colorString == null) {
             return null;
         }
         int closestColorIndex = -1;
         int smallestDistance = 765;
-        // TODO: determine how the colorString is value so that we can get the three
+        // TODO: determine how the colorString is formatted so that we can get the three
         // values below from it
         int red;
         int green;
@@ -111,17 +110,16 @@ public class ColorSensor {
      * 
      * Classifies the rgb color value from the camera to red, yellow, blue, or green
      * 
-     * @return
+     * @return Color
      */
     public Color colorClassifier() {
         String colorString = detectColor();
-        if (colorString == null)
-        {
+        if (colorString == null) {
             return null;
         }
         int closestColorIndex = -1;
         int smallestDistance = 765;
-        // TODO: determine how the colorString is value so that we can get the three
+        // TODO: determine how the colorString is formatted so that we can get the three
         // values below from it
         int red;
         int green;
@@ -148,6 +146,10 @@ public class ColorSensor {
         }
     }
 
+    /**
+     * 
+     * @return String color
+     */
     public String detectColor() {
         String colorResult = NetworkTables.Sensors.controlPanelColor.getString(null);
         if (colorResult == null) {
@@ -156,6 +158,9 @@ public class ColorSensor {
         return colorResult;
     }
 
+    /**
+     * An enum of the different colors on the control panel.
+     */
     enum Color {
         RED, YELLOW, BLUE, GREEN;
     }
