@@ -17,10 +17,6 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void teleopInitialize() {
-<<<<<<< HEAD
-        teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
-=======
->>>>>>> a59165430113b61a0451c6f1052141f0ab7ff199
     }
 
     @Override
