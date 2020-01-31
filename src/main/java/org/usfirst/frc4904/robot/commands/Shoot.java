@@ -6,9 +6,10 @@ import org.usfirst.frc4904.robot.subsystems.Flywheel.FlywheelStatus;
 import org.usfirst.frc4904.standard.commands.RunIf;
 import org.usfirst.frc4904.standard.commands.WaitUntil;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import java.lang.Math;
 
 public class Shoot extends SequentialCommandGroup {
-  protected static final double SPEED_TOLERANCE = 0.001;
+  protected static final double SPEED_TOLERANCE = 0.0; // TODO: Untested value
   /**
    * Check that the flywheel is spun up, spin up if it isn't, then call IndexOne
    * 
@@ -25,7 +26,7 @@ public class Shoot extends SequentialCommandGroup {
    */
   public Shoot(Indexer indexer, Shooter shooter, double speed) {
     super(new RunIf(new FlywheelSpinUp(shooter.flywheel, speed), () -> {
-      return (shooter.flywheel.getTargetSpeed() - speed) < SPEED_TOLERANCE;
+      return Math.abs(shooter.flywheel.getTargetSpeed() - speed) < SPEED_TOLERANCE;
     }), new WaitUntil(() -> {
       return shooter.flywheel.getStatus() == FlywheelStatus.AT_SPEED;
     }), new IndexOne(indexer, shooter));

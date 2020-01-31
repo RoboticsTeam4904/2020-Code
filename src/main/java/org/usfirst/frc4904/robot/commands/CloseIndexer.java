@@ -18,6 +18,7 @@ public class CloseIndexer extends CommandBase {
     this.indexer = indexer;
   }
 
+  @Override
   public void initialize() {
     indexer.closeFlippers();
   }

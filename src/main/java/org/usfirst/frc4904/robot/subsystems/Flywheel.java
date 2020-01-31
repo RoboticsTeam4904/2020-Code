@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 import org.usfirst.frc4904.standard.custom.motioncontrollers.MotionController;
 import org.usfirst.frc4904.standard.subsystems.motor.VelocitySensorMotor;
+import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.IdentityModifier;
 import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.SpeedModifier;
 
 /**
@@ -46,6 +47,27 @@ public class Flywheel extends VelocitySensorMotor {
    */
   public Flywheel(SpeedModifier speedModifier, MotionController motionController, SpeedController... motors) {
     this("Flywheel", speedModifier, motionController, motors);
+  }
+
+  /**
+   * Flywheel constructor - extends VelocitySensorMotor
+   * 
+   * @param name             The name of the flywheel
+   * @param motionController The motionController
+   * @param motors           Motors to control
+   */
+  public Flywheel(String name, MotionController motionController, SpeedController... motors) {
+    this(name, new IdentityModifier(), motionController, motors);
+  }
+
+  /**
+   * Flywheel constructor - extends VelocitySensorMotor
+   * 
+   * @param motionController The motionController
+   * @param motors           Motors to control
+   */
+  public Flywheel(MotionController motionController, SpeedController... motors) {
+    this("Flywheel", motionController, motors);
   }
 
   protected void syncStatus() {

@@ -18,6 +18,7 @@ public class ExtendIntake extends CommandBase {
     this.intake = intake;
   }
 
+  @Override
   public void initialize() {
     intake.extend();
   }

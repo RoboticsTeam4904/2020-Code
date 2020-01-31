@@ -9,10 +9,10 @@ import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 public class Intake {
-  public static final double DEFAULT_INTAKE_SPEED = 0.5; // TODO: test this value
-  public static final double DEFAULT_OUTTAKE_SPEED = -0.5; //TODO: test this value
-  public static final double DEFAULT_FUNNEL_SPEED = 0.5; // TODO: test this value
-  public static final double DEFAULT_FUNNEL_REVERSE_SPEED = -0.5; // TODO: test this value
+  public static final double DEFAULT_INTAKE_SPEED = 0.0; // TODO: test this value
+  public static final double DEFAULT_OUTTAKE_SPEED = -0.0; // TODO: test this value
+  public static final double DEFAULT_FUNNEL_SPEED = 0.0; // TODO: test this value
+  public static final double DEFAULT_FUNNEL_REVERSE_SPEED = -0.0; // TODO: test this value
   public static final double DEFAULT_OFF_SPEED = 0.0;
 
   public final Motor intake;
@@ -29,7 +29,7 @@ public class Intake {
    * @param intakeSolenoid The solenoid that controls the position of the
    *                       intakeMotor rollers
    */
-  Intake(Motor intakeMotor, Motor funnelMotor, SolenoidSubsystem intakeSolenoid) {
+  public Intake(Motor intakeMotor, Motor funnelMotor, SolenoidSubsystem intakeSolenoid) {
     intake = intakeMotor;
     funnel = funnelMotor;
     solenoid = intakeSolenoid;
@@ -56,7 +56,7 @@ public class Intake {
     setSpeed(speed, speed);
   }
 
-  public void start() {
+  public void setSpeed() {
     setSpeed(DEFAULT_INTAKE_SPEED, DEFAULT_FUNNEL_SPEED);
   }
 
@@ -64,7 +64,7 @@ public class Intake {
     setSpeed(DEFAULT_OFF_SPEED);
   }
 
-  public void reverse(){
+  public void reverse() {
     setSpeed(DEFAULT_OUTTAKE_SPEED, DEFAULT_FUNNEL_REVERSE_SPEED);
   }
 
