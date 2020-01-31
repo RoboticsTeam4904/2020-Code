@@ -4,7 +4,7 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class RaiseHook extends CommandBase {
-  public static final double DEFAULT_UP_SPEED = 0.9; // TODO: This is an untested value
+  public static final double DEFAULT_UP_SPEED = 0; // TODO: This is an untested value
   protected final Motor tubeMotor;
   protected double speed;
 
@@ -31,7 +31,8 @@ public class RaiseHook extends CommandBase {
     this(tubeMotor, DEFAULT_UP_SPEED);
   }
 
-  public void initialize() {
-    this.tubeMotor.set(speed);
+  @Override
+  public void execute() {
+    tubeMotor.set(speed);
   }
 }

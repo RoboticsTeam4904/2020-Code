@@ -4,7 +4,7 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Winch extends CommandBase {
-  public static final double DEFAULT_WINCH_SPEED = 0.9; // TODO: This is an untested value
+  public static final double DEFAULT_WINCH_SPEED = 0; // TODO: This is an untested value
   protected final Motor winchMotor;
   protected double speed;
 
@@ -31,7 +31,8 @@ public class Winch extends CommandBase {
     this(winchMotor, DEFAULT_WINCH_SPEED);
   }
 
-  public void initialize() {
-    this.winchMotor.set(speed);
+  @Override
+  public void execute() {
+    winchMotor.set(speed);
   }
 }
