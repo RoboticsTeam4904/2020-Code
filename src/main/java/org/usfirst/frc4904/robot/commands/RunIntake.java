@@ -12,7 +12,7 @@ public class RunIntake extends CommandBase {
    * 
    * @param intake The intake to manipulate
    */
-  RunIntake(Intake intake) {
+  public RunIntake(Intake intake) {
     super();
     setName("RunIntake");
     addRequirements(intake.intake);

@@ -19,11 +19,11 @@ class PickupAndShootCenter extends CommandGroupBase {
         goingToPowerCells.relativeTo(Poses.currentPos);
         SimpleSplines approachSpline = new SimpleSplines(RobotMap.Component.sensorDrive, goingToPowerCells);
         this.andThen(approachSpline);
-        this.andThen(new RunIntake(null)); // TODO: intake isn't in robotmap yet
+        this.andThen(new RunIntake(RobotMap.Component.intake));
         Trajectory collect = RobotMap.Component.sensorDrive
                 .generateQuinticTrajectory(Arrays.asList(Poses.currentPos, Poses.centerCollectEnd));
         goingToPowerCells.relativeTo(Poses.currentPos);
-        SimpleSplines collectSpline = new SimpleSplines(RobotMap.Component.sensorDrive, goingToPowerCells);
+        SimpleSplines collectSpline = new SimpleSplines(RobotMap.Component.sensorDrive, collect);
         this.andThen(collectSpline);
 
     }
