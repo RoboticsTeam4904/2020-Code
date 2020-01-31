@@ -18,6 +18,7 @@ public class ShooterAimLow extends CommandBase {
     this.shooter = shooter;
   }
 
+  @Override
   public void initialize() {
     shooter.setSolenoidLow();
   }

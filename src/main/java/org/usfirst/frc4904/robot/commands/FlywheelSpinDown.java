@@ -4,7 +4,7 @@ import org.usfirst.frc4904.robot.subsystems.Flywheel;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class FlywheelSpinDown extends CommandBase {
-  public static final double DEFAULT_OFF_SPEED = 0.0;
+  public static final double DEFAULT_IDLE_SPEED = 0.0;
   protected final Flywheel flywheel;
 
   /**
@@ -19,7 +19,8 @@ public class FlywheelSpinDown extends CommandBase {
     this.flywheel = flywheel;
   }
 
+  @Override
   public void execute() {
-    this.flywheel.setSpeed(DEFAULT_OFF_SPEED);
+    flywheel.setSpeed(DEFAULT_OFF_SPEED);
   }
 }

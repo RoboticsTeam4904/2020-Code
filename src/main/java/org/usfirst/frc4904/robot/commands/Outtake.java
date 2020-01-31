@@ -19,6 +19,7 @@ public class Outtake extends CommandBase {
     this.intake = intake;
   }
 
+  @Override
   public void initialize() {
     intake.reverse();
   }

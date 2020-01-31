@@ -13,7 +13,7 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
  * 
  */
 public class Indexer {
-  public static final double DEFAULT_LIFT_SPEED = 0.7; // TODO: Untested value
+  public static final double DEFAULT_LIFT_SPEED = 0.0; // TODO: Untested value
   public static final double DEFAULT_OFF_SPEED = 0.0;
 
   public final SolenoidSubsystem flippers;

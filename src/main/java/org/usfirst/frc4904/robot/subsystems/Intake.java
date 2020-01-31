@@ -9,10 +9,10 @@ import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 public class Intake {
-  public static final double DEFAULT_INTAKE_SPEED = 0.5; // TODO: test this value
-  public static final double DEFAULT_OUTTAKE_SPEED = -0.5; // TODO: test this value
-  public static final double DEFAULT_FUNNEL_SPEED = 0.5; // TODO: test this value
-  public static final double DEFAULT_FUNNEL_REVERSE_SPEED = -0.5; // TODO: test this value
+  public static final double DEFAULT_INTAKE_SPEED = 0.0; // TODO: test this value
+  public static final double DEFAULT_OUTTAKE_SPEED = -0.0; // TODO: test this value
+  public static final double DEFAULT_FUNNEL_SPEED = 0.0; // TODO: test this value
+  public static final double DEFAULT_FUNNEL_REVERSE_SPEED = -0.0; // TODO: test this value
   public static final double DEFAULT_OFF_SPEED = 0.0;
 
   public final Motor intake;

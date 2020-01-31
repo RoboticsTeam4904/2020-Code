@@ -31,7 +31,8 @@ public class FlywheelSpinUp extends CommandBase {
     this(flywheel, DEFAULT_FLYWHEEL_SPEED);
   }
 
+  @Override
   public void execute() {
-    this.flywheel.setSpeed(speed);
+    flywheel.setSpeed(speed);
   }
 }

@@ -19,6 +19,7 @@ public class RunIntake extends CommandBase {
     this.intake = intake;
   }
 
+  @Override
   public void execute() {
     intake.setSpeed();
   }

@@ -12,7 +12,7 @@ import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 public class Shooter {
-  public final static double DEFAULT_RUN_UP_BELT_SPEED = 0.3;
+  public final static double DEFAULT_RUN_UP_BELT_SPEED = 0.0; // TODO: Untested value
   public final static double DEFAULT_OFF_SPEED = 0.0;
 
   public final Flywheel flywheel;

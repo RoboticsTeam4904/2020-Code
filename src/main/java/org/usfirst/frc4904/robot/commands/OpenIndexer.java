@@ -18,6 +18,7 @@ public class OpenIndexer extends CommandBase {
     this.indexer = indexer;
   }
 
+  @Override
   public void initialize() {
     indexer.openFlippers();
   }

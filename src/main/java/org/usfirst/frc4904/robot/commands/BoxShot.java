@@ -5,7 +5,7 @@ import org.usfirst.frc4904.robot.subsystems.Indexer;
 import org.usfirst.frc4904.robot.subsystems.Shooter;
 
 public class BoxShot extends Shoot {
-  protected static final double DEFAULT_BOXSHOT_SPEED = 0.9; // TODO: Untested variables
+  protected static final double DEFAULT_BOXSHOT_SPEED = 0.0; // TODO: Untested variables
 
   /**
    * Run the Shoot command for a box shot.
