@@ -4,7 +4,7 @@ import org.usfirst.frc4904.robot.subsystems.Flywheel;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class FlywheelSpinUp extends CommandBase {
-  public static final double DEFAULT_FLYWHEEL_SPEED = 0.9; // TODO: This is an untested value.
+  public static final double DEFAULT_FLYWHEEL_SPEED = 0.9; // TODO: This is an untested value
   protected final Flywheel flywheel;
   protected final double speed;
 
