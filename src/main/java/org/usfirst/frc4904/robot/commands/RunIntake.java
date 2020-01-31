@@ -1,11 +1,18 @@
 package org.usfirst.frc4904.robot.commands;
 
 import org.usfirst.frc4904.robot.subsystems.Intake;
+import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-
-public class RunIntake extends CommandBase {
-  protected final Intake intake;
+public class RunIntake extends MotorConstant {
+  /**
+   * Run the intake
+   * 
+   * @param intake The intake to manipulate
+   * @param speed  The speed to intake at
+   */
+  RunIntake(Intake intake, double speed) {
+    super("RunIntake", intake.intake, speed);
+  }
 
   /**
    * Run the intake
@@ -13,14 +20,6 @@ public class RunIntake extends CommandBase {
    * @param intake The intake to manipulate
    */
   RunIntake(Intake intake) {
-    super();
-    setName("RunIntake");
-    addRequirements(intake.intake);
-    this.intake = intake;
-  }
-
-  @Override
-  public void execute() {
-    intake.setSpeed();
+    super("RunIntake", intake.intake, Intake.DEFAULT_INTAKE_SPEED);
   }
 }

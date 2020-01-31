@@ -1,12 +1,9 @@
 package org.usfirst.frc4904.robot.commands;
 
 import org.usfirst.frc4904.robot.subsystems.Flywheel;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-
-public class FlywheelSpinUp extends CommandBase {
-  public static final double DEFAULT_FLYWHEEL_SPEED = 0.9; // TODO: This is an untested value
-  protected final Flywheel flywheel;
-  protected final double speed;
+import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
+public class FlywheelSpinUp extends MotorConstant {
+  public static final double DEFAULT_FLYWHEEL_SPEED = 0.0; // TODO: This is an untested value
 
   /**
    * Spin up the flywheel to a speed
@@ -15,11 +12,7 @@ public class FlywheelSpinUp extends CommandBase {
    * @param speed    The speed to spin the flywheel up to
    */
   FlywheelSpinUp(Flywheel flywheel, double speed) {
-    super();
-    setName("FlywheelSpinUp");
-    addRequirements(flywheel);
-    this.flywheel = flywheel;
-    this.speed = speed;
+    super("FlywheelSpinUp", flywheel, speed);
   }
 
   /**
@@ -29,10 +22,5 @@ public class FlywheelSpinUp extends CommandBase {
    */
   FlywheelSpinUp(Flywheel flywheel) {
     this(flywheel, DEFAULT_FLYWHEEL_SPEED);
-  }
-
-  @Override
-  public void execute() {
-    flywheel.setSpeed(speed);
   }
 }

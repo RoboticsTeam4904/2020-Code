@@ -21,6 +21,6 @@ public class FlywheelSpinDown extends CommandBase {
 
   @Override
   public void execute() {
-    flywheel.setSpeed(DEFAULT_OFF_SPEED);
+    flywheel.setSpeed(DEFAULT_IDLE_SPEED);
   }
 }

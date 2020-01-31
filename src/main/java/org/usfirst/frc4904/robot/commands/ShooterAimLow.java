@@ -1,25 +1,15 @@
 package org.usfirst.frc4904.robot.commands;
 
 import org.usfirst.frc4904.robot.subsystems.Shooter;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.usfirst.frc4904.standard.commands.solenoid.SolenoidRetract;
 
-public class ShooterAimLow extends CommandBase {
-  protected final Shooter shooter;
-
+public class ShooterAimLow extends SolenoidRetract {
   /**
    * Retract the aim solenoid to aim the shooter down
    * 
    * @param shooter
    */
   public ShooterAimLow(Shooter shooter) {
-    super();
-    setName("ShooterAimLow");
-    addRequirements(shooter.aimSolenoid);
-    this.shooter = shooter;
-  }
-
-  @Override
-  public void initialize() {
-    shooter.setSolenoidLow();
+    super("ShooterAimLow", shooter.aimSolenoid);
   }
 }

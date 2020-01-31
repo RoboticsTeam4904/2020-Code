@@ -1,25 +1,15 @@
 package org.usfirst.frc4904.robot.commands;
 
 import org.usfirst.frc4904.robot.subsystems.Intake;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.usfirst.frc4904.standard.commands.solenoid.SolenoidRetract;
 
-public class RetractIntake extends CommandBase {
-  protected final Intake intake;
-
+public class RetractIntake extends SolenoidRetract {
   /**
    * Retract the intake solenoid to flip up the intake rollers.
    * 
    * @param intake The intake to manipulate
    */
   public RetractIntake(Intake intake) {
-    super();
-    setName("RetractIntake");
-    addRequirements(intake.solenoid);
-    this.intake = intake;
-  }
-
-  @Override
-  public void initialize() {
-    intake.retract();
+    super("RetractIntake", intake.solenoid);
   }
 }

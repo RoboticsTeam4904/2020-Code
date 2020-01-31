@@ -1,25 +1,15 @@
 package org.usfirst.frc4904.robot.commands;
 
 import org.usfirst.frc4904.robot.subsystems.Intake;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.usfirst.frc4904.standard.commands.solenoid.SolenoidExtend;
 
-public class ExtendIntake extends CommandBase {
-  protected final Intake intake;
-
+public class ExtendIntake extends SolenoidExtend {
   /**
    * Extend the intake solenoid to deploy the intake rollers.
    * 
    * @param intake The intake to manipulate
    */
   public ExtendIntake(Intake intake) {
-    super();
-    setName("ExtendIntake");
-    addRequirements(intake.solenoid);
-    this.intake = intake;
-  }
-
-  @Override
-  public void initialize() {
-    intake.extend();
+    super("ExtendIntake", intake.solenoid);
   }
 }
