@@ -16,6 +16,9 @@ import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
 import org.usfirst.frc4904.standard.custom.sensors.NavX;
 import org.usfirst.frc4904.standard.custom.sensors.PDP;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class RobotMap {
     public static class Port {
@@ -103,6 +106,16 @@ public class RobotMap {
     public static class Input {
     }
 
+    public static class NetworkTables {
+        public static NetworkTableInstance inst;
+        public static NetworkTable table;
+
+        public static class Sensors {
+            public static NetworkTable table;
+            public static NetworkTableEntry controlPanelColor;
+        }
+    }
+
     public static class HumanInput {
         public static class Driver {
             public static CustomXbox xbox;
@@ -140,7 +153,10 @@ public class RobotMap {
         Component.rightDriveB = new Motor("rightDriveB", false, Component.rightWheelAccelerationCap,
                 new CANTalonFX(Port.CANMotor.rightDriveB));
 
-        Component.controlPanel = new Motor("controlPanel", false, new CANTalonFX(Port.CANMotor.controlPanel)); // TODO: add a speed modifier?
+        Component.controlPanel = new Motor("controlPanel", false, new CANTalonFX(Port.CANMotor.controlPanel)); // TODO:
+                                                                                                               // add a
+                                                                                                               // speed
+                                                                                                               // modifier?
 
         Component.shifter = new SolenoidShifters(Port.Pneumatics.shifter.buildDoubleSolenoid());
 
@@ -149,5 +165,11 @@ public class RobotMap {
 
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
+
+        /* NetworkTables */
+        NetworkTables.inst = NetworkTableInstance.getDefault();
+        NetworkTables.table = NetworkTables.inst.getTable("vision");
+        NetworkTables.Sensors.table = NetworkTables.inst.getTable("sensorData");
+        NetworkTables.Sensors.controlPanelColor = NetworkTables.Sensors.table.getEntry("controlPanelColor");
     }
 }
