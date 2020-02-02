@@ -55,7 +55,7 @@ public class RobotMap {
     }
 
     public static class Digital {
-      public static final int INDEXER_LIMIT_SWITCH = 0;
+      public static final int INDEXER_LIMIT_SWITCH = -1;
     }
   }
 
