@@ -14,7 +14,7 @@ class PickupAndShootSide extends SequentialCommandGroup {
 
     public PickupAndShootSide() {
         Trajectory goingToPowerCells = RobotMap.Component.sensorDrive
-                .generateQuinticTrajectory(Arrays.asList(Poses.shootingPose, Poses.sideCollection));
+                .generateQuinticTrajectory(Arrays.asList(Poses.shootingPose, Poses.sideCollectionStart));
         SimpleSplines splines = new SimpleSplines(RobotMap.Component.sensorDrive, goingToPowerCells);
         this.andThen(splines);
     }
