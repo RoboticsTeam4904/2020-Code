@@ -27,8 +27,8 @@ class Poses {
     static final double centerBallposX = -1;
 
     // TODO: calculate positions (any value with -1)
-    static final Pose2d centerCollectStart = new Pose2d(-1, -1, new Rotation2d(4));
-    static final Pose2d centerCollectEnd = new Pose2d(-1, -1, new Rotation2d(4));
+    static final Pose2d centerCollectStart = new Pose2d(120, -1, new Rotation2d(4));
+    static final Pose2d centerCollectEnd = new Pose2d(392.49, 175.8, new Rotation2d(4));
 
     static final Pose2d sideCollectionStart = new Pose2d(startingLine + 122.63 - offset, topOfField - 94.66 + 66.91,
             new Rotation2d(0));
