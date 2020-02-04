@@ -16,12 +16,11 @@ public class IndexOne extends SequentialCommandGroup {
    * then close the flippers.
    * 
    * @param indexer
-   * @param shooter
    */
-  public IndexOne(Indexer indexer, Shooter shooter) {
+  public IndexOne(Indexer indexer) {
     super(new OpenIndexer(indexer), new MotorConstant("RunIndexer", indexer.liftBelts, Indexer.DEFAULT_LIFT_SPEED),
         new WaitUntilCommand(() -> {
-          return shooter.limitSwitch.get();
+          return indexer.limitSwitch.get();
         }), new CloseIndexer(indexer));
     setName("IndexOne");
   }
