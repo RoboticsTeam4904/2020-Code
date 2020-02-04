@@ -20,27 +20,27 @@ import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
 public class RobotMap {
     public static class Port {
         public static class HumanInput {
-            public static final int joystick = 0;
-            public static final int xboxController = 1;
+            public static final int JOYSTICK = 0;
+            public static final int XBOX_CONTROLLER = 1;
         }
 
         public static class CANMotor {
-            public static final int leftDriveA = -1;
-            public static final int leftDriveB = -1;
-            public static final int rightDriveA = -1;
-            public static final int rightDriveB = -1;
+            public static final int LEFT_DRIVE_A = -1;
+            public static final int LEFT_DRIVE_B = -1;
+            public static final int RIGHT_DRIVE_A = -1;
+            public static final int RIGHT_DRIVE_B = -1;
         }
 
         public static class PWM {
         }
 
         public static class CAN {
-            public static final int leftWheelEncoder = -1;
-            public static final int rightWheelEncoder = -1;
+            public static final int LEFT_WHEEL_ENCODER = -1;
+            public static final int RIGHT_WHEEL_ENCODER = -1;
         }
 
         public static class Pneumatics {
-            public static final PCMPort shifter = new PCMPort(-1, -1, -1);
+            public static final PCMPort SHIFTER = new PCMPort(-1, -1, -1);
         }
 
         public static class Digital {
@@ -67,8 +67,8 @@ public class RobotMap {
             public static final double I = -1;
             public static final double D = -1;
             public static final double F = -1;
-            public static final double tolerance = -1;
-            public static final double dTolerance = -1;
+            public static final double TOLERANCE = -1;
+            public static final double D_TOLERANCE = -1;
         }
 
         public static class Turn {
@@ -76,8 +76,8 @@ public class RobotMap {
             public static final double I = -1;
             public static final double D = -1;
             public static final double F = -1;
-            public static final double tolerance = -1;
-            public static final double dTolerance = -1;
+            public static final double TOLERANCE = -1;
+            public static final double D_TOLERANCE = -1;
         }
     }
 
@@ -114,8 +114,8 @@ public class RobotMap {
     public RobotMap() {
         Component.pdp = new PDP();
 
-        Component.leftWheelEncoder = new CANCoder(Port.CAN.leftWheelEncoder);
-        Component.rightWheelEncoder = new CANCoder(Port.CAN.rightWheelEncoder);
+        Component.leftWheelEncoder = new CANCoder(Port.CAN.LEFT_WHEEL_ENCODER);
+        Component.rightWheelEncoder = new CANCoder(Port.CAN.RIGHT_WHEEL_ENCODER);
         Component.canCoderConfiguration = new CANCoderConfiguration();
         Component.leftWheelEncoder.configAllSettings(Component.canCoderConfiguration);
         Component.rightWheelEncoder.configAllSettings(Component.canCoderConfiguration);
@@ -130,20 +130,20 @@ public class RobotMap {
         Component.rightWheelAccelerationCap.enable();
 
         Component.leftDriveA = new Motor("leftDriveA", false, Component.leftWheelAccelerationCap,
-                new CANTalonFX(Port.CANMotor.leftDriveA));
+                new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A));
         Component.leftDriveB = new Motor("rightDriveA", false, Component.rightWheelAccelerationCap,
-                new CANTalonFX(Port.CANMotor.rightDriveA));
+                new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A));
         Component.rightDriveA = new Motor("leftDriveB", false, Component.leftWheelAccelerationCap,
-                new CANTalonFX(Port.CANMotor.leftDriveB));
+                new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
         Component.rightDriveB = new Motor("rightDriveB", false, Component.rightWheelAccelerationCap,
-                new CANTalonFX(Port.CANMotor.rightDriveB));
+                new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
 
-        Component.shifter = new SolenoidShifters(Port.Pneumatics.shifter.buildDoubleSolenoid());
+        Component.shifter = new SolenoidShifters(Port.Pneumatics.SHIFTER.buildDoubleSolenoid());
 
         Component.chassis = new TankDriveShifting(0d, RobotMap.Component.leftDriveA, RobotMap.Component.leftDriveB,
                 RobotMap.Component.rightDriveA, RobotMap.Component.rightDriveB, Component.shifter);
 
-        HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
-        HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
+        HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
+        HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
     }
 }
