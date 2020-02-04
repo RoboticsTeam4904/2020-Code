@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
-import org.usfirst.frc4904.robot.subsystems.Shooter;
 import org.usfirst.frc4904.robot.commands.OpenIndexer;
 import org.usfirst.frc4904.robot.commands.CloseIndexer;
 
