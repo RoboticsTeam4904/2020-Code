@@ -14,6 +14,7 @@ import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.MotionController;
+import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomDigitalLimitSwitch;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
@@ -123,7 +124,7 @@ public class RobotMap {
     public static Motor flywheelMotorA;
     public static Motor flywheelMotorB;
 
-    public static CANCoder flywheelEncoder;
+    public static CustomCANCoder flywheelEncoder;
     public static CANCoderConfiguration flywheelEncoderConfiguration;
   }
 
@@ -160,10 +161,10 @@ public class RobotMap {
     Component.intake = new Intake(Component.intakeRollerMotor, Component.funnelMotor, Component.intakeSolenoid);
     Component.indexer = new Indexer(Component.liftBeltMotor, Component.flipperSolenoid, Input.limitSwitch);
 
-    Component.flywheelEncoder = new CANCoder(Port.CAN.FLYWHEEL_ENCODER);
+    Component.flywheelEncoder = new CustomCANCoder(Port.CAN.FLYWHEEL_ENCODER, Metrics.Chassis.METERS_PER_TICK);
     Component.flywheelEncoderConfiguration = new CANCoderConfiguration();
     Component.flywheelEncoder.configAllSettings(Component.flywheelEncoderConfiguration);
-    Component.flywheel = new Flywheel(new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, Component.flywheelEncoder); // TODO: BAAAAAAD CODE
+    Component.flywheel = new Flywheel(new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, Component.flywheelEncoder)); // TODO: BAAAAAAD CODE
     Component.shooter = new Shooter(Component.flywheel, Component.shooterAimSolenoid, Component.runUpBeltMotor);
   }
 }
