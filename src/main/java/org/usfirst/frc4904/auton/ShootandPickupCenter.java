@@ -35,6 +35,5 @@ class ShootandPickupCenter extends SequentialCommandGroup {
                 goingToPowerCells.relativeTo(Poses.currentPos);
                 SimpleSplines collectSpline = new SimpleSplines(RobotMap.Component.sensorDrive, collect);
                 this.andThen(collectSpline);
-
         }
 }
