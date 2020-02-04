@@ -18,7 +18,6 @@ public class Shooter {
   public final Flywheel flywheel;
   public final SolenoidSubsystem aimSolenoid;
   public final Motor runUpBelt;
-  public final CustomDigitalLimitSwitch limitSwitch;
 
   /**
    * Shooter
@@ -29,12 +28,10 @@ public class Shooter {
    * @param flywheel          The actual flywheel for this subsystem
    * @param solenoidSubsystem The SolenoidSubsystem for aiming the shooter
    */
-  public Shooter(Flywheel flywheel, SolenoidSubsystem solenoidSubsystem, Motor motor,
-      CustomDigitalLimitSwitch limitSwitch) {
+  public Shooter(Flywheel flywheel, SolenoidSubsystem solenoidSubsystem, Motor motor) {
     this.flywheel = flywheel;
     this.aimSolenoid = solenoidSubsystem;
     this.runUpBelt = motor;
-    this.limitSwitch = limitSwitch;
   }
 
   public Set<SubsystemBase> getSubsystems() {
