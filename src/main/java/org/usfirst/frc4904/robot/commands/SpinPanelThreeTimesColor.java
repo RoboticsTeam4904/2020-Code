@@ -1,8 +1,6 @@
 package org.usfirst.frc4904.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
-import org.usfirst.frc4904.standard.commands.WaitUntil;
+import org.usfirst.frc4904.standard.commands.RunUntil;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.robot.RobotMap.NetworkTables;
@@ -48,7 +46,8 @@ public class SpinPanelThreeTimesColor extends ColorSensor {
         this.motor = motor;
         addRequirements(this.motor);
         setName("SpinPanelThreeTimesColor");
-
+        Supplier<Boolean> isDone = () -> {return checkColorOrder();};
+        addCommands(new RunUntil(new StartPanelMotor(this.motor), isDone), new StopPanelMotor());
     }
     @Override
     public void initialize() {

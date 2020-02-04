@@ -36,7 +36,7 @@ public class ColorSensor extends SequentialCommandGroup {
     public ColorSensor() {
     }
 
-    public void checkColorOrder() {
+    public Boolean checkColorOrder() {
         Color tempColor = getColor();
         if (currentColor != tempColor) {
             Color oldColor = currentColor;
@@ -45,25 +45,28 @@ public class ColorSensor extends SequentialCommandGroup {
             if (getIndex(currentColor) == 3) {
                 if (currentColor == colorOrder[0]) {
                     if (colorsPassed == 23) {
-                        StopPanelMotor stopPanelMotor = new StopPanelMotor();
-                        stopPanelMotor.schedule();
+                        return true;
                     }
                 } else {
                     LogKitten.wtf("A color somehow was skipped.");
+                    return true;
                     // calculate how many were skipped
                 }
+                return false;
             } else {
                 if (currentColor == colorOrder[getIndex(oldColor) + 1]) {
                     if (colorsPassed == 23) {
-                        StopPanelMotor stopPanelMotor = new StopPanelMotor();
-                        stopPanelMotor.schedule();
+                        return true;
                     }
                 } else {
                     LogKitten.wtf("A color somehow was skipped.");
+                    return true;
                     // calculate how many were skipped
                 }
+                return false;
             }
         }
+        return false;
     }
 
     /**
