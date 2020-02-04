@@ -1,4 +1,4 @@
-package org.usfirst.frc4904.robot.commands;
+package org.usfirst.frc4904.robot.commands.controlpanel;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -9,8 +9,8 @@ import java.util.function.Supplier;
 
 import com.ctre.phoenix.sensors.CANCoder;
 
-import org.usfirst.frc4904.robot.commands.StartPanelMotor;
-import org.usfirst.frc4904.robot.commands.StopPanelMotor;
+import org.usfirst.frc4904.robot.commands.controlpanel.StartPanelMotor;
+import org.usfirst.frc4904.robot.commands.controlpanel.StopPanelMotor;
 
 public class SpinPanelThreeTimes extends SequentialCommandGroup {
     private final double SPEED = -1d;

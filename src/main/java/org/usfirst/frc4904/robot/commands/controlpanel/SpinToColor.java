@@ -1,12 +1,12 @@
-package org.usfirst.frc4904.robot.commands;
+package org.usfirst.frc4904.robot.commands.controlpanel;
 
 import org.usfirst.frc4904.standard.commands.RunUntil;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 import java.util.function.Supplier;
 
-import org.usfirst.frc4904.robot.commands.StartPanelMotor;
-import org.usfirst.frc4904.robot.commands.StopPanelMotor;
+import org.usfirst.frc4904.robot.commands.controlpanel.StartPanelMotor;
+import org.usfirst.frc4904.robot.commands.controlpanel.StopPanelMotor;
 
 public class SpinToColor extends ColorSensor {
     private final Motor motor;
