@@ -22,10 +22,10 @@ public class Indexer {
   public final CustomDigitalLimitSwitch limitSwitch;
 
   /**
-   * Indexer - Wraps the indexer flippers and the run up belt.
+   * Indexer - Wraps the indexer flippers and the lift belts.
    * 
    * @param flippers The SolenoidSubsystem controlling the flippers
-   * @param liftBelt The motor controlling the run up belt
+   * @param liftBelt The motor controlling the lift belts
    */
   public Indexer(Motor liftBelts, SolenoidSubsystem flippers, CustomDigitalLimitSwitch limitSwitch) {
     this.liftBelts = liftBelts;
