@@ -29,7 +29,7 @@ public class StopPanelMotor extends CommandBase {
     }
 
     /**
-     * @param name
+     * @param name The name of the Command
      */
     public StopPanelMotor(String name) {
         this(name, RobotMap.Component.controlPanel);
