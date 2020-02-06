@@ -116,15 +116,12 @@ import org.usfirst.frc4904.standard.LogKitten;
 ``````¶¶¶¶¶¶¶¶¶00000000000000000000000000000¶01``_0_11`
 ``````¶¶¶¶0¶¶¶¶00000000000000000000000000000001```_1_11
  */
-public class ColorSensor extends SequentialCommandGroup {
+public abstract class ColorSensor extends SequentialCommandGroup {
     public final Color[] colorOrder = new Color[] { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN };
 
     public Color currentColor = null;
     private int colorsPassed = 0;
     public boolean doneSpinning = false;
-
-    public ColorSensor() {
-    }
 
     public void trackColorChange() {
         if (currentColor == null) {
