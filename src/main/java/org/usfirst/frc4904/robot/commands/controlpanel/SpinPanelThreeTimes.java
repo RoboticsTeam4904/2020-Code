@@ -2,7 +2,7 @@ package org.usfirst.frc4904.robot.commands.controlpanel;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import org.usfirst.frc4904.standard.commands.WaitUntil;
+import org.usfirst.frc4904.standard.commands.RunUntil;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 import java.util.function.Supplier;
@@ -13,12 +13,12 @@ import org.usfirst.frc4904.robot.commands.controlpanel.StartPanelMotor;
 import org.usfirst.frc4904.robot.commands.controlpanel.StopPanelMotor;
 
 public class SpinPanelThreeTimes extends SequentialCommandGroup {
-    private final double SPEED = -1d;
-    private final double CONTROL_PANEL_DIAMETER = -1d;
-    private final double PANEL_SPINNER_DIAMETER = -1d;
+    private final double SPEED = -1.0;
+    private final double CONTROL_PANEL_DIAMETER = -1.0;
+    private final double PANEL_SPINNER_DIAMETER = -1.0;
     private final double PANEL_SPINNER_RATIO = CONTROL_PANEL_DIAMETER / PANEL_SPINNER_DIAMETER;
-    private final double DEGREES_IN_A_CIRCLE = 360d;
-    private final double TOTAL_REVOLUTIONS = 3d;
+    private final double DEGREES_IN_A_CIRCLE = 360.0;
+    private final double TOTAL_REVOLUTIONS = 3.0;
 
     private final Motor motor;
     private final CANCoder encoder;
@@ -50,7 +50,7 @@ public class SpinPanelThreeTimes extends SequentialCommandGroup {
             return totalDistance >= (TOTAL_REVOLUTIONS * DEGREES_IN_A_CIRCLE) / PANEL_SPINNER_RATIO;
         };
 
-        addCommands(new StartPanelMotor(this.motor), new WaitUntil(isDone), new StopPanelMotor(this.motor));
+        addCommands(new RunUntil(new StartPanelMotor(this.motor), isDone), new StopPanelMotor(this.motor));
 
     }
 

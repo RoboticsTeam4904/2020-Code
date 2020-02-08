@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 import org.usfirst.frc4904.standard.commands.RunUntil;
 import org.usfirst.frc4904.robot.RobotMap;
 
-public class SpinPanelThreeTimesColor extends ColorSensor {
+public class SpinPanelThreeTimesColor extends ColorChecker {
 
     private final Motor motor;
 

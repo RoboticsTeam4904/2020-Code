@@ -8,7 +8,7 @@ import org.usfirst.frc4904.robot.RobotMap;
  * A command that will start the control panel motor.
  */
 public class StartPanelMotor extends MotorConstant {
-	protected static final double SPEED = -1d; // TODO: Find motor speed value
+	protected static final double SPEED = 0; // TODO: Find motor speed value
 	protected Motor motor;
 
 	/**

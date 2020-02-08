@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 import org.usfirst.frc4904.robot.commands.controlpanel.StartPanelMotor;
 import org.usfirst.frc4904.robot.commands.controlpanel.StopPanelMotor;
 
-public class SpinToColor extends ColorSensor {
+public class SpinToColor extends ColorChecker {
     private final Motor motor;
     private final Color color;
 
@@ -16,7 +16,7 @@ public class SpinToColor extends ColorSensor {
      * @param motor The motor to spin the control panel.
      * @param color A string representation of the color that needs to be spinned to
      */
-    public SpinToColor(Motor motor, ColorSensor.Color color) {
+    public SpinToColor(Motor motor, ColorChecker.Color color) {
         super();
         this.motor = motor;
         this.color = color;
