@@ -17,8 +17,9 @@ public class VisionDistanceAlign extends SequentialCommandGroup {
     public VisionDistanceAlign() {
         double currentAngle = RobotMap.Component.navx.getYaw();
         double beta = RobotMap.NetworkTables.Vision.beta.getDouble(DEFAULT_ANGLE);
-        double xPose = Math.cos(beta) * RobotMap.NetworkTables.Vision.distanceToTarget.getDouble(DEFAULT_DISTANCE);
-        double yPose = Math.sin(beta) * RobotMap.NetworkTables.Vision.distanceToTarget.getDouble(DEFAULT_DISTANCE);
+        double distance = RobotMap.NetworkTables.Vision.distanceToTarget.getDouble(DEFAULT_DISTANCE);
+        double xPose = Math.cos(beta) * distance;
+        double yPose = Math.sin(beta) * distance;
 
         Trajectory traj = RobotMap.Component.splinesChassis
                 .generateQuinticTrajectory(List.of(new Pose2d(0, 0, Rotation2d.fromDegrees(currentAngle)),
