@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
+/**
+ * Given distance, beta, theta from target, drive right to the target
+ */
 public class VisionDistanceAlign extends SequentialCommandGroup {
     protected static final double DEFAULT_ANGLE = 0.0;
     protected static final double DEFAULT_DISTANCE = 0.0;
