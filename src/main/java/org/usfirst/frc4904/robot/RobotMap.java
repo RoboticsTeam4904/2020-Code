@@ -196,12 +196,19 @@ public class RobotMap {
         Component.turnPID = new CustomPIDController(PID.Turn.P, PID.Turn.I, PID.Turn.D, PID.Turn.F, (PIDSensor) Component.navx);
         Component.shifter = new SolenoidShifters(Port.Pneumatics.SHIFTER.buildDoubleSolenoid());
 
-        Component.chassis = new TankDriveShifting(0d, RobotMap.Component.leftDriveA, RobotMap.Component.leftDriveB,
+        Component.chassis = new TankDriveShifting(0.0, RobotMap.Component.leftDriveA, RobotMap.Component.leftDriveB,
                 RobotMap.Component.rightDriveA, RobotMap.Component.rightDriveB, Component.shifter);
 
         Component.splinesChassis = new SensorDrive(Component.chassis, AutoConstants.autoConstants, DriveConstants.driveConstants, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
 
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
+        NetworkTables.inst = NetworkTableInstance.getDefault();
+        NetworkTables.table = NetworkTables.inst.getTable("vision");
+        NetworkTables.Vision.distanceToTarget = NetworkTables.Vision.table.getEntry("distanceToTarget");
+        NetworkTables.Vision.beta = NetworkTables.Vision.table.getEntry("beta");
+        NetworkTables.Vision.theta = NetworkTables.Vision.table.getEntry("theta");
+
+
     }
 }
