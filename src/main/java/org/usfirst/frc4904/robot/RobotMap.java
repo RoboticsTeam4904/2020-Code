@@ -1,9 +1,5 @@
 package org.usfirst.frc4904.robot;
 
-import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.CANCoderConfiguration;
-import com.ctre.phoenix.sensors.SensorTimeBase;
-
 import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
@@ -28,8 +24,14 @@ import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.CANCoderConfiguration;
+import com.ctre.phoenix.sensors.SensorTimeBase;
+
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.SplineAutoConstants;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.SplineDriveConstants;
+
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 public class RobotMap {
     public static class Port {
@@ -63,10 +65,10 @@ public class RobotMap {
 
     public static class Metrics {
         public static class Chassis {
-            public static final double TICKS_PER_REVOLUTION = -1;
+            public static final double TICKS_PER_REVOLUTION = -1; // TODO: CHANGE CONSTS
             public static final double DIAMETER_METERS = -1;
             public static final double CIRCUMFERENCE_METERS = Metrics.Chassis.DIAMETER_METERS * Math.PI;
-            public static final double TICKS_PER_METER = Metrics.Chassis.TICKS_PER_REVOLUTION
+            public static final double METERS = Metrics.Chassis.TICKS_PER_REVOLUTION
                     / Metrics.Chassis.CIRCUMFERENCE_METERS;
             public static final double DISTANCE_FRONT_BACK = -1;
             public static final double DISTANCE_SIDE_SIDE = -1;
@@ -93,6 +95,7 @@ public class RobotMap {
             public static final double TOLERANCE = -1;
             public static final double D_TOLERANCE = -1;
         }
+
     }
 
     public static class DriveConstants {
