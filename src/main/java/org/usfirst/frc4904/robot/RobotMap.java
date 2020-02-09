@@ -17,7 +17,6 @@ public class RobotMap {
         }
 
         public static class CANMotor {
-            public static final int controlPanel = -1;
         }
 
         public static class PWM {
@@ -35,14 +34,14 @@ public class RobotMap {
 
     public static class Metrics {
         public static class Chassis {
-            public static final double TICKS_PER_REVOLUTION = -1;
-            public static final double DIAMETER_METERS = -1;
-            public static final double CIRCUMFERENCE_METERS = Metrics.Chassis.DIAMETER_METERS * Math.PI;
-            public static final double TICKS_PER_METER = Metrics.Chassis.TICKS_PER_REVOLUTION
-                    / Metrics.Chassis.CIRCUMFERENCE_METERS;
+            public static final double TICKS_PER_REVOLUTION = -1; // TODO: CHANGE CONSTS
+            public static final double DIAMETER_INCHES = -1;
+            public static final double CIRCUMFERENCE_INCHES = Metrics.Chassis.DIAMETER_INCHES * Math.PI;
+            public static final double TICKS_PER_INCH = Metrics.Chassis.TICKS_PER_REVOLUTION
+                    / Metrics.Chassis.CIRCUMFERENCE_INCHES;
             public static final double DISTANCE_FRONT_BACK = -1;
             public static final double DISTANCE_SIDE_SIDE = -1;
-            public static final double METERS_PER_TICK = Metrics.Chassis.CIRCUMFERENCE_METERS
+            public static final double INCHES_PER_TICK = Metrics.Chassis.CIRCUMFERENCE_INCHES
                     / Metrics.Chassis.TICKS_PER_REVOLUTION;
         }
     }
@@ -53,6 +52,7 @@ public class RobotMap {
 
         public static class Turn {
         }
+
     }
 
     public static class Component {
@@ -83,6 +83,9 @@ public class RobotMap {
     }
 
     public RobotMap() {
+        HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
+        HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
+
         // TODO: add a speed modifier?
         Component.controlPanel = new Motor("controlPanel", false, new CANTalonFX(Port.CANMotor.controlPanel));
 
