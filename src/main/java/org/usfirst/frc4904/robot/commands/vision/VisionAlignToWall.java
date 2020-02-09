@@ -22,7 +22,6 @@ public class VisionAlignToWall extends SequentialCommandGroup {
         double deltaAngle = beta - 90;
         double xPose = RobotMap.NetworkTables.Vision.xDistanceToTarget.getDouble(DEFAULT_DISTANCE);
         double yPose = RobotMap.NetworkTables.Vision.yDistanceToTarget.getDouble(DEFAULT_DISTANCE);
-        
 
         Trajectory traj = RobotMap.Component.splinesChassis
                 .generateQuinticTrajectory(List.of(new Pose2d(0, 0, Rotation2d.fromDegrees(0)),

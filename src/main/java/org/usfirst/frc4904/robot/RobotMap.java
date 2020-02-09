@@ -132,8 +132,7 @@ public class RobotMap {
         public static Motor leftDriveB;
         public static Motor rightDriveA;
         public static Motor rightDriveB;
-        // public static TankDriveShifting chassis;
-        public static TankDrive chassis;
+        public static TankDriveShifting chassis;
         public static SolenoidShifters shifter;
         public static EnableableModifier leftWheelAccelerationCap;
         public static EnableableModifier rightWheelAccelerationCap;
