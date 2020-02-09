@@ -1,24 +1,20 @@
 package org.usfirst.frc4904.robot.commands.controlpanel;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.usfirst.frc4904.standard.commands.motor.MotorIdle;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import org.usfirst.frc4904.robot.RobotMap;
 
 /**
  * A command that will stop the control panel motor.
  */
-public class StopPanelMotor extends CommandBase {
-    private Motor motor;
+public class StopPanelMotor extends MotorIdle {
 
     /**
      * @param name
      * @param motor The motor that spins the control panel.
      */
     public StopPanelMotor(String name, Motor motor) {
-        super();
-        setName(name);
-        addRequirements(motor);
-        this.motor = motor;
+        super(name, motor);
     }
 
     /**
@@ -29,7 +25,7 @@ public class StopPanelMotor extends CommandBase {
     }
 
     /**
-     * @param name The name of the Command
+     * @param name The name of the command
      */
     public StopPanelMotor(String name) {
         this(name, RobotMap.Component.controlPanel);
@@ -37,10 +33,5 @@ public class StopPanelMotor extends CommandBase {
 
     public StopPanelMotor() {
         this("StopPanelMotor");
-    }
-
-    @Override
-    public void initialize() {
-        this.motor.stopMotor();
     }
 }
