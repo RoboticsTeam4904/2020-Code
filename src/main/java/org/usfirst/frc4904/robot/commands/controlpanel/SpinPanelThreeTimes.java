@@ -40,7 +40,7 @@ public class SpinPanelThreeTimes extends SequentialCommandGroup {
 
         Supplier<Boolean> isDone = () -> {
             double tempRelativeDistance = encoder.getPosition();
-            if (tempRelativeDistance < this.relativeDistance) {
+            if (tempRelativeDistance > this.relativeDistance) {
                 this.revolutions += 1;
             }
             this.relativeDistance = tempRelativeDistance;
