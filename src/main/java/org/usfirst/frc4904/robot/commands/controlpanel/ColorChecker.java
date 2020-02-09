@@ -1,7 +1,5 @@
-
 package org.usfirst.frc4904.robot.commands.controlpanel;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.usfirst.frc4904.robot.RobotMap.NetworkTables;
 import org.usfirst.frc4904.standard.LogKitten;
 
@@ -9,7 +7,7 @@ import org.usfirst.frc4904.standard.LogKitten;
  * This class contains everything pertaining to using the camera for the control
  * panel.
  */
-public abstract class ColorChecker extends SequentialCommandGroup {
+public class ColorChecker {
     public final Color[] colorOrder = new Color[] { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN };
 
     public Color currentColor = null;
@@ -24,10 +22,10 @@ public abstract class ColorChecker extends SequentialCommandGroup {
         RED, YELLOW, BLUE, GREEN;
     }
 
-    public void trackColorChange() {
+    public boolean trackColorChange() {
         if (currentColor == null) {
             currentColor = getColor();
-            return;
+            return false;
         }
         Color tempColor = getColor();
         if (currentColor != tempColor) {
@@ -57,6 +55,7 @@ public abstract class ColorChecker extends SequentialCommandGroup {
                 }
             }
         }
+        return doneSpinning;
     }
 
     /**

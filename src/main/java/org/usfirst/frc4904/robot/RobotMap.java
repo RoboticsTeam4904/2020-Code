@@ -17,6 +17,7 @@ public class RobotMap {
         }
 
         public static class CANMotor {
+            public static final int controlPanel = -1; // TODO: determine
         }
 
         public static class PWM {
