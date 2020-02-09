@@ -1,4 +1,4 @@
-package org.usfirst.frc4904.robot.commands;
+package org.usfirst.frc4904.robot.commands.vision;
 
 import java.util.List;
 
@@ -13,17 +13,16 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 /**
  * Given distance, beta, theta from target, drive right to the target
  */
-public class VisionDistanceAlign extends SequentialCommandGroup {
+public class VisionAlignToWall extends SequentialCommandGroup {
     protected static final double DEFAULT_ANGLE = 0.0;
     protected static final double DEFAULT_DISTANCE = 0.0;
 
-    public VisionDistanceAlign() {
+    public VisionAlignToWall() {
         double beta = RobotMap.NetworkTables.Vision.beta.getDouble(DEFAULT_ANGLE);
-        double theta = RobotMap.NetworkTables.Vision.theta.getDouble(DEFAULT_ANGLE);
-        double distance = RobotMap.NetworkTables.Vision.distanceToTarget.getDouble(DEFAULT_DISTANCE);
-        double xPose = distance * Math.abs(Math.sin(Math.toRadians(Math.abs(theta) + Math.abs(beta - 90)))) * Math.signum(theta);
-        double yPose = distance * Math.abs(Math.cos(Math.toRadians(Math.abs(theta) + Math.abs(beta - 90))));
         double deltaAngle = beta - 90;
+        double xPose = RobotMap.NetworkTables.Vision.xDistanceToTarget.getDouble(DEFAULT_DISTANCE);
+        double yPose = RobotMap.NetworkTables.Vision.yDistanceToTarget.getDouble(DEFAULT_DISTANCE);
+        
 
         Trajectory traj = RobotMap.Component.splinesChassis
                 .generateQuinticTrajectory(List.of(new Pose2d(0, 0, Rotation2d.fromDegrees(0)),

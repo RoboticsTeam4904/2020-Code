@@ -23,6 +23,7 @@ import org.usfirst.frc4904.standard.custom.sensors.PIDSensor;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.util.Units;
 
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
@@ -66,14 +67,13 @@ public class RobotMap {
     public static class Metrics {
         public static class Chassis {
             public static final double TICKS_PER_REVOLUTION = -1; // TODO: CHANGE CONSTS
-            public static final double DIAMETER_METERS = -1;
+            public static final double DIAMETER_METERS = Units.inchesToMeters(5);
             public static final double CIRCUMFERENCE_METERS = Metrics.Chassis.DIAMETER_METERS * Math.PI;
-            public static final double METERS = Metrics.Chassis.TICKS_PER_REVOLUTION
+            public static final double TICKS_PER_METER = Metrics.Chassis.TICKS_PER_REVOLUTION
                     / Metrics.Chassis.CIRCUMFERENCE_METERS;
             public static final double DISTANCE_FRONT_BACK = -1;
-            public static final double DISTANCE_SIDE_SIDE = -1;
-            public static final double METERS_PER_TICK = Metrics.Chassis.CIRCUMFERENCE_METERS
-                    / Metrics.Chassis.TICKS_PER_REVOLUTION;
+            public static final double DISTANCE_TRACK_WIDTH = -1;
+            public static final double METERS_PER_TICK = 1 / TICKS_PER_METER;
         }
     }
 
@@ -98,7 +98,7 @@ public class RobotMap {
 
     }
 
-    public static class DriveConstants {
+    public static class DriveConstants {// TODO: Change Constants
         // Field Carpet
         // public static final double ksVolts = 0.0018;
         // public static final double kvVoltSecondsPerMeter = 4.9;
@@ -106,21 +106,24 @@ public class RobotMap {
         // public static final double kTrackwidthMeters = .61; //0.5842
         // public static final double kPDriveVel = 6.27;
         // School Carpet
-        public static final double ksVolts = 0.000665;
-        public static final double kvVoltSecondsPerMeter = 4.9;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.0718;
-        public static final double kTrackwidthMeters = 0.60; // 0.5842 // 0.6063751884752512
-        public static final double kPDriveVel = 1.62;
-        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
-        public static final SplineDriveConstants driveConstants = new SplineDriveConstants(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, kTrackwidthMeters, kPDriveVel);
+        public static final double VOLTS = -1;
+        public static final double VOLT_SECONDS_PER_METER = -1;
+        public static final double VOLT_SECONDS_SQUARED_PER_METER = -1;
+        public static final double TRACK_WIDTH_METERS = -1; // 0.5842 // 0.6063751884752512
+        public static final double DRIVE_VEL = -1;
+        public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(
+                TRACK_WIDTH_METERS);
+        public static final SplineDriveConstants DRIVE_CONSTANTS = new SplineDriveConstants(VOLTS,
+                VOLT_SECONDS_PER_METER, VOLT_SECONDS_SQUARED_PER_METER, TRACK_WIDTH_METERS, DRIVE_VEL);
     }
 
-    public static class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 2.3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 2;
-        public static final double kRamseteB = 2;
-        public static final double kRamseteZeta = 0.7;
-        public static final SplineAutoConstants autoConstants = new SplineAutoConstants(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared, kRamseteB, kRamseteZeta);
+    public static class AutoConstants {// TODO: Change Constants
+        public static final double MAX_SPEED_METERS_PER_SECOND = -1;
+        public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = -1;
+        public static final double RAMSETE_B = -1;
+        public static final double RAMSETE_ZETA = -1;
+        public static final SplineAutoConstants AUTO_CONSTANTS = new SplineAutoConstants(MAX_SPEED_METERS_PER_SECOND,
+                MAX_ACCELERATION_METERS_PER_SECOND_SQUARED, RAMSETE_B, RAMSETE_ZETA);
     }
 
     public static class Component {
@@ -152,7 +155,8 @@ public class RobotMap {
 
         public static class Vision {
             public static NetworkTable table;
-            public static NetworkTableEntry distanceToTarget;
+            public static NetworkTableEntry xDistanceToTarget;
+            public static NetworkTableEntry yDistanceToTarget;
             public static NetworkTableEntry beta;
             public static NetworkTableEntry theta;
 
@@ -196,22 +200,25 @@ public class RobotMap {
         Component.rightDriveB = new Motor("rightDriveB", false, Component.rightWheelAccelerationCap,
                 new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
 
-        Component.turnPID = new CustomPIDController(PID.Turn.P, PID.Turn.I, PID.Turn.D, PID.Turn.F, (PIDSensor) Component.navx);
+        Component.turnPID = new CustomPIDController(PID.Turn.P, PID.Turn.I, PID.Turn.D, PID.Turn.F,
+                (PIDSensor) Component.navx);
         Component.shifter = new SolenoidShifters(Port.Pneumatics.SHIFTER.buildDoubleSolenoid());
 
         Component.chassis = new TankDriveShifting(0.0, RobotMap.Component.leftDriveA, RobotMap.Component.leftDriveB,
                 RobotMap.Component.rightDriveA, RobotMap.Component.rightDriveB, Component.shifter);
 
-        Component.splinesChassis = new SensorDrive(Component.chassis, AutoConstants.autoConstants, DriveConstants.driveConstants, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
+        Component.splinesChassis = new SensorDrive(Component.chassis, AutoConstants.AUTO_CONSTANTS,
+                DriveConstants.DRIVE_CONSTANTS, Component.leftWheelEncoder, Component.rightWheelEncoder,
+                Component.navx);
 
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
         NetworkTables.inst = NetworkTableInstance.getDefault();
-        NetworkTables.table = NetworkTables.inst.getTable("vision");
-        NetworkTables.Vision.distanceToTarget = NetworkTables.Vision.table.getEntry("distanceToTarget");
-        NetworkTables.Vision.beta = NetworkTables.Vision.table.getEntry("beta");
+        NetworkTables.Vision.table = NetworkTables.inst.getTable("vision");
+        NetworkTables.Vision.xDistanceToTarget = NetworkTables.Vision.table.getEntry("xDistanceToTarget");
+        NetworkTables.Vision.yDistanceToTarget = NetworkTables.Vision.table.getEntry("yDistanceToTarget");
         NetworkTables.Vision.theta = NetworkTables.Vision.table.getEntry("theta");
-
+        NetworkTables.Vision.beta = NetworkTables.Vision.table.getEntry("beta");
 
     }
 }
