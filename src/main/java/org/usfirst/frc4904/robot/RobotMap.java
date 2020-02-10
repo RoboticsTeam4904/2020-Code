@@ -13,6 +13,7 @@ import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.Acceleration
 import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.EnableableModifier;
 import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
+import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
 import org.usfirst.frc4904.standard.custom.sensors.NavX;
 import org.usfirst.frc4904.standard.custom.sensors.PDP;
@@ -26,17 +27,10 @@ public class RobotMap {
         }
 
         public static class CANMotor {
-<<<<<<< HEAD
-            public static final int LEFT_DRIVE_A = -1;
-            public static final int LEFT_DRIVE_B = -1;
-            public static final int RIGHT_DRIVE_A = -1;
-            public static final int RIGHT_DRIVE_B = -1;
-=======
-            public static final int leftDriveA = 0;
-            public static final int leftDriveB = 3;
-            public static final int rightDriveA = 1;
-            public static final int rightDriveB = 2;
->>>>>>> 718d8952ed2d7d1fcc29a030cf8a01385f912f65
+            public static final int LEFT_DRIVE_A = 0;
+            public static final int LEFT_DRIVE_B = 3;
+            public static final int RIGHT_DRIVE_A = 1;
+            public static final int RIGHT_DRIVE_B = 2;
         }
 
         public static class PWM {
@@ -66,6 +60,7 @@ public class RobotMap {
             public static final double DISTANCE_SIDE_SIDE = -1;
             public static final double METERS_PER_TICK = Metrics.Chassis.CIRCUMFERENCE_METERS
                     / Metrics.Chassis.TICKS_PER_REVOLUTION;
+            public static final double TURN_CORRECTION = 0.0;
         }
     }
 
@@ -100,8 +95,8 @@ public class RobotMap {
         public static SolenoidShifters shifter;
         public static EnableableModifier leftWheelAccelerationCap;
         public static EnableableModifier rightWheelAccelerationCap;
-        public static CANCoder leftWheelEncoder;
-        public static CANCoder rightWheelEncoder;
+        public static CustomCANCoder leftWheelEncoder;
+        public static CustomCANCoder rightWheelEncoder;
         public static EncoderPair chassisEncoders;
         public static CANCoderConfiguration canCoderConfiguration;
         public static NavX navx;
@@ -123,82 +118,25 @@ public class RobotMap {
     public RobotMap() {
         Component.pdp = new PDP();
 
-<<<<<<< HEAD
-        Component.leftWheelEncoder = new CANCoder(Port.CAN.LEFT_WHEEL_ENCODER);
-        Component.rightWheelEncoder = new CANCoder(Port.CAN.RIGHT_WHEEL_ENCODER);
-        Component.canCoderConfiguration = new CANCoderConfiguration();
-        Component.leftWheelEncoder.configAllSettings(Component.canCoderConfiguration);
-        Component.rightWheelEncoder.configAllSettings(Component.canCoderConfiguration);
-        Component.leftWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters",
-                SensorTimeBase.PerSecond);
-        Component.rightWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters",
-                SensorTimeBase.PerSecond);
+        Component.leftWheelEncoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,
+                RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
+                RobotMap.Metrics.Chassis.METERS_PER_TICK);
 
         Component.leftWheelAccelerationCap = new EnableableModifier(new AccelerationCap(Component.pdp));
         Component.leftWheelAccelerationCap.enable();
         Component.rightWheelAccelerationCap = new EnableableModifier(new AccelerationCap(Component.pdp));
         Component.rightWheelAccelerationCap.enable();
 
-        Component.leftDriveA = new Motor("leftDriveA", false, Component.leftWheelAccelerationCap,
-                new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A));
-        Component.leftDriveB = new Motor("rightDriveA", false, Component.rightWheelAccelerationCap,
-                new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A));
-        Component.rightDriveA = new Motor("leftDriveB", false, Component.leftWheelAccelerationCap,
-                new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
-        Component.rightDriveB = new Motor("rightDriveB", false, Component.rightWheelAccelerationCap,
-                new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
+        Component.leftDriveA = new Motor("leftDriveA", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A));
+        Component.leftDriveB = new Motor("leftDriveB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
+        Component.rightDriveA = new Motor("rightDriveA", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A));
+        Component.rightDriveB = new Motor("rightDriveB", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
 
         Component.shifter = new SolenoidShifters(Port.Pneumatics.SHIFTER.buildDoubleSolenoid());
 
-        Component.chassis = new TankDriveShifting(0d, RobotMap.Component.leftDriveA, RobotMap.Component.leftDriveB,
-                RobotMap.Component.rightDriveA, RobotMap.Component.rightDriveB, Component.shifter);
-=======
-        // Component.leftWheelEncoder = new CANCoder(Port.CAN.leftWheelEncoder);
-        // Component.rightWheelEncoder = new CANCoder(Port.CAN.rightWheelEncoder);
-        // Component.canCoderConfiguration = new CANCoderConfiguration();
-        // Component.leftWheelEncoder.configAllSettings(Component.canCoderConfiguration);
-        // Component.rightWheelEncoder.configAllSettings(Component.canCoderConfiguration);
-        // Component.leftWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK,
-        // "meters",
-        // SensorTimeBase.PerSecond);
-        // Component.rightWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK,
-        // "meters",
-        // SensorTimeBase.PerSecond);
-
-        // Component.leftWheelAccelerationCap = new EnableableModifier(new
-        // AccelerationCap(Component.pdp));
-        // Component.leftWheelAccelerationCap.enable();
-        // Component.rightWheelAccelerationCap = new EnableableModifier(new
-        // AccelerationCap(Component.pdp));
-        // Component.rightWheelAccelerationCap.enable();
-
-        // Component.leftDriveA = new Motor("leftDriveA", false,
-        // Component.leftWheelAccelerationCap,
-        // new CANTalonFX(Port.CANMotor.leftDriveA));
-        // Component.leftDriveB = new Motor("rightDriveA", false,
-        // Component.rightWheelAccelerationCap,
-        // new CANTalonFX(Port.CANMotor.rightDriveA));
-        // Component.rightDriveA = new Motor("leftDriveB", false,
-        // Component.leftWheelAccelerationCap,
-        // new CANTalonFX(Port.CANMotor.leftDriveB));
-        // Component.rightDriveB = new Motor("rightDriveB", false,
-        // Component.rightWheelAccelerationCap,
-        // new CANTalonFX(Port.CANMotor.rightDriveB));
-        Component.leftDriveA = new Motor("leftDriveA", true, new CANTalonFX(Port.CANMotor.leftDriveA));
-        Component.leftDriveB = new Motor("leftDriveB", true, new CANTalonFX(Port.CANMotor.leftDriveB));
-        Component.rightDriveA = new Motor("rightDriveA", false, new CANTalonFX(Port.CANMotor.rightDriveA));
-        Component.rightDriveB = new Motor("rightDriveB", false, new CANTalonFX(Port.CANMotor.rightDriveB));
-
-        // Component.shifter = new
-        // SolenoidShifters(Port.Pneumatics.shifter.buildDoubleSolenoid());
-
-        // Component.chassis = new TankDriveShifting(0d, RobotMap.Component.leftDriveA,
-        // RobotMap.Component.leftDriveB,
-        // RobotMap.Component.rightDriveA, RobotMap.Component.rightDriveB,
-        // Component.shifter);
-        Component.chassis = new TankDrive(0d, RobotMap.Component.leftDriveA, RobotMap.Component.leftDriveB,
-                RobotMap.Component.rightDriveA, RobotMap.Component.rightDriveB);
->>>>>>> 718d8952ed2d7d1fcc29a030cf8a01385f912f65
+        Component.chassis = new TankDriveShifting(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA,
+                Component.leftDriveB, Component.rightDriveA, Component.rightDriveB, Component.shifter);
 
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
