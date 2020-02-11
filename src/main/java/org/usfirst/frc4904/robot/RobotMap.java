@@ -11,12 +11,15 @@ import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.ContinuousServoController;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
 import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomDigitalLimitSwitch;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
+import org.usfirst.frc4904.robot.subsystems.Hood;
 
+import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 public class RobotMap {
@@ -40,6 +43,7 @@ public class RobotMap {
     }
 
     public static class PWM {
+      public static final int HOOD_MOTOR = -1;
     }
 
     public static class CAN {
@@ -95,6 +99,13 @@ public class RobotMap {
       public static final double I = 0;
       public static final double D = 0;
     }
+
+    public static class Hood {
+      public static final double P = 0;
+      public static final double I = 0;
+      public static final double D = 0;
+    }
+
     public static class Drive {
     }
 
@@ -103,12 +114,12 @@ public class RobotMap {
 
   }
 
-
   public static class Component {
     public static Intake intake;
     public static Indexer indexer;
     public static Flywheel flywheel;
     public static Shooter shooter;
+    public static Hood hood;
 
     public static SolenoidSubsystem intakeSolenoid;
     public static SolenoidSubsystem flipperSolenoid;
@@ -120,13 +131,17 @@ public class RobotMap {
     public static Motor runUpBeltMotor;
     public static Motor flywheelMotorA;
     public static Motor flywheelMotorB;
+    public static Motor hoodMotor;
 
     public static CustomCANCoder flywheelEncoder;
     public static CANCoderConfiguration flywheelEncoderConfiguration;
+    public static CustomCANCoder hoodEncoder;
   }
 
   public static class Input {
     public static CustomDigitalLimitSwitch limitSwitch;
+    public static CustomDigitalLimitSwitch hoodLowLimitSwitch;
+    public static CustomDigitalLimitSwitch hoodHighLimitSwitch;
   }
 
   public static class HumanInput {
@@ -154,6 +169,7 @@ public class RobotMap {
     Component.runUpBeltMotor = new Motor("runUpBeltMotor", new CANTalonSRX(Port.CANMotor.RUN_UP_BELT_MOTOR));
     Component.flywheelMotorA = new Motor("flywheelMotorA", new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_A));
     Component.flywheelMotorB = new Motor("flywheelMotorB", new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_B));
+    Component.hoodMotor = new Motor("hoodMotor", new ContinuousServoController(Port.PWM.HOOD_MOTOR));
 
     Component.intake = new Intake(Component.intakeRollerMotor, Component.funnelMotor, Component.intakeSolenoid);
     Component.indexer = new Indexer(Component.liftBeltMotor, Component.flipperSolenoid, Input.limitSwitch);
@@ -161,7 +177,12 @@ public class RobotMap {
     Component.flywheelEncoder = new CustomCANCoder(Port.CAN.FLYWHEEL_ENCODER, Metrics.Chassis.METERS_PER_TICK);
     Component.flywheelEncoderConfiguration = new CANCoderConfiguration();
     Component.flywheelEncoder.configAllSettings(Component.flywheelEncoderConfiguration);
-    Component.flywheel = new Flywheel(new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, Component.flywheelEncoder)); // TODO: BAAAAAAD CODE
+    Component.flywheel = new Flywheel(
+        new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, Component.flywheelEncoder)); // TODO:
+                                                                                                             // BAAAAAAD
+                                                                                                             // CODE
     Component.shooter = new Shooter(Component.flywheel, Component.shooterAimSolenoid, Component.runUpBeltMotor);
+    Component.hood = new Hood(new CustomPIDController(PID.Hood.P, PID.Hood.I, PID.Hood.D, Component.hoodEncoder),
+        Component.hoodMotor, Input.hoodLowLimitSwitch, Input.hoodHighLimitSwitch);
   }
 }
