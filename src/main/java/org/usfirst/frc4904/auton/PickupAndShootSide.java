@@ -6,11 +6,8 @@ import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandGroupBase;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-class PickupAndShootSide extends SequentialCommandGroup {
+class PickupAndShootSide extends AutonRoutine {
 
     public PickupAndShootSide() {
         Trajectory goingToPowerCells = RobotMap.Component.sensorDrive
