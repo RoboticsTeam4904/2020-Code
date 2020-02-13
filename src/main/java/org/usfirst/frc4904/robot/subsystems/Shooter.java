@@ -17,6 +17,7 @@ public class Shooter {
   public final Flywheel flywheel;
   public final SolenoidSubsystem aimSolenoid;
   public final Motor runUpBelt;
+  public Hood hood;
 
   /**
    * Shooter
@@ -27,7 +28,7 @@ public class Shooter {
    * @param flywheel          The actual flywheel for this subsystem
    * @param solenoidSubsystem The SolenoidSubsystem for aiming the shooter
    */
-  public Shooter(Flywheel flywheel, SolenoidSubsystem solenoidSubsystem, Motor motor) {
+  public Shooter(Flywheel flywheel, SolenoidSubsystem solenoidSubsystem, Motor motor, Hood hood) {
     this.flywheel = flywheel;
     this.aimSolenoid = solenoidSubsystem;
     this.runUpBelt = motor;

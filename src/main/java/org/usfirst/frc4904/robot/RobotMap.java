@@ -181,8 +181,9 @@ public class RobotMap {
         new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, Component.flywheelEncoder)); // TODO:
                                                                                                              // BAAAAAAD
                                                                                                              // CODE
-    Component.shooter = new Shooter(Component.flywheel, Component.shooterAimSolenoid, Component.runUpBeltMotor);
     Component.hood = new Hood(new CustomPIDController(PID.Hood.P, PID.Hood.I, PID.Hood.D, Component.hoodEncoder),
         Component.hoodMotor, Input.hoodLowLimitSwitch, Input.hoodHighLimitSwitch);
+    Component.shooter = new Shooter(Component.flywheel, Component.shooterAimSolenoid, Component.runUpBeltMotor);
+
   }
 }
