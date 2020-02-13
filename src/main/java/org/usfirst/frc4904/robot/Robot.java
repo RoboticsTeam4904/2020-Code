@@ -34,7 +34,7 @@ public class Robot extends CommandRobotBase {
     @Override
     public void autonomousInitialize() {
         try {
-            myWriter = new FileWriter("filename.txt");
+            myWriter = new FileWriter("flywheel_speeds.txt");
         } catch (IOException e) {
             LogKitten.wtf("io err");
         }
