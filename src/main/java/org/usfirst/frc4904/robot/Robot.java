@@ -16,6 +16,7 @@ import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.LogKitten;
 
 public class Robot extends CommandRobotBase {
+    FileWriter myWriter;
     private RobotMap map = new RobotMap();
 
     @Override
@@ -32,6 +33,11 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
+        try {
+            myWriter = new FileWriter("filename.txt");
+        } catch (IOException e) {
+            LogKitten.wtf("io err");
+        }
         Flywheel flywheel = RobotMap.Component.flywheel;
         FlywheelSpinUp spinUp = new FlywheelSpinUp(flywheel, 0.8);
         spinUp.schedule();
@@ -41,17 +47,21 @@ public class Robot extends CommandRobotBase {
     public void autonomousExecute() {
         double speed = RobotMap.Component.flywheel.getSpeed();
         try {
-            FileWriter myWriter = new FileWriter("filename.txt");
             myWriter.write(Double.toString(speed));
-            myWriter.close();
         } catch (IOException e) {
-            LogKitten.wtf("file err");
+            LogKitten.wtf("write err");
         }
 
     }
 
     @Override
     public void disabledInitialize() {
+        try {
+            myWriter.close();
+        } catch (IOException e) {
+            LogKitten.wtf("Couldn't close file");
+            e.printStackTrace();
+        }
     }
 
     @Override
