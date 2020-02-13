@@ -11,7 +11,7 @@ public class FlywheelSpinUp extends MotorConstant {
    * @param flywheel The flywheel to manipulate
    * @param speed    The speed to spin the flywheel up to
    */
-  FlywheelSpinUp(Flywheel flywheel, double speed) {
+  public FlywheelSpinUp(Flywheel flywheel, double speed) {
     super("FlywheelSpinUp", flywheel, speed);
   }
 
@@ -20,7 +20,7 @@ public class FlywheelSpinUp extends MotorConstant {
    * 
    * @param flywheel The flywheel to manipulate
    */
-  FlywheelSpinUp(Flywheel flywheel) {
+  public FlywheelSpinUp(Flywheel flywheel) {
     this(flywheel, DEFAULT_FLYWHEEL_SPEED);
   }
 }
