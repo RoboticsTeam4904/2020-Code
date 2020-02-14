@@ -42,22 +42,22 @@ public class RobotMap {
         }
 
         public static class CANMotor {
-            public static final int leftDriveA = 0;
-            public static final int leftDriveB = 3;
-            public static final int rightDriveA = 1;
-            public static final int rightDriveB = 2;
+            public static final int LEFT_DRIVE_A = -1;
+            public static final int LEFT_DRIVE_B = -1;
+            public static final int RIGHT_DRIVE_A = -1;
+            public static final int RIGHT_DRIVE_B = -1;
         }
 
         public static class PWM {
         }
 
         public static class CAN {
-            public static final int leftWheelEncoder = -1;
-            public static final int rightWheelEncoder = -1;
+            public static final int LEFT_WHEEL_ENCODER = -1;
+            public static final int RIGHT_WHEEL_ENCODER = -1;
         }
 
         public static class Pneumatics {
-            public static final PCMPort shifter = new PCMPort(-1, -1, -1);
+            public static final PCMPort SHIFTER = new PCMPort(-1, -1, -1);
         }
 
         public static class Digital {
@@ -72,7 +72,7 @@ public class RobotMap {
             public static final double TICKS_PER_METER = Metrics.Chassis.TICKS_PER_REVOLUTION
                     / Metrics.Chassis.CIRCUMFERENCE_METERS;
             public static final double DISTANCE_FRONT_BACK = -1;
-            public static final double DISTANCE_TRACK_WIDTH = -1;
+            public static final double TRACK_WIDTH = -1;
             public static final double METERS_PER_TICK = 1 / TICKS_PER_METER;
         }
     }
@@ -175,8 +175,8 @@ public class RobotMap {
     public RobotMap() {
         Component.pdp = new PDP();
         Component.navx = new NavX(SerialPort.Port.kMXP);
-        Component.leftWheelEncoder = new CANCoder(Port.CAN.leftWheelEncoder);
-        Component.rightWheelEncoder = new CANCoder(Port.CAN.rightWheelEncoder);
+        Component.leftWheelEncoder = new CANCoder(Port.CAN.LEFT_WHEEL_ENCODER);
+        Component.rightWheelEncoder = new CANCoder(Port.CAN.RIGHT_WHEEL_ENCODER);
         Component.canCoderConfiguration = new CANCoderConfiguration();
         Component.leftWheelEncoder.configAllSettings(Component.canCoderConfiguration);
         Component.rightWheelEncoder.configAllSettings(Component.canCoderConfiguration);
@@ -191,17 +191,17 @@ public class RobotMap {
         Component.rightWheelAccelerationCap.enable();
 
         Component.leftDriveA = new Motor("leftDriveA", false, Component.leftWheelAccelerationCap,
-                new CANTalonFX(Port.CANMotor.leftDriveA));
+                new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A));
         Component.leftDriveB = new Motor("rightDriveA", false, Component.rightWheelAccelerationCap,
-                new CANTalonFX(Port.CANMotor.rightDriveA));
+                new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A));
         Component.rightDriveA = new Motor("leftDriveB", false, Component.leftWheelAccelerationCap,
-                new CANTalonFX(Port.CANMotor.leftDriveB));
+                new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
         Component.rightDriveB = new Motor("rightDriveB", false, Component.rightWheelAccelerationCap,
-                new CANTalonFX(Port.CANMotor.rightDriveB));
+                new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
 
         Component.turnPID = new CustomPIDController(PID.Turn.P, PID.Turn.I, PID.Turn.D, PID.Turn.F,
                 (PIDSensor) Component.navx);
-        Component.shifter = new SolenoidShifters(Port.Pneumatics.shifter.buildDoubleSolenoid());
+        Component.shifter = new SolenoidShifters(Port.Pneumatics.SHIFTER.buildDoubleSolenoid());
 
         Component.chassis = new TankDriveShifting(0.0, RobotMap.Component.leftDriveA, RobotMap.Component.leftDriveB,
                 RobotMap.Component.rightDriveA, RobotMap.Component.rightDriveB, Component.shifter);
