@@ -1,11 +1,11 @@
 package org.usfirst.frc4904.robot.commands;
 
+import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Winch extends CommandBase {
+public class Winch extends MotorConstant {
   public static final double DEFAULT_WINCH_SPEED = 0; // TODO: This is an untested value
-  protected final Motor winchMotor;
+  protected Motor winchMotor;
   protected double speed;
 
   /**
@@ -15,11 +15,7 @@ public class Winch extends CommandBase {
    * @param speed      The speed to winch up with
    */
   Winch(Motor winchMotor, double speed) {
-    super();
-    setName("Winch");
-    addRequirements(winchMotor);
-    this.winchMotor = winchMotor;
-    this.speed = speed;
+    super("Winch", winchMotor, speed);
   }
 
   /**

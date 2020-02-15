@@ -1,11 +1,11 @@
 package org.usfirst.frc4904.robot.commands;
 
+import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class RaiseHook extends CommandBase {
+public class RaiseHook extends MotorConstant {
   public static final double DEFAULT_UP_SPEED = 0; // TODO: This is an untested value
-  protected final Motor tubeMotor;
+  protected Motor tubeMotor;
   protected double speed;
 
   /**
@@ -15,11 +15,7 @@ public class RaiseHook extends CommandBase {
    * @param speed     The speed to raise the deploy tube at
    */
   RaiseHook(Motor tubeMotor, double speed) {
-    super();
-    setName("RaiseHook");
-    addRequirements(tubeMotor);
-    this.tubeMotor = tubeMotor;
-    this.speed = speed;
+    super("RaiseHook", tubeMotor, speed);
   }
 
   /**
