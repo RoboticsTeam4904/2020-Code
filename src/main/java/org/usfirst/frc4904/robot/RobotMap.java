@@ -16,8 +16,8 @@ public class RobotMap {
 
     public static class CANMotor {
       // Climb
-      public static final int CLIMB_TUBE_MOTOR= -1;
-      public static final int CLIMB_WINCH_MOTOR = -1;
+      public static final int HOOK_MOTOR= -1;
+      public static final int WINCH_MOTOR = -1;
     }
 
     public static class PWM {
@@ -75,8 +75,8 @@ public class RobotMap {
   }
 
   public static class Component {
-    public static Motor climbTubeMotor;
-    public static Motor climbWinchMotor;
+    public static Motor HookMotor;
+    public static Motor WinchMotor;
   }
 
   public static class Input {
@@ -96,7 +96,7 @@ public class RobotMap {
     HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
     HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 
-    Component.climbTubeMotor = new Motor("climbTubeMotor", new CANTalonSRX(Port.CANMotor.CLIMB_TUBE_MOTOR));
-    Component.climbWinchMotor = new Motor("climbWinchMotor", new CANTalonSRX(Port.CANMotor.CLIMB_WINCH_MOTOR));
+    Component.HookMotor = new Motor("HookMotor", new CANTalonSRX(Port.CANMotor.HOOK_MOTOR));
+    Component.WinchMotor = new Motor("WinchMotor", new CANTalonSRX(Port.CANMotor.WINCH_MOTOR));
   }
 }
