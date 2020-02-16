@@ -5,8 +5,8 @@ import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 
 public class LowerHook extends MotorConstant {
   public static final double DEFAULT_DOWN_SPEED = -0; // TODO: This is an untested value
-  protected Motor tubeMotor;
-  protected double speed;
+  public Motor tubeMotor;
+  public double speed;
 
   /**
    * Lower the deploy tube to hook onto the generator switch
@@ -27,8 +27,4 @@ public class LowerHook extends MotorConstant {
     this(tubeMotor, DEFAULT_DOWN_SPEED);
   }
 
-  @Override
-  public void execute() {
-    tubeMotor.set(speed);
-  }
 }
