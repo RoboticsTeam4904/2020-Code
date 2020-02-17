@@ -1,5 +1,7 @@
 package org.usfirst.frc4904.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 
@@ -100,13 +102,13 @@ public class RobotMap {
         Component.rightWheelAccelerationCap = new EnableableModifier(new AccelerationCap(Component.pdp));
         Component.rightWheelAccelerationCap.enable();
 
-        Component.leftDriveA = new Motor("leftDriveA", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A));
-        Component.leftDriveB = new Motor("leftDriveB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
-        Component.rightDriveA = new Motor("rightDriveA", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A));
-        Component.rightDriveB = new Motor("rightDriveB", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
+        Component.leftDriveA = new Motor("leftDriveA", false, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A, NeutralMode.Coast));
+        Component.leftDriveB = new Motor("leftDriveB", false, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B, NeutralMode.Coast));
+        Component.rightDriveA = new Motor("rightDriveA", true, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A, NeutralMode.Coast));
+        Component.rightDriveB = new Motor("rightDriveB", true, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B, NeutralMode.Coast));
 
-        Component.chassis = new TankDrive(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA,
-                Component.leftDriveB, Component.rightDriveA, Component.rightDriveB);
+        Component.chassis = new TankDrive(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA, Component.leftDriveB,
+                Component.rightDriveA, Component.rightDriveB);
 
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
