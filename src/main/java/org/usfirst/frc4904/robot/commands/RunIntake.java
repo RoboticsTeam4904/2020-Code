@@ -10,7 +10,7 @@ public class RunIntake extends MotorConstant {
    * @param intake The intake to manipulate
    * @param speed  The speed to intake at
    */
-  RunIntake(Intake intake, double speed) {
+  public RunIntake(Intake intake, double speed) {
     super("RunIntake", intake.intake, speed);
   }
 
@@ -19,7 +19,7 @@ public class RunIntake extends MotorConstant {
    * 
    * @param intake The intake to manipulate
    */
-  RunIntake(Intake intake) {
+  public RunIntake(Intake intake) {
     super("RunIntake", intake.intake, Intake.DEFAULT_INTAKE_SPEED);
   }
 }
