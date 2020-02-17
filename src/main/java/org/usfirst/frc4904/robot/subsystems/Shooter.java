@@ -65,9 +65,9 @@ public class Shooter {
     flywheel.setSpeed(speed);
   }
 
-  public void setFlywheelSpeedForDistance(double distance) {
-    flywheel.setSpeedForDistance(distance);
-  }
+  // public void setFlywheelSpeedForDistance(double distance) {
+  //   // flywheel.setSpeedForDistance(distance);
+  // }
 
   public void setRunUpBeltSpeed(double speed) {
     runUpBelt.set(speed);

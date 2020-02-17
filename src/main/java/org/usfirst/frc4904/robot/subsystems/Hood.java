@@ -1,52 +1,102 @@
 package org.usfirst.frc4904.robot.subsystems;
 
+import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.standard.Util;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.MotionController;
+import org.usfirst.frc4904.standard.custom.sensors.CANEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomDigitalLimitSwitch;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import org.usfirst.frc4904.standard.subsystems.motor.PositionSensorMotor;
 
 public class Hood extends PositionSensorMotor {
     public final double DEFAULT_SPEED = 0;
-    private final double UPPER_LIMIT = 0;
-    private final double LOWER_LIMIT = 0;
-    private double upperLimit;
-    private double lowerLimit;
+    private final double LOWER_HOOD_ANGLE = 0; //TODO: Add this value
+    private final double RANGE_HOOD_ANGLES = 35.0;
+    private final double UPPER_HOOD_ANGLE = LOWER_HOOD_ANGLE + RANGE_HOOD_ANGLES; //TODO: Does having all of these theoretical constants negate the zeroing we're doing?
+    private final double TEETH_PER_SERVO_ROTATION = 20.0;
+    private final double TEETH_PER_HOOD = 364.0;
+    private final double SERVO_ROTATION_PER_HOOD = TEETH_PER_SERVO_ROTATION / TEETH_PER_HOOD;
+    private final double HOOD_ANGLE_PER_SERVO_POSITION = RANGE_HOOD_ANGLES / SERVO_ROTATION_PER_HOOD; //TODO: Nomenclature can get confusing.
     protected Motor servo;
-    protected MotionController motionController;
+    protected CANEncoder hoodEncoder;
     protected CustomDigitalLimitSwitch lowLimit;
     protected CustomDigitalLimitSwitch highLimit;
-    private Util.Range servoRange = new Util.Range(LOWER_LIMIT, UPPER_LIMIT);;
+    private final double lowerServoPosition = 0.0; //TODO: Refine this value.
+    private final double upperServoPosition = lowerServoPosition + SERVO_ROTATION_PER_HOOD;
+    private Util.Range servoRange = new Util.Range(lowerServoPosition, upperServoPosition);
 
-    public Hood(MotionController motionController, Motor servo, CustomDigitalLimitSwitch lowLimit,
+    /**
+     * We are currently making some pretty big assumptions. Those are:
+     * + servo speed moves it towards the upper limit, - servo speed moves it towards the lower limit
+     * "true" for limitType is upper, "false" is lower.
+     */
+    public Hood(Motor servo, CANEncoder hoodEncoder, CustomDigitalLimitSwitch lowLimit,
             CustomDigitalLimitSwitch highLimit) {
-        super(motionController, servo);
+        super(new CustomPIDController(RobotMap.PID.Hood.P, RobotMap.PID.Hood.I, RobotMap.PID.Hood.D, hoodEncoder), servo);
+        this.servo = servo;
+        this.hoodEncoder = hoodEncoder;
+        this.lowLimit = lowLimit;
+        this.highLimit = highLimit;
     }
 
     @Override
-    public void setPosition(double position) {
-        if (isLimitButtonDown()) {
-            set(0);
+    public void periodic() {
+        super.periodic();
+        syncStatus();
+    }
+
+    public void syncStatus(){
+        if(isLowerLimitDown()){
+            setLimit(false);
         }
-        double safePosition = servoRange.limitValue(position);
+        if(isUpperLimitDown()){
+            setLimit(true);
+        }
+    }
+
+    /**
+     * Sets the hood angle, not the servo position.
+     */
+    @Override
+    public void setPosition(double angle) {
+        double safePosition = servoRange.limitValue(hoodAngleToServoPosition(angle)); //TODO: Should we error if we are outside of this value?
         super.setPosition(safePosition);
     }
 
     @Override
     public void set(double speed) {
+        if(speed > 0 && (isUpperLimitDown() || getHoodAngle() >= UPPER_HOOD_ANGLE)){
+            speed = 0.0;
+        }
+        if(speed < 0 && (isLowerLimitDown() || getHoodAngle() <= LOWER_HOOD_ANGLE)){
+            speed = 0.0;
+        }
         super.set(speed);
     }
 
-    public Util.Range getRange() {
-        return this.servoRange;
+    public double hoodAngleToServoPosition(double hoodAngle){
+        return hoodAngle / HOOD_ANGLE_PER_SERVO_POSITION;
     }
 
-    public void setRange() {
-        servoRange = new Util.Range(lowerLimit, upperLimit);
+    public double servoPositionToHoodAngle(double servoPosition){
+        return servoPosition * HOOD_ANGLE_PER_SERVO_POSITION;
     }
 
-    public boolean isLimitButtonDown() {
-        return lowLimit.get() || highLimit.get();
+    public double getServoPosition(){
+        return hoodEncoder.getDistance();
+    }
+
+    public double getHoodAngle(){
+        return servoPositionToHoodAngle(getServoPosition());
+    }
+
+    public boolean isLowerLimitDown() {
+        return lowLimit.get();
+    }
+
+    public boolean isUpperLimitDown() {
+        return highLimit.get();
     }
 
     public Motor getServo() {
@@ -55,9 +105,9 @@ public class Hood extends PositionSensorMotor {
 
     public void setLimit(boolean limitType) {
         if (limitType) {
-            upperLimit = motionController.getSensorValue();
+            hoodEncoder.resetViaOffset(upperServoPosition);
         } else {
-            lowerLimit = motionController.getSensorValue();
+            hoodEncoder.resetViaOffset(lowerServoPosition);
         }
     }
 }

@@ -104,8 +104,4 @@ public class Flywheel extends VelocitySensorMotor {
     targetSpeed = speed;
     setSpeed();
   }
-
-  public void setSpeedForDistance(double distance) {
-    setSpeed(2 * distance); // TODO: set speed value based on distance
-  }
 }

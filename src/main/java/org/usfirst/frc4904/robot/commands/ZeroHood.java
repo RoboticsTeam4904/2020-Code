@@ -11,16 +11,14 @@ public class ZeroHood extends SequentialCommandGroup {
 
     public ZeroHood(Hood hood) {
         super(new HoodZeroConstant(hood, hood.DEFAULT_SPEED, true), new WaitUntilCommand(() -> {
-            return hood.isLimitButtonDown();
+            return hood.isUpperLimitDown();
         }), new HoodZeroConstant(hood, -hood.DEFAULT_SPEED, false), new WaitUntilCommand(() -> {
-            return hood.isLimitButtonDown();
+            return hood.isLowerLimitDown();
         }));
     }
 
     @Override
     public void end(boolean interrupted) {
         super.end(interrupted);
-        hood.setRange();
     }
-
 }

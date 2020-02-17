@@ -13,6 +13,8 @@ import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.ContinuousServoController;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
+import org.usfirst.frc4904.standard.custom.sensors.CANEncoder;
+import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomDigitalLimitSwitch;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
@@ -47,7 +49,7 @@ public class RobotMap {
     }
 
     public static class CAN {
-      public static final int FLYWHEEL_ENCODER = -1;
+      public static final int HOOD_ENCODER = -1;
     }
 
     public static class Pneumatics {
@@ -72,6 +74,9 @@ public class RobotMap {
       public static final double DISTANCE_SIDE_SIDE = -1;
       public static final double METERS_PER_TICK = Metrics.Chassis.CIRCUMFERENCE_METERS
           / Metrics.Chassis.TICKS_PER_REVOLUTION;
+    }
+    public static class Flywheel {
+      public static final double ROTATIONS_PER_TICK = 1.0 / 2048.0;
     }
   }
 
@@ -133,9 +138,8 @@ public class RobotMap {
     public static Motor flywheelMotorB;
     public static Motor hoodMotor;
 
-    public static CustomCANCoder flywheelEncoder;
-    public static CANCoderConfiguration flywheelEncoderConfiguration;
-    public static CustomCANCoder hoodEncoder;
+    public static CANTalonEncoder flywheelEncoder;
+    public static CANEncoder hoodEncoder;
   }
 
   public static class Input {
@@ -167,22 +171,20 @@ public class RobotMap {
     Component.funnelMotor = new Motor("funnelMotor", new CANTalonSRX(Port.CANMotor.INTAKE_FUNNEL_MOTOR));
     Component.liftBeltMotor = new Motor("liftBeltMotor", new CANTalonSRX(Port.CANMotor.LIFT_BELT_MOTOR));
     Component.runUpBeltMotor = new Motor("runUpBeltMotor", new CANTalonSRX(Port.CANMotor.RUN_UP_BELT_MOTOR));
-    Component.flywheelMotorA = new Motor("flywheelMotorA", new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_A));
+    CANTalonFX flywheelATalon = new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_A); //TODO: Nicer way to do this?
+    Component.flywheelMotorA = new Motor("flywheelMotorA", flywheelATalon);
     Component.flywheelMotorB = new Motor("flywheelMotorB", new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_B));
     Component.hoodMotor = new Motor("hoodMotor", new ContinuousServoController(Port.PWM.HOOD_MOTOR));
 
     Component.intake = new Intake(Component.intakeRollerMotor, Component.funnelMotor, Component.intakeSolenoid);
     Component.indexer = new Indexer(Component.liftBeltMotor, Component.flipperSolenoid, Input.limitSwitch);
 
-    Component.flywheelEncoder = new CustomCANCoder(Port.CAN.FLYWHEEL_ENCODER, Metrics.Chassis.METERS_PER_TICK);
-    Component.flywheelEncoderConfiguration = new CANCoderConfiguration();
-    Component.flywheelEncoder.configAllSettings(Component.flywheelEncoderConfiguration);
+    Component.flywheelEncoder = new CANTalonEncoder(flywheelATalon, Metrics.Flywheel.ROTATIONS_PER_TICK);
     Component.flywheel = new Flywheel(
-        new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, Component.flywheelEncoder)); // TODO:
-                                                                                                             // BAAAAAAD
-                                                                                                             // CODE
+        new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, Component.flywheelEncoder));
+
+    Component.hoodEncoder = new CANEncoder(Port.CAN.HOOD_ENCODER);
     Component.shooter = new Shooter(Component.flywheel, Component.shooterAimSolenoid, Component.runUpBeltMotor);
-    Component.hood = new Hood(new CustomPIDController(PID.Hood.P, PID.Hood.I, PID.Hood.D, Component.hoodEncoder),
-        Component.hoodMotor, Input.hoodLowLimitSwitch, Input.hoodHighLimitSwitch);
+    Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLowLimitSwitch, Input.hoodHighLimitSwitch); //TODO: Remove this redundancy.
   }
 }
