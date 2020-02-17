@@ -1,8 +1,8 @@
 package org.usfirst.frc4904.robot.humaninterface.operators;
 
-
 import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.standard.humaninput.Operator;
+import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 
 public class DefaultOperator extends Operator {
@@ -16,5 +16,16 @@ public class DefaultOperator extends Operator {
 
 	@Override
 	public void bindCommands() {
+		// Indexing + intaking
+		RobotMap.HumanInput.Operator.joystick.button2.whileHeld(new MotorConstant(RobotMap.Component.intakeRollerMotor, 0.5));
+		RobotMap.HumanInput.Operator.joystick.button2.whileHeld(new MotorConstant(RobotMap.Component.funnelMotor, 0.5));
+		RobotMap.HumanInput.Operator.joystick.button2.whileHeld(new MotorConstant(RobotMap.Component.liftBeltMotor, 1));
+		// Shooting
+		RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new MotorConstant(RobotMap.Component.flywheelMotorA, 0.5));
+		RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new MotorConstant(RobotMap.Component.flywheelMotorB, 0.5));
+		RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new MotorConstant(RobotMap.Component.runUpBeltMotor, 0.8));
+		RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new MotorConstant(RobotMap.Component.liftBeltMotor, 1));
+		// Oh no
+		RobotMap.HumanInput.Operator.joystick.button4.whileHeld(new MotorConstant(RobotMap.Component.liftBeltMotor, -0.5));
 	}
 }
