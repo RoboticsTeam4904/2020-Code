@@ -3,6 +3,7 @@ package org.usfirst.frc4904.robot;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
+import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -17,13 +18,14 @@ public class RobotMap {
         }
 
         public static class CANMotor {
-            public static final int controlPanel = -1; // TODO: determine
+            public static final int CONTROL_PANEL = -1; // TODO: determine
         }
 
         public static class PWM {
         }
 
         public static class CAN {
+            public static final int CONTROL_PANEL_ENCODER = -1;
         }
 
         public static class Pneumatics {
@@ -45,6 +47,10 @@ public class RobotMap {
             public static final double INCHES_PER_TICK = Metrics.Chassis.CIRCUMFERENCE_INCHES
                     / Metrics.Chassis.TICKS_PER_REVOLUTION;
         }
+        public static class ControlPanel {
+            public static final double TICKS_PER_REVOLUTION = -1; //TODO: Depending on encoder, change this constant
+            public static final double DEGREES_PER_TICK = 360.0 / TICKS_PER_REVOLUTION;
+        }
     }
 
     public static class PID {
@@ -58,6 +64,7 @@ public class RobotMap {
 
     public static class Component {
         public static Motor controlPanel;
+        public static CustomCANCoder controlPanelEncoder;
     }
 
     public static class Input {
@@ -88,7 +95,8 @@ public class RobotMap {
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 
         // TODO: add a speed modifier?
-        Component.controlPanel = new Motor("controlPanel", false, new CANTalonFX(Port.CANMotor.controlPanel));
+        Component.controlPanel = new Motor("controlPanel", false, new CANTalonFX(Port.CANMotor.CONTROL_PANEL));
+        Component.controlPanelEncoder = new CustomCANCoder(Port.CAN.CONTROL_PANEL_ENCODER, Metrics.ControlPanel.DEGREES_PER_TICK);
 
         /* NetworkTables */
         NetworkTables.inst = NetworkTableInstance.getDefault();

@@ -1,19 +1,15 @@
 package org.usfirst.frc4904.robot.commands.controlpanel;
 
-import org.usfirst.frc4904.standard.subsystems.motor.Motor;
-
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import org.usfirst.frc4904.robot.commands.controlpanel.StartPanelMotor;
-import org.usfirst.frc4904.robot.commands.controlpanel.StopPanelMotor;
 import java.util.function.Supplier;
 import org.usfirst.frc4904.standard.commands.RunUntil;
 import org.usfirst.frc4904.robot.RobotMap;
 
 public class SpinPanelThreeTimesColor extends SequentialCommandGroup {
-
-    private final Motor motor;
-    private ColorChecker colorChecker;
+    protected static final int TOTAL_COLORS_PASSED = (int) (ColorTracker.NUM_COLORS
+            * SpinPanelThreeTimes.TOTAL_REVOLUTIONS); // 24 color wedges need to be passed to spin three revolutions
+    protected final ColorTracker tracker;
 
     /**
      * This command will spin the control panel three times based off the camera
@@ -25,34 +21,18 @@ public class SpinPanelThreeTimesColor extends SequentialCommandGroup {
      * @param motor        The motor to spin the control panel.
      */
 
-    public SpinPanelThreeTimesColor(String name, ColorChecker colorChecker, Motor motor) {
+    public SpinPanelThreeTimesColor() {
         super();
-        this.motor = motor;
-        this.colorChecker = colorChecker;
-        addRequirements(this.motor);
-        setName(name);
+        setName("SpinPanelThreeTimesColor");
+        addRequirements(RobotMap.Component.controlPanel);
+        tracker = new ColorTracker();
 
         Supplier<Boolean> isDone = () -> {
-            return this.colorChecker.trackColorChange();
+            tracker.update();
+            return tracker.getColorsPassed() >= TOTAL_COLORS_PASSED;
         };
 
-        addCommands(new RunUntil(new StartPanelMotor(this.motor), isDone), new StopPanelMotor(this.motor));
+        addCommands(new RunUntil(new SpinPanelMotorForward(), isDone), new StopPanelMotor());
 
-    }
-
-    /**
-     * 
-     * @param name
-     */
-    public SpinPanelThreeTimesColor(String name) {
-        this(name, new ColorChecker(), RobotMap.Component.controlPanel);
-    }
-
-    /**
-     * This command will spin the control panel three times based off the camera
-     * feed.
-     */
-    public SpinPanelThreeTimesColor() {
-        this("SpinPanelThreeTimesColor");
     }
 }
