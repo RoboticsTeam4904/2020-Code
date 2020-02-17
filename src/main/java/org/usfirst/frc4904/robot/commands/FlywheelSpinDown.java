@@ -12,7 +12,7 @@ public class FlywheelSpinDown extends CommandBase {
    * 
    * @param flywheel The flywheel to manipulate
    */
-  FlywheelSpinDown(Flywheel flywheel) {
+  public FlywheelSpinDown(Flywheel flywheel) {
     super();
     setName("FlywheelSpinDown");
     addRequirements(flywheel);
