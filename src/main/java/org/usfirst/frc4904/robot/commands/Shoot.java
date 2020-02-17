@@ -29,7 +29,7 @@ public class Shoot extends SequentialCommandGroup {
       return Math.abs(shooter.flywheel.getTargetSpeed() - speed) < SPEED_TOLERANCE;
     }), new WaitUntil(() -> {
       return shooter.flywheel.getStatus() == FlywheelStatus.AT_SPEED;
-    }), new IndexOne(indexer, shooter));
+    }), new IndexOne(indexer));
     setName("Shoot");
   }
 }

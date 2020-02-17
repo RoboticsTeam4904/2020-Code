@@ -1,10 +1,9 @@
 package org.usfirst.frc4904.robot.commands;
 
 import org.usfirst.frc4904.robot.subsystems.Indexer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.usfirst.frc4904.standard.commands.solenoid.SolenoidExtend;
 
-public class OpenIndexer extends CommandBase {
-  protected final Indexer indexer;
+public class OpenIndexer extends SolenoidExtend {
 
   /**
    * Extend the indexer solenoid to open the indexer flippers.
@@ -12,14 +11,6 @@ public class OpenIndexer extends CommandBase {
    * @param indexer The indexer to manipulate
    */
   public OpenIndexer(Indexer indexer) {
-    super();
-    setName("OpenIndexer");
-    addRequirements(indexer.flippers);
-    this.indexer = indexer;
-  }
-
-  @Override
-  public void initialize() {
-    indexer.openFlippers();
+    super("OpenIndexer", indexer.flippers);
   }
 }

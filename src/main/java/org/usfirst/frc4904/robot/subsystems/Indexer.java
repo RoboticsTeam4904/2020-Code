@@ -4,6 +4,7 @@ import java.util.Set;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import org.usfirst.frc4904.standard.custom.sensors.CustomDigitalLimitSwitch;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
@@ -18,16 +19,18 @@ public class Indexer {
 
   public final SolenoidSubsystem flippers;
   public final Motor liftBelts;
+  public final CustomDigitalLimitSwitch limitSwitch;
 
   /**
-   * Indexer - Wraps the indexer flippers and the run up belt.
+   * Indexer - Wraps the indexer flippers and the lift belts.
    * 
    * @param flippers The SolenoidSubsystem controlling the flippers
-   * @param liftBelt The motor controlling the run up belt
+   * @param liftBelt The motor controlling the lift belts
    */
-  public Indexer(Motor liftBelts, SolenoidSubsystem flippers) {
+  public Indexer(Motor liftBelts, SolenoidSubsystem flippers, CustomDigitalLimitSwitch limitSwitch) {
     this.liftBelts = liftBelts;
     this.flippers = flippers;
+    this.limitSwitch = limitSwitch;
   }
 
   public Set<SubsystemBase> getSubsystems() {

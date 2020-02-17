@@ -7,7 +7,7 @@ import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-class AutonRoutine extends SequentialCommandGroup {
+public class AutonRoutine extends SequentialCommandGroup {
     public ArrayList<Command> commandsList;
 
     @Override
@@ -25,6 +25,7 @@ class AutonRoutine extends SequentialCommandGroup {
 
     /**
      * Used for the spline visualizer.
+     * 
      * @return List of all commands with trajectories
      */
     public ArrayList<Command> getSplinesList() {

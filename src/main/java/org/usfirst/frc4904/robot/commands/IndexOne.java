@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
-import org.usfirst.frc4904.robot.subsystems.Shooter;
 import org.usfirst.frc4904.robot.commands.OpenIndexer;
 import org.usfirst.frc4904.robot.commands.CloseIndexer;
 
@@ -16,12 +15,11 @@ public class IndexOne extends SequentialCommandGroup {
    * then close the flippers.
    * 
    * @param indexer
-   * @param shooter
    */
-  public IndexOne(Indexer indexer, Shooter shooter) {
+  public IndexOne(Indexer indexer) {
     super(new OpenIndexer(indexer), new MotorConstant("RunIndexer", indexer.liftBelts, Indexer.DEFAULT_LIFT_SPEED),
         new WaitUntilCommand(() -> {
-          return shooter.limitSwitch.get();
+          return indexer.limitSwitch.get();
         }), new CloseIndexer(indexer));
     setName("IndexOne");
   }
