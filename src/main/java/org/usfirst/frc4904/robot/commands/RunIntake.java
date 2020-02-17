@@ -10,16 +10,8 @@ public class RunIntake extends MotorConstant {
    * @param intake The intake to manipulate
    * @param speed  The speed to intake at
    */
-<<<<<<< HEAD
-  public RunIntake(Intake intake) {
-    super();
-    setName("RunIntake");
-    addRequirements(intake.intake);
-    this.intake = intake;
-=======
   RunIntake(Intake intake, double speed) {
     super("RunIntake", intake.intake, speed);
->>>>>>> origin/shooter-commands
   }
 
   /**

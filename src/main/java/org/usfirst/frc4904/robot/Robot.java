@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc4904.robot;
 
+import org.usfirst.frc4904.auton.AutonRoutine;
 import org.usfirst.frc4904.standard.CommandRobotBase;
 
 public class Robot extends CommandRobotBase {
