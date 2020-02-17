@@ -1,6 +1,7 @@
 package org.usfirst.frc4904.robot.humaninterface.drivers;
 
 import org.usfirst.frc4904.robot.RobotMap;
+import org.usfirst.frc4904.robot.commands.MoveHook;
 import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 import org.usfirst.frc4904.standard.humaninput.Driver;
 
@@ -22,6 +23,7 @@ public class NathanGain extends Driver {
 
 	@Override
 	public void bindCommands() {
+		RobotMap.HumanInput.Driver.xbox.lb.whileHeld(new MoveHook(RobotMap.Component.hookMotor));
 	}
 
 	@Override

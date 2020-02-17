@@ -9,6 +9,8 @@ import org.usfirst.frc4904.robot.subsystems.Intake;
 import org.usfirst.frc4904.robot.subsystems.Shooter;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
+import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
@@ -33,6 +35,7 @@ public class RobotMap {
         }
 
         public static class CANMotor {
+            // Drive
             public static final int LEFT_DRIVE_A = 7;
             public static final int LEFT_DRIVE_B = 3;
             public static final int RIGHT_DRIVE_A = 4;
@@ -47,16 +50,16 @@ public class RobotMap {
             public static final int FLYWHEEL_MOTOR_B = 1;
             // Shooter
             public static final int RUN_UP_BELT_MOTOR = 8;
+            // Climber
+            public static final int WINCH_MOTOR = 0;
+            public static final int HOOK_MOTOR = 9;
         }
 
-        public static class PWM {
-        }
+    public static class PWM {
+    }
 
-        public static class CAN {
-        }
-
-        public static class Pneumatics {
-        }
+    public static class CAN {
+    }
 
         public static class Digital {
           public static final int INDEXER_LIMIT_SWITCH = -1;
@@ -147,6 +150,9 @@ public class RobotMap {
         public static Motor flywheelMotorB;
         public static Motor hoodMotor;
 
+        public static Motor hookMotor;
+        public static Motor winchMotor;
+
         public static CANTalonEncoder flywheelEncoder;
         public static CANEncoder hoodEncoder;
   }
@@ -159,7 +165,7 @@ public class RobotMap {
     public static class Operator {
         public static CustomJoystick joystick;
     }
-}
+  }
   
     public RobotMap() {
       Component.pdp = new PDP();
@@ -179,6 +185,7 @@ public class RobotMap {
 
       HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
       HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
+
       Component.intakeRollerMotor = new Motor("intakeRollerMotor", true, new CANTalonSRX(Port.CANMotor.INTAKE_ROLLER_MOTOR));
       Component.funnelMotor = new Motor("funnelMotor", true, new CANTalonSRX(Port.CANMotor.INTAKE_FUNNEL_MOTOR));
       Component.liftBeltMotor = new Motor("liftBeltMotor", new CANTalonSRX(Port.CANMotor.LIFT_BELT_MOTOR));
@@ -202,5 +209,7 @@ public class RobotMap {
     // Component.hoodEncoder = new CANEncoder(Port.CAN.HOOD_ENCODER);
     // Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLowerLimitSwitch, Input.hoodUpperLimitSwitch);
     // Component.shooter = new Shooter(Component.flywheel, Component.runUpBeltMotor, Component.hood);
+    Component.hookMotor = new Motor("HookMotor", new CANTalonSRX(Port.CANMotor.HOOK_MOTOR));
+    Component.winchMotor = new Motor("WinchMotor", new CANTalonFX(Port.CANMotor.WINCH_MOTOR));
   }
 }
