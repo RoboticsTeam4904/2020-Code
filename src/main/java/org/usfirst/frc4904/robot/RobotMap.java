@@ -183,8 +183,8 @@ public class RobotMap {
     Input.hoodLowerLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_LOWER_LIMIT_SWITCH);
     Input.hoodUpperLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_UPPER_LIMIT_SWITCH);
 
-    Component.intake = new Intake(Component.intakeRollerMotor, Component.funnelMotor, Component.intakeSolenoid);
-    Component.indexer = new Indexer(Component.liftBeltMotor, Component.flipperSolenoid, Input.indexerLimitSwitch);
+    Component.intake = new Intake(Component.intakeRollerMotor, Component.liftBeltMotor, Component.funnelMotor, Component.intakeSolenoid);
+    Component.indexer = new Indexer(Component.flipperSolenoid, Input.indexerLimitSwitch);
 
     Component.flywheelEncoder = new CANTalonEncoder(flywheelATalon, Metrics.Flywheel.ROTATIONS_PER_TICK);
     Component.flywheel = new Flywheel(

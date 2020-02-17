@@ -1,6 +1,7 @@
 package org.usfirst.frc4904.robot.commands;
 
 import org.usfirst.frc4904.robot.subsystems.Indexer;
+import org.usfirst.frc4904.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -16,8 +17,8 @@ public class IndexOne extends SequentialCommandGroup {
    * 
    * @param indexer
    */
-  public IndexOne(Indexer indexer) {
-    super(new OpenIndexer(indexer), new MotorConstant("RunIndexer", indexer.liftBelts, Indexer.DEFAULT_LIFT_SPEED),
+  public IndexOne(Indexer indexer, Intake intake) {
+    super(new OpenIndexer(indexer), new MotorConstant("RunIndexer", intake.lift, Intake.DEFAULT_LIFT_SPEED),
         new WaitUntilCommand(() -> {
           return indexer.limitSwitch.get();
         }), new CloseIndexer(indexer));
