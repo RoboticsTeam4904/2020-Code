@@ -185,6 +185,6 @@ public class RobotMap {
 
     Component.hoodEncoder = new CANEncoder(Port.CAN.HOOD_ENCODER);
     Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLowLimitSwitch, Input.hoodHighLimitSwitch); //TODO: Remove this redundancy.
-    Component.shooter = new Shooter(Component.flywheel, Component.shooterAimSolenoid, Component.hood);
+    Component.shooter = new Shooter(Component.flywheel, Component.runUpBeltMotor, Component.hood);
   }
 }
