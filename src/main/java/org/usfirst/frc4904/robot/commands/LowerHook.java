@@ -1,6 +1,7 @@
 package org.usfirst.frc4904.robot.commands;
 
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
+import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 
 public class LowerHook extends MotorConstant {
@@ -11,20 +12,36 @@ public class LowerHook extends MotorConstant {
   /**
    * Lower the deploy tube to hook onto the generator switch
    * 
-   * @param tubeMotor The motor to use to lower
-   * @param speed     The speed to lower the deploy tube at
+   * @param name
+   * @param speed The speed to lower the deploy tube at
    */
-  LowerHook(Motor tubeMotor, double speed) {
-    super("LowerHook", tubeMotor, speed);
+  public LowerHook(String name, Double speed) {
+    super(name, RobotMap.Component.hookMotor, speed);
   }
 
   /**
    * Lower the deploy tube to hook onto the generator switch
    * 
-   * @param tubeMotor The motor to use to lower
+   * @param name
    */
-  LowerHook(Motor tubeMotor) {
-    this(tubeMotor, DEFAULT_DOWN_SPEED);
+  public LowerHook(String name) {
+    this(name, DEFAULT_DOWN_SPEED);
   }
 
+  /**
+   * Lower the deploy tube to hook onto the generator switch
+   * 
+   * @param speed The speed to lower the deploy tube at
+   */
+  public LowerHook(Double speed) {
+    this("LowerHook", speed);
+  }
+
+  /**
+   * Lower the deploy tube to hook onto the generator switch
+   * 
+   */
+  public LowerHook() {
+    this("LowerHook", DEFAULT_DOWN_SPEED);
+  }
 }
