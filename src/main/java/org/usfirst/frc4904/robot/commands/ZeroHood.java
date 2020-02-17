@@ -10,17 +10,15 @@ public class ZeroHood extends SequentialCommandGroup {
     protected double ZERO_SERVO_CONSTANT = 0;
 
     public ZeroHood(Hood hood) {
-        super(new HoodZeroConstant(hood, hood.DEFAULT_SPEED, true), new WaitUntilCommand(() -> {
-            return hood.isLimitButtonDown();
-        }), new HoodZeroConstant(hood, -hood.DEFAULT_SPEED, false), new WaitUntilCommand(() -> {
-            return hood.isLimitButtonDown();
+        super(new HoodZeroConstant(hood, Hood.limitType.UPPER), new WaitUntilCommand(() -> {
+            return hood.isUpperLimitDown();
+        }), new HoodZeroConstant(hood, Hood.limitType.LOWER), new WaitUntilCommand(() -> {
+            return hood.isLowerLimitDown();
         }));
     }
 
     @Override
     public void end(boolean interrupted) {
         super.end(interrupted);
-        hood.setRange();
     }
-
 }

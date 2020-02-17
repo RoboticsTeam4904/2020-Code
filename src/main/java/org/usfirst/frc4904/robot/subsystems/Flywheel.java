@@ -71,7 +71,7 @@ public class Flywheel extends VelocitySensorMotor {
   }
 
   protected void syncStatus() {
-    if (Math.abs(targetSpeed) < motionController.getAbsoluteTolerance() || currentStatus == FlywheelStatus.IDLE) {
+    if (Math.abs(targetSpeed) < motionController.getAbsoluteTolerance() || currentStatus == FlywheelStatus.IDLE) { //TODO: Infinitely idle?
       currentStatus = FlywheelStatus.IDLE;
       return;
     }
@@ -103,9 +103,5 @@ public class Flywheel extends VelocitySensorMotor {
   public void setSpeed(double speed) {
     targetSpeed = speed;
     setSpeed();
-  }
-
-  public void setSpeedForDistance(double distance) {
-    setSpeed(2 * distance); // TODO: set speed value based on distance
   }
 }

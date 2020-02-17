@@ -1,8 +1,8 @@
 package org.usfirst.frc4904.robot.commands;
 
 import org.usfirst.frc4904.robot.subsystems.Flywheel;
-import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
-public class FlywheelSpinUp extends MotorConstant {
+import org.usfirst.frc4904.standard.commands.motor.MotorVelocitySet;
+public class FlywheelSpinUp extends MotorVelocitySet {
   public static final double DEFAULT_FLYWHEEL_SPEED = 0.0; // TODO: This is an untested value
 
   /**
