@@ -14,7 +14,10 @@ public class Hood extends PositionSensorMotor {
         IDLE, MOVING, IN_POSITION
     }
 
-    public final double DEFAULT_SPEED = 0;
+    public static enum limitType {
+        UPPER, LOWER
+    }
+
     private final double LOWER_HOOD_ANGLE = 0; //TODO: Add this value
     private final double RANGE_HOOD_ANGLES = 35.0;
     private final double UPPER_HOOD_ANGLE = LOWER_HOOD_ANGLE + RANGE_HOOD_ANGLES; //TODO: Does having all of these theoretical constants negate the zeroing we're doing?
@@ -53,10 +56,10 @@ public class Hood extends PositionSensorMotor {
 
     public void syncStatus(){
         if(isLowerLimitDown()){
-            setLimit(false);
+            setLimit(limitType.LOWER);
         }
         if(isUpperLimitDown()){
-            setLimit(true);
+            setLimit(limitType.UPPER);
         }
     }
 
@@ -108,8 +111,8 @@ public class Hood extends PositionSensorMotor {
         return this.servo;
     }
 
-    public void setLimit(boolean limitType) {
-        if (limitType) {
+    public void setLimit(limitType type) {
+        if (type == limitType.UPPER) {
             hoodEncoder.resetViaOffset(upperServoPosition);
         } else {
             hoodEncoder.resetViaOffset(lowerServoPosition);

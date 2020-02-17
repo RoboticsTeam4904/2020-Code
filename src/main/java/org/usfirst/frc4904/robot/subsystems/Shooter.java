@@ -27,7 +27,7 @@ public class Shooter {
   public Set<SubsystemBase> getSubsystems() {
     return Set.of(flywheel, runUpBelt, hood);
   }
-  
+
   public FlywheelStatus getFlywheelStatus() {
     return flywheel.getStatus();
   }
@@ -44,9 +44,9 @@ public class Shooter {
     flywheel.setSpeed(speed);
   }
 
-  // public void setFlywheelSpeedForDistance(double distance) {
-  //   // flywheel.setSpeedForDistance(distance);
-  // }
+  public void setFlywheelSpeedForDistance(double distance) {
+    //TODO: Add this
+  }
 
   public void setRunUpBeltSpeed(double speed) {
     runUpBelt.set(speed);

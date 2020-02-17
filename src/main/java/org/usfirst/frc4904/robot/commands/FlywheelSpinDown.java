@@ -20,7 +20,13 @@ public class FlywheelSpinDown extends CommandBase {
   }
 
   @Override
+  public void initialize() {
+    super.initialize();
+    flywheel.disableMotionController();
+  }
+
+  @Override
   public void execute() {
-    flywheel.setSpeed(DEFAULT_IDLE_SPEED);
+    flywheel.set(DEFAULT_IDLE_SPEED);
   }
 }

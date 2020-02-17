@@ -60,6 +60,8 @@ public class RobotMap {
 
     public static class Digital {
       public static final int INDEXER_LIMIT_SWITCH = -1;
+      public static final int HOOD_LOWER_LIMIT_SWITCH = -1;
+      public static final int HOOD_UPPER_LIMIT_SWITCH = -1;
     }
   }
 
@@ -103,12 +105,14 @@ public class RobotMap {
       public static final double P = 0;
       public static final double I = 0;
       public static final double D = 0;
+      public static final double F = 0;
     }
 
     public static class Hood {
       public static final double P = 0;
       public static final double I = 0;
       public static final double D = 0;
+      public static final double F = 0;
     }
 
     public static class Drive {
@@ -143,9 +147,9 @@ public class RobotMap {
   }
 
   public static class Input {
-    public static CustomDigitalLimitSwitch limitSwitch;
-    public static CustomDigitalLimitSwitch hoodLowLimitSwitch;
-    public static CustomDigitalLimitSwitch hoodHighLimitSwitch;
+    public static CustomDigitalLimitSwitch indexerLimitSwitch;
+    public static CustomDigitalLimitSwitch hoodLowerLimitSwitch;
+    public static CustomDigitalLimitSwitch hoodUpperLimitSwitch;
   }
 
   public static class HumanInput {
@@ -166,25 +170,28 @@ public class RobotMap {
     Component.flipperSolenoid = new SolenoidSubsystem(Port.Pneumatics.FLIPPER_SOLENOID.buildDoubleSolenoid());
     Component.shooterAimSolenoid = new SolenoidSubsystem(Port.Pneumatics.SHOOTER_AIM_SOLENOID.buildDoubleSolenoid());
 
-    // TODO: FIX MOTOR TYPES
     Component.intakeRollerMotor = new Motor("intakeRollerMotor", new CANTalonSRX(Port.CANMotor.INTAKE_ROLLER_MOTOR));
     Component.funnelMotor = new Motor("funnelMotor", new CANTalonSRX(Port.CANMotor.INTAKE_FUNNEL_MOTOR));
     Component.liftBeltMotor = new Motor("liftBeltMotor", new CANTalonSRX(Port.CANMotor.LIFT_BELT_MOTOR));
     Component.runUpBeltMotor = new Motor("runUpBeltMotor", new CANTalonSRX(Port.CANMotor.RUN_UP_BELT_MOTOR));
-    CANTalonFX flywheelATalon = new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_A); //TODO: Nicer way to do this?
+    CANTalonFX flywheelATalon = new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_A);
     Component.flywheelMotorA = new Motor("flywheelMotorA", flywheelATalon);
     Component.flywheelMotorB = new Motor("flywheelMotorB", new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_B));
     Component.hoodMotor = new Motor("hoodMotor", new ContinuousServoController(Port.PWM.HOOD_MOTOR));
 
+    Input.indexerLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.INDEXER_LIMIT_SWITCH);
+    Input.hoodLowerLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_LOWER_LIMIT_SWITCH);
+    Input.hoodUpperLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_UPPER_LIMIT_SWITCH);
+
     Component.intake = new Intake(Component.intakeRollerMotor, Component.funnelMotor, Component.intakeSolenoid);
-    Component.indexer = new Indexer(Component.liftBeltMotor, Component.flipperSolenoid, Input.limitSwitch);
+    Component.indexer = new Indexer(Component.liftBeltMotor, Component.flipperSolenoid, Input.indexerLimitSwitch);
 
     Component.flywheelEncoder = new CANTalonEncoder(flywheelATalon, Metrics.Flywheel.ROTATIONS_PER_TICK);
     Component.flywheel = new Flywheel(
         new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, Component.flywheelEncoder));
 
     Component.hoodEncoder = new CANEncoder(Port.CAN.HOOD_ENCODER);
-    Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLowLimitSwitch, Input.hoodHighLimitSwitch); //TODO: Remove this redundancy.
+    Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLowerLimitSwitch, Input.hoodUpperLimitSwitch);
     Component.shooter = new Shooter(Component.flywheel, Component.runUpBeltMotor, Component.hood);
   }
 }
