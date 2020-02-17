@@ -10,11 +10,19 @@ import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 
-class PickupAndShootSide extends AutonRoutine {
+class ShootAndPickupSide extends AutonRoutine {
 
-    public PickupAndShootSide() {
+    public ShootAndPickupSide() {
+        Trajectory moveToShoot = RobotMap.Component.sensorChassis
+                .generateQuinticTrajectory(Arrays.asList(Poses.currentPos, Poses.shootingPose));
+        SimpleSplines moveToShootSpline = new SimpleSplines(RobotMap.Component.sensorChassis, moveToShoot);
+        this.andThen(moveToShootSpline);
+        double FlywheelSpeed = 0.0;
+        andThen(new Shoot(RobotMap.Component.indexer, RobotMap.Component.shooter, FlywheelSpeed));
+        andThen(new FlywheelSpinDown(RobotMap.Component.flywheel));
+
         Trajectory goingToPowerCells = RobotMap.Component.sensorChassis
-                .generateQuinticTrajectory(Arrays.asList(Poses.currentPos, Poses.sideCollectStart));
+                .generateQuinticTrajectory(Arrays.asList(Poses.shootingPose, Poses.sideCollectStart));
         SimpleSplines approachSpline = new SimpleSplines(RobotMap.Component.sensorChassis, goingToPowerCells);
         this.andThen(approachSpline);
         this.andThen(new RunIntake(RobotMap.Component.intake));
@@ -23,13 +31,6 @@ class PickupAndShootSide extends AutonRoutine {
         goingToPowerCells.relativeTo(Poses.currentPos);
         SimpleSplines collectSpline = new SimpleSplines(RobotMap.Component.sensorChassis, collect);
         this.andThen(collectSpline);
-        Trajectory moveToShoot = RobotMap.Component.sensorChassis
-                .generateQuinticTrajectory(Arrays.asList(Poses.sideCollectEnd, Poses.shootingPose));
-        SimpleSplines moveToShootSpline = new SimpleSplines(RobotMap.Component.sensorChassis, moveToShoot);
-        this.andThen(moveToShootSpline);
-        double FlywheelSpeed = 0.0;
-        andThen(new Shoot(RobotMap.Component.indexer, RobotMap.Component.shooter, FlywheelSpeed));
-        andThen(new FlywheelSpinDown(RobotMap.Component.flywheel));
     }
 
 }

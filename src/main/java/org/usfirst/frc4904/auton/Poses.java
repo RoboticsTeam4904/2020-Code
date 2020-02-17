@@ -5,37 +5,45 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
 class Poses {
 
-    //
-    // All measurements are in inches, starting at the bottom left corner of the
-    // field (I hope)
-    //
+        //
+        // All measurements are in inches, starting at the bottom left corner of the
+        // field (I hope)
+        //
 
-    // Useful constants
-    static final int topOfField = 500;
-    static final int startOfField = 28;
-    static final int widthofField = -1;
-    static final double firstCenterBall = 122.63;
-    // y position of center ball is 94.66 +43.65
-    // see layout and marking diagram pages 4 and 5
-    static final double centerBallposY = 138.41;
+        // Useful constants
+        static final int topOfField = 319;
+        static final int startOfField = 28;
+        static final int widthofField = 649;
+        static final double firstCenterBall = 122.63;
 
-    static final double offset = 5;
-    static final double startingLine = 120;
+        // y position of center ball is 94.66 +43.65
+        // see layout and marking diagram pages 4 and 5
 
-    // x position of center ball
-    // from right side of field:
-    // 374.59+130.36 - 122.63
-    static final double centerBallposX = -1;
+        static final double centerBallposY = 138.41;
 
-    // TODO: calculate positions (any value with -1)
-    static final Pose2d centerCollectStart = new Pose2d(227, widthofField - 145.2, new Rotation2d(4));
-    static final Pose2d centerCollectEnd = new Pose2d(250.25, widthofField - 168.15, new Rotation2d(4));
+        static final double offset = 5;
+        static final double startingLine = 120;
 
-    static final Pose2d sideCollectionStart = new Pose2d(startingLine + 122.63 - offset, topOfField - 94.66 + 66.91,
-            new Rotation2d(0));
-    static final Pose2d sideCollectionEnd = new Pose2d(startingLine + 194.63 + offset, topOfField - 94.66 + 66.91,
-            new Rotation2d(0));
-    static Pose2d shootingPose = new Pose2d(startOfField, topOfField - 94.66, new Rotation2d(90));
+        // x position of center ball
+        // from right side of field:
+        // 374.59+130.36 - 122.63
+        static final double centerBallposX = -1;
 
-    static Pose2d currentPos = new Pose2d();// TODO: Get from localization
+        static final Pose2d centerCollectStart = new Pose2d(0.0254 * 227, 0.0254 * ((topOfField - 94.66) - 50),
+                        new Rotation2d(0));
+        static final Pose2d centerCollectEnd = new Pose2d(0.0254 * 240, 0.0254 * ((topOfField - 94.66) - 81),
+                        new Rotation2d(0));
+
+        static final Pose2d sideCollectStart = new Pose2d(0.0254 * (startingLine + 122.63 - offset),
+                        0.0254 * (topOfField - 94.66 + 66.91), new Rotation2d(0));
+        static final Pose2d sideCollectEnd = new Pose2d(0.0254 * (startingLine + 194.63 + offset),
+                        0.0254 * (topOfField - 94.66 + 66.91), new Rotation2d(0));
+        static Pose2d shootingPose = new Pose2d(0.0254 * startOfField, 0.0254 * (topOfField - 94.66),
+                        new Rotation2d(0));
+
+        static Pose2d currentPos = new Pose2d(0.0254 * (120 + startOfField), 0.0254 * topOfField / 2,
+                        new Rotation2d(0));// TODO:
+                                           // Get
+        // from
+        // localization
 }
