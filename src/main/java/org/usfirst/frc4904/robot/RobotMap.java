@@ -184,7 +184,7 @@ public class RobotMap {
         new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, Component.flywheelEncoder));
 
     Component.hoodEncoder = new CANEncoder(Port.CAN.HOOD_ENCODER);
-    Component.shooter = new Shooter(Component.flywheel, Component.shooterAimSolenoid, Component.runUpBeltMotor);
     Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLowLimitSwitch, Input.hoodHighLimitSwitch); //TODO: Remove this redundancy.
+    Component.shooter = new Shooter(Component.flywheel, Component.shooterAimSolenoid, Component.hood);
   }
 }

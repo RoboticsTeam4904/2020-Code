@@ -15,40 +15,19 @@ public class Shooter {
   public final static double DEFAULT_OFF_SPEED = 0.0;
 
   public final Flywheel flywheel;
-  public final SolenoidSubsystem aimSolenoid;
   public final Motor runUpBelt;
+  public Hood hood;
 
-  /**
-   * Shooter
-   * 
-   * Wraps a Flywheel and a SolenoidSubsystem together for the shooter on 4904's
-   * 2020 robot
-   * 
-   * @param flywheel          The actual flywheel for this subsystem
-   * @param solenoidSubsystem The SolenoidSubsystem for aiming the shooter
-   */
-  public Shooter(Flywheel flywheel, SolenoidSubsystem solenoidSubsystem, Motor motor) {
+  public Shooter(Flywheel flywheel, Motor runUpBelt, Hood hood) {
     this.flywheel = flywheel;
-    this.aimSolenoid = solenoidSubsystem;
-    this.runUpBelt = motor;
+    this.runUpBelt = runUpBelt;
+    this.hood = hood;
   }
 
   public Set<SubsystemBase> getSubsystems() {
-    return Set.of(flywheel, aimSolenoid, runUpBelt);
+    return Set.of(flywheel, runUpBelt, hood);
   }
-
-  public SolenoidState getSolenoidState() {
-    return aimSolenoid.getState();
-  }
-
-  public void setSolenoidHigh() {
-    aimSolenoid.set(SolenoidState.EXTEND);
-  }
-
-  public void setSolenoidLow() {
-    aimSolenoid.set(SolenoidState.RETRACT);
-  }
-
+  
   public FlywheelStatus getFlywheelStatus() {
     return flywheel.getStatus();
   }

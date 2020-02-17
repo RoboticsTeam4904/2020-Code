@@ -10,6 +10,10 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import org.usfirst.frc4904.standard.subsystems.motor.PositionSensorMotor;
 
 public class Hood extends PositionSensorMotor {
+    public static enum HoodStatus {
+        IDLE, MOVING, IN_POSITION
+    }
+
     public final double DEFAULT_SPEED = 0;
     private final double LOWER_HOOD_ANGLE = 0; //TODO: Add this value
     private final double RANGE_HOOD_ANGLES = 35.0;
@@ -22,6 +26,7 @@ public class Hood extends PositionSensorMotor {
     protected CANEncoder hoodEncoder;
     protected CustomDigitalLimitSwitch lowLimit;
     protected CustomDigitalLimitSwitch highLimit;
+    protected HoodStatus currentStatus = HoodStatus.IDLE;
     private final double lowerServoPosition = 0.0; //TODO: Refine this value.
     private final double upperServoPosition = lowerServoPosition + SERVO_ROTATION_PER_HOOD;
     private Util.Range servoRange = new Util.Range(lowerServoPosition, upperServoPosition);
