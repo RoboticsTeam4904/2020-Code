@@ -10,10 +10,11 @@ import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
  */
 public class ColorTracker {
     protected static final Color[] colorOrder = new Color[] { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN };
-    protected static final double NUM_COLORS = 2 * colorOrder.length; // there are two wedges of every color on the control panel
+    protected static final double NUM_COLORS = 2 * colorOrder.length; // there are two wedges of every color on the
+                                                                      // control panel
     protected static final double DEGREES_IN_A_CIRCLE = 360.0;
     protected static final double DEGREES_PER_WEDGE = DEGREES_IN_A_CIRCLE / NUM_COLORS;
-        protected static final double CONTROL_PANEL_DIAMETER = -1.0; //TODO: update these constants
+    protected static final double CONTROL_PANEL_DIAMETER = -1.0; // TODO: update these constants
     protected static final double PANEL_SPINNER_DIAMETER = -1.0;
     protected static final double PANEL_SPINNER_RATIO = CONTROL_PANEL_DIAMETER / PANEL_SPINNER_DIAMETER;
 
@@ -59,22 +60,22 @@ public class ColorTracker {
      * @return String color
      */
     public Color getColor() {
-        String colorResult = NetworkTables.Sensors.controlPanelColor.getString("ERROR");
+        String colorResult = NetworkTables.Vision.ControlPanel.color.getString("ERROR");
         if (colorResult == "ERROR") {
             LogKitten.wtf("Control panel color not in network table. ERROR was returned instead.");
             return null;
         }
-        switch (colorResult) { // TODO: get correct format for strings based off networktables
-        case "RED":
-            return Color.RED;
-        case "GREEN":
-            return Color.GREEN;
-        case "YELLOW":
-            return Color.YELLOW;
-        case "BLUE":
-            return Color.BLUE;
-        default:
-            return null;
+        switch (colorResult) {
+            case "RED":
+                return Color.RED;
+            case "GREEN":
+                return Color.GREEN;
+            case "YELLOW":
+                return Color.YELLOW;
+            case "BLUE":
+                return Color.BLUE;
+            default:
+                return null;
         }
     }
 
@@ -98,7 +99,9 @@ public class ColorTracker {
             return;
         }
         if (currentColor != nextColor) {
-            int colorChange = getIndex(nextColor) - getIndex(currentColor) + ((int) NUM_COLORS )/ 2 * ((int) changeInPosition )/ 180; // if we've gone more than a half circle, we've passed a color twice
+            int colorChange = getIndex(nextColor) - getIndex(currentColor)
+                    + ((int) NUM_COLORS) / 2 * ((int) changeInPosition) / 180; // if we've gone more than a half circle,
+                                                                               // we've passed a color twice
             if (!motorDirection) {
                 colorChange *= -1;
             }
