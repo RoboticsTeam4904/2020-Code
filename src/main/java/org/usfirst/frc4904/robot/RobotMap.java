@@ -47,8 +47,9 @@ public class RobotMap {
             public static final double INCHES_PER_TICK = Metrics.Chassis.CIRCUMFERENCE_INCHES
                     / Metrics.Chassis.TICKS_PER_REVOLUTION;
         }
+
         public static class ControlPanel {
-            public static final double TICKS_PER_REVOLUTION = -1; //TODO: Depending on encoder, change this constant
+            public static final double TICKS_PER_REVOLUTION = -1; // TODO: Depending on encoder, change this constant
             public static final double DEGREES_PER_TICK = 360.0 / TICKS_PER_REVOLUTION;
         }
     }
@@ -74,9 +75,13 @@ public class RobotMap {
         public static NetworkTableInstance inst;
         public static NetworkTable table;
 
-        public static class Sensors {
+        public static class Vision {
             public static NetworkTable table;
-            public static NetworkTableEntry controlPanelColor;
+
+            public static class ControlPanel {
+                public static NetworkTable table;
+                public static NetworkTableEntry color;
+            }
         }
     }
 
@@ -96,12 +101,14 @@ public class RobotMap {
 
         // TODO: add a speed modifier?
         Component.controlPanel = new Motor("controlPanel", false, new CANTalonFX(Port.CANMotor.CONTROL_PANEL));
-        Component.controlPanelEncoder = new CustomCANCoder(Port.CAN.CONTROL_PANEL_ENCODER, Metrics.ControlPanel.DEGREES_PER_TICK);
+        Component.controlPanelEncoder = new CustomCANCoder(Port.CAN.CONTROL_PANEL_ENCODER,
+                Metrics.ControlPanel.DEGREES_PER_TICK);
 
         /* NetworkTables */
         NetworkTables.inst = NetworkTableInstance.getDefault();
-        NetworkTables.table = NetworkTables.inst.getTable("vision");
-        NetworkTables.Sensors.table = NetworkTables.inst.getTable("sensorData");
-        NetworkTables.Sensors.controlPanelColor = NetworkTables.Sensors.table.getEntry("controlPanelColor");
+        NetworkTables.table = NetworkTables.inst.getTable("Team4904");
+        NetworkTables.Vision.table = NetworkTables.table.getSubTable("vision");
+        NetworkTables.Vision.ControlPanel.table = NetworkTables.Vision.table.getSubTable("controlPanel");
+        NetworkTables.Vision.ControlPanel.color = NetworkTables.Vision.ControlPanel.table.getEntry("controlPanelColor");
     }
 }
