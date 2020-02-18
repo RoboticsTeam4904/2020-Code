@@ -1,5 +1,6 @@
 package org.usfirst.frc4904.robot;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import org.usfirst.frc4904.robot.subsystems.Flywheel;
@@ -7,6 +8,7 @@ import org.usfirst.frc4904.robot.subsystems.Hood;
 import org.usfirst.frc4904.robot.subsystems.Indexer;
 import org.usfirst.frc4904.robot.subsystems.Intake;
 import org.usfirst.frc4904.robot.subsystems.Shooter;
+import org.usfirst.frc4904.standard.custom.CustomPIDSourceType;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
@@ -96,10 +98,10 @@ public class RobotMap {
 
     public static class PID {
       public static class Flywheel {
-        public static final double P = 0;
-        public static final double I = 0;
+        public static final double P = 0.001;
+        public static final double I = 0.000000001;
         public static final double D = 0;
-        public static final double F = 0;
+        public static final double F = 0.01;
       }
   
       public static class Hood {
@@ -202,9 +204,9 @@ public class RobotMap {
     // Component.intake = new Intake(Component.intakeRollerMotor, Component.funnelMotor, Component.intakeSolenoid);
     // Component.indexer = new Indexer(Component.liftBeltMotor, Component.flipperSolenoid, Input.indexerLimitSwitch);
 
-    Component.flywheelEncoder = new CANTalonEncoder(flywheelATalon, Metrics.Flywheel.ROTATIONS_PER_TICK);
+    Component.flywheelEncoder = new CANTalonEncoder("flywheelEncoder", flywheelATalon, true, Metrics.Flywheel.ROTATIONS_PER_TICK, CustomPIDSourceType.kRate, FeedbackDevice.IntegratedSensor);
     Component.flywheel = new Flywheel(
-        new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, Component.flywheelEncoder));
+        new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, PID.Flywheel.F, Component.flywheelEncoder), Component.flywheelMotorA, Component.flywheelMotorB);
 
     // Component.hoodEncoder = new CANEncoder(Port.CAN.HOOD_ENCODER);
     // Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLowerLimitSwitch, Input.hoodUpperLimitSwitch);

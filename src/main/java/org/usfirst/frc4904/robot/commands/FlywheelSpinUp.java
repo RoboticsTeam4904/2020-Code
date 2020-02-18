@@ -1,7 +1,9 @@
 package org.usfirst.frc4904.robot.commands;
 
-import org.usfirst.frc4904.robot.subsystems.Flywheel;
+import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.standard.commands.motor.MotorVelocitySet;
+
+// import org.usfirst.frc4904.standard.commands.motor.MotorVelocitySet;
 public class FlywheelSpinUp extends MotorVelocitySet {
   public static final double DEFAULT_FLYWHEEL_SPEED = 0.0; // TODO: This is an untested value
 
@@ -11,8 +13,8 @@ public class FlywheelSpinUp extends MotorVelocitySet {
    * @param flywheel The flywheel to manipulate
    * @param speed    The speed to spin the flywheel up to
    */
-  FlywheelSpinUp(Flywheel flywheel, double speed) {
-    super("FlywheelSpinUp", flywheel, speed);
+  public FlywheelSpinUp(double speed) {
+    super("FlywheelSpinUp", RobotMap.Component.flywheel, speed);
   }
 
   /**
@@ -20,7 +22,7 @@ public class FlywheelSpinUp extends MotorVelocitySet {
    * 
    * @param flywheel The flywheel to manipulate
    */
-  FlywheelSpinUp(Flywheel flywheel) {
-    this(flywheel, DEFAULT_FLYWHEEL_SPEED);
+  public FlywheelSpinUp() {
+    this(DEFAULT_FLYWHEEL_SPEED);
   }
 }

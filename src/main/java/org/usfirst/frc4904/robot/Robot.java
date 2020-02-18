@@ -9,6 +9,7 @@ package org.usfirst.frc4904.robot;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
+import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 
 public class Robot extends CommandRobotBase {
@@ -55,7 +56,6 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void alwaysExecute() {
-
     }
 
 }

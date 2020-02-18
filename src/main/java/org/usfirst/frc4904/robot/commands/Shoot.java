@@ -25,7 +25,7 @@ public class Shoot extends SequentialCommandGroup {
    * @param speed   The target speed of the flywheel
    */
   public Shoot(Indexer indexer, Shooter shooter, double speed) {
-    super(new RunIf(new FlywheelSpinUp(shooter.flywheel, speed), () -> {
+    super(new RunIf(new FlywheelSpinUp(speed), () -> {
       return Math.abs(shooter.flywheel.getTargetSpeed() - speed) > SPEED_TOLERANCE;
     }), new WaitUntil(() -> {
       return shooter.flywheel.getStatus() == FlywheelStatus.AT_SPEED;
