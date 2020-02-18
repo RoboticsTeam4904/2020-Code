@@ -90,8 +90,7 @@ public class RobotMap {
         public static Motor leftDriveB;
         public static Motor rightDriveA;
         public static Motor rightDriveB;
-        // public static TankDriveShifting chassis;
-        public static TankDrive chassis;
+        public static TankDriveShifting chassis;
         public static SolenoidShifters shifter;
         public static EnableableModifier leftWheelAccelerationCap;
         public static EnableableModifier rightWheelAccelerationCap;
@@ -122,11 +121,6 @@ public class RobotMap {
                 RobotMap.Metrics.Chassis.METERS_PER_TICK);
         Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
                 RobotMap.Metrics.Chassis.METERS_PER_TICK);
-
-        Component.leftWheelAccelerationCap = new EnableableModifier(new AccelerationCap(Component.pdp));
-        Component.leftWheelAccelerationCap.enable();
-        Component.rightWheelAccelerationCap = new EnableableModifier(new AccelerationCap(Component.pdp));
-        Component.rightWheelAccelerationCap.enable();
 
         Component.leftDriveA = new Motor("leftDriveA", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A));
         Component.leftDriveB = new Motor("leftDriveB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
