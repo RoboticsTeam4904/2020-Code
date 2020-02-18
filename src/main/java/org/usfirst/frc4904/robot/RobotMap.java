@@ -1,5 +1,7 @@
 package org.usfirst.frc4904.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
@@ -99,8 +101,7 @@ public class RobotMap {
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 
-        // TODO: add a speed modifier?
-        Component.controlPanel = new Motor("controlPanel", false, new CANTalonFX(Port.CANMotor.CONTROL_PANEL));
+        Component.controlPanel = new Motor("controlPanel", false, new CANTalonFX(Port.CANMotor.CONTROL_PANEL, NeutralMode.Brake));
         Component.controlPanelEncoder = new CustomCANCoder(Port.CAN.CONTROL_PANEL_ENCODER,
                 Metrics.ControlPanel.DEGREES_PER_TICK);
 
