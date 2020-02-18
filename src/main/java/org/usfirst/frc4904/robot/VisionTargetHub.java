@@ -2,13 +2,18 @@ package org.usfirst.frc4904.robot;
 
 import java.util.Arrays;
 
-import org.usfirst.frc4904.robot.RobotMap;
-import org.usfirst.frc4904.robot.VisionTarget;
-
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
+/**
+ * Class for vision data collection and corresponding helper methods
+ */
 public class VisionTargetHub implements Subsystem {
     protected static final double[] DEFAULT_INPUT_ARRAY = new double[0];
+    protected static NetworkTableEntry targetTypesEntry;
+    protected static NetworkTableEntry distancesEntry;
+    protected static NetworkTableEntry betasEntry;
+    protected static NetworkTableEntry thetasEntry;
     protected static double[] targetTypes;
     protected static double[] distances;
     protected static double[] betas;
@@ -26,7 +31,13 @@ public class VisionTargetHub implements Subsystem {
         }
     }
 
-    public VisionTargetHub() {
+    public VisionTargetHub(NetworkTableEntry targetTypesEntry, NetworkTableEntry distancesEntry,
+            NetworkTableEntry betasEntry, NetworkTableEntry thetasEntry) {
+        VisionTargetHub.targetTypesEntry = targetTypesEntry;
+        VisionTargetHub.distancesEntry = targetTypesEntry;
+        VisionTargetHub.betasEntry = targetTypesEntry;
+        VisionTargetHub.thetasEntry = targetTypesEntry;
+
         enableDataCollection();
         getTargetData();
         createTargets();
@@ -49,14 +60,10 @@ public class VisionTargetHub implements Subsystem {
     }
 
     public void getTargetData() {
-        VisionTargetHub.targetTypes = RobotMap.NetworkTables.Vision.VisionTargets.targetTypes
-                .getDoubleArray(DEFAULT_INPUT_ARRAY);
-        VisionTargetHub.distances = RobotMap.NetworkTables.Vision.VisionTargets.targetTypes
-                .getDoubleArray(DEFAULT_INPUT_ARRAY);
-        VisionTargetHub.betas = RobotMap.NetworkTables.Vision.VisionTargets.targetTypes
-                .getDoubleArray(DEFAULT_INPUT_ARRAY);
-        VisionTargetHub.thetas = RobotMap.NetworkTables.Vision.VisionTargets.targetTypes
-                .getDoubleArray(DEFAULT_INPUT_ARRAY);
+        VisionTargetHub.targetTypes = targetTypesEntry.getDoubleArray(DEFAULT_INPUT_ARRAY);
+        VisionTargetHub.distances = distancesEntry.getDoubleArray(DEFAULT_INPUT_ARRAY);
+        VisionTargetHub.betas = betasEntry.getDoubleArray(DEFAULT_INPUT_ARRAY);
+        VisionTargetHub.thetas = thetasEntry.getDoubleArray(DEFAULT_INPUT_ARRAY);
     }
 
     public VisionTarget[] createTargets() {

@@ -30,7 +30,6 @@ import org.usfirst.frc4904.robot.VisionTargetHub;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.SplineAutoConstants;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.SplineDriveConstants;
 
-
 public class RobotMap {
     public static class Port {
         public static class HumanInput {
@@ -195,13 +194,11 @@ public class RobotMap {
                 DriveConstants.DRIVE_CONSTANTS, Component.leftWheelEncoder, Component.rightWheelEncoder,
                 Component.navx);
 
-
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 
         /** Vision */
-        Component.hub = new VisionTargetHub();
-        //Network Tables
+        // Network Tables
         NetworkTables.inst = NetworkTableInstance.getDefault();
         NetworkTables.table = NetworkTables.inst.getTable("team4904");
         NetworkTables.Vision.table = NetworkTables.table.getSubTable("vision");
@@ -211,6 +208,10 @@ public class RobotMap {
         NetworkTables.Vision.VisionTargets.distances = NetworkTables.Vision.VisionTargets.table.getEntry("distances");
         NetworkTables.Vision.VisionTargets.betas = NetworkTables.Vision.VisionTargets.table.getEntry("betas");
         NetworkTables.Vision.VisionTargets.thetas = NetworkTables.Vision.VisionTargets.table.getEntry("thetas");
+
+        Component.hub = new VisionTargetHub(NetworkTables.Vision.VisionTargets.targetTypes,
+                NetworkTables.Vision.VisionTargets.distances, NetworkTables.Vision.VisionTargets.betas,
+                NetworkTables.Vision.VisionTargets.thetas);
 
     }
 }
