@@ -1,6 +1,7 @@
 package org.usfirst.frc4904.robot.commands;
 
 import org.usfirst.frc4904.robot.subsystems.Indexer;
+import org.usfirst.frc4904.robot.subsystems.Intake;
 import org.usfirst.frc4904.robot.subsystems.Shooter;
 import org.usfirst.frc4904.robot.subsystems.Flywheel.FlywheelStatus;
 import org.usfirst.frc4904.standard.commands.RunIf;
@@ -24,12 +25,12 @@ public class Shoot extends SequentialCommandGroup {
    * @param shooter The shooter subsystem
    * @param speed   The target speed of the flywheel
    */
-  public Shoot(Indexer indexer, Shooter shooter, double speed) {
+  public Shoot(Indexer indexer, Intake intake, Shooter shooter, double speed) {
     super(new RunIf(new FlywheelSpinUp(shooter.flywheel, speed), () -> {
       return Math.abs(shooter.flywheel.getTargetSpeed() - speed) > SPEED_TOLERANCE;
     }), new WaitUntil(() -> {
       return shooter.flywheel.getStatus() == FlywheelStatus.AT_SPEED;
-    }), new IndexOne(indexer));
+    }), new IndexOne(indexer, intake));
     setName("Shoot");
   }
 }
