@@ -31,34 +31,34 @@ public class RobotMap {
       public static final int xboxController = 1;
     }
 
-    public static class CANMotor { // TODO: CHANGE CONSTS
+    public static class CANMotor {
       // Intake
-      public static final int INTAKE_ROLLER_MOTOR = -1;
-      public static final int INTAKE_FUNNEL_MOTOR = -1;
+      public static final int INTAKE_ROLLER_MOTOR = 10;
+      public static final int INTAKE_FUNNEL_MOTOR = 5;
       // Indexer
-      public static final int LIFT_BELT_MOTOR = -1;
+      public static final int LIFT_BELT_MOTOR = 6;
       // Flywheel
-      public static final int FLYWHEEL_MOTOR_A = -1;
-      public static final int FLYWHEEL_MOTOR_B = -1;
+      public static final int FLYWHEEL_MOTOR_A = 2;
+      public static final int FLYWHEEL_MOTOR_B = 1;
       // Shooter
-      public static final int RUN_UP_BELT_MOTOR = -1;
+      public static final int RUN_UP_BELT_MOTOR = 8;
     }
 
-    public static class PWM {
+    public static class PWM { // TODO: CHANGE CONSTS
       public static final int HOOD_MOTOR = -1;
     }
 
-    public static class CAN {
+    public static class CAN { // TODO: CHANGE CONSTS
       public static final int HOOD_ENCODER = -1;
     }
 
-    public static class Pneumatics {
+    public static class Pneumatics { // TODO: CHANGE CONSTS
       public static final PCMPort INTAKE_SOLENOID = new PCMPort(0, -1, -1);
       public static final PCMPort FLIPPER_SOLENOID = new PCMPort(0, -1, -1);
       public static final PCMPort SHOOTER_AIM_SOLENOID = new PCMPort(0, -1, -1);
     }
 
-    public static class Digital {
+    public static class Digital { // TODO: CHANGE CONSTS
       public static final int INDEXER_LIMIT_SWITCH = -1;
       public static final int HOOD_LOWER_LIMIT_SWITCH = -1;
       public static final int HOOD_UPPER_LIMIT_SWITCH = -1;
@@ -78,8 +78,15 @@ public class RobotMap {
           / Metrics.Chassis.TICKS_PER_REVOLUTION;
     }
 
-    public static class Flywheel {
-      public static final double ROTATIONS_PER_TICK = 1.0 / 2048.0;
+    public static class Encoders {
+      public static class TalonEncoders {
+        public static final double TICKS_PER_REVOLUTION = 2048.0;
+        public static final double REVOLUTIONS_PER_TICK = 1 / TICKS_PER_REVOLUTION;
+      }
+      public static class CANCoders {
+        public static final double TICKS_PER_REVOLUTION = 4096.0;
+        public static final double REVOLUTIONS_PER_TICK = 1 / TICKS_PER_REVOLUTION;
+      }
     }
   }
 
@@ -103,17 +110,17 @@ public class RobotMap {
 
   public static class PID {
     public static class Flywheel {
-      public static final double P = 0;
-      public static final double I = 0;
-      public static final double D = 0;
-      public static final double F = 0;
+      public static final double P = 0.0;
+      public static final double I = 0.0;
+      public static final double D = 0.0;
+      public static final double F = 0.0;
     }
 
     public static class Hood {
-      public static final double P = 0;
-      public static final double I = 0;
-      public static final double D = 0;
-      public static final double F = 0;
+      public static final double P = 0.0;
+      public static final double I = 0.0;
+      public static final double D = 0.0;
+      public static final double F = 0.0;
     }
 
     public static class Drive {
@@ -164,13 +171,16 @@ public class RobotMap {
   }
 
   public RobotMap() {
+    /** Human Input */
     HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
     HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 
+    /** Pneumatics */
     Component.intakeSolenoid = new SolenoidSubsystem(Port.Pneumatics.INTAKE_SOLENOID.buildDoubleSolenoid());
     Component.flipperSolenoid = new SolenoidSubsystem(Port.Pneumatics.FLIPPER_SOLENOID.buildDoubleSolenoid());
     Component.shooterAimSolenoid = new SolenoidSubsystem(Port.Pneumatics.SHOOTER_AIM_SOLENOID.buildDoubleSolenoid());
 
+    /** Motors */
     Component.intakeRollerMotor = new Motor("intakeRollerMotor", new CANTalonSRX(Port.CANMotor.INTAKE_ROLLER_MOTOR));
     Component.funnelMotor = new Motor("funnelMotor", new CANTalonSRX(Port.CANMotor.INTAKE_FUNNEL_MOTOR));
     Component.liftBeltMotor = new Motor("liftBeltMotor", new CANTalonSRX(Port.CANMotor.LIFT_BELT_MOTOR));
@@ -180,19 +190,23 @@ public class RobotMap {
     Component.flywheelMotorB = new Motor("flywheelMotorB", new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_B));
     Component.hoodMotor = new Motor("hoodMotor", new ContinuousServoController(Port.PWM.HOOD_MOTOR));
 
+    /** Digital */
     Input.indexerLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.INDEXER_LIMIT_SWITCH);
     Input.hoodLowerLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_LOWER_LIMIT_SWITCH);
     Input.hoodUpperLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_UPPER_LIMIT_SWITCH);
 
+    /** Encoders */
+    Component.flywheelEncoder = new CANTalonEncoder(flywheelATalon, Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK);
+    Component.hoodEncoder = new CANEncoder(Port.CAN.HOOD_ENCODER);
+
+    /** Classes */
     Component.intake = new Intake(Component.intakeRollerMotor, Component.liftBeltMotor, Component.funnelMotor,
         Component.intakeSolenoid);
     Component.indexer = new Indexer(Component.flipperSolenoid, Input.indexerLimitSwitch);
 
-    Component.flywheelEncoder = new CANTalonEncoder(flywheelATalon, Metrics.Flywheel.ROTATIONS_PER_TICK);
     Component.flywheel = new Flywheel(new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D,
         PID.Flywheel.F, Component.flywheelEncoder), Component.flywheelMotorA, Component.flywheelMotorB);
 
-    Component.hoodEncoder = new CANEncoder(Port.CAN.HOOD_ENCODER);
     Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLowerLimitSwitch,
         Input.hoodUpperLimitSwitch);
     Component.shooter = new Shooter(Component.flywheel, Component.runUpBeltMotor, Component.hood);

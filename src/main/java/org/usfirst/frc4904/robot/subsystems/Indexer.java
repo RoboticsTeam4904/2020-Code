@@ -9,7 +9,7 @@ import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem.SolenoidState;
 
 /**
- * Indexer - Wraps the indexer flippers and the run up belt.
+ * Indexer - Wraps the indexer flippers and the flippers limit switch.
  * 
  */
 public class Indexer {
