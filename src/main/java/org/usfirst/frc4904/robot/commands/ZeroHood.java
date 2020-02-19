@@ -10,9 +10,9 @@ public class ZeroHood extends SequentialCommandGroup {
     protected double ZERO_SERVO_CONSTANT = 0;
 
     public ZeroHood(Hood hood) {
-        super(new HoodZeroConstant(hood, Hood.limitType.UPPER), new WaitUntilCommand(() -> {
+        super(new HoodZeroConstant(hood, Hood.LimitType.UPPER), new WaitUntilCommand(() -> {
             return hood.isUpperLimitDown();
-        }), new HoodZeroConstant(hood, Hood.limitType.LOWER), new WaitUntilCommand(() -> {
+        }), new HoodZeroConstant(hood, Hood.LimitType.LOWER), new WaitUntilCommand(() -> {
             return hood.isLowerLimitDown();
         }));
     }
