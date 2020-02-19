@@ -80,6 +80,15 @@ public class RobotMap {
     public static class Flywheel {
       public static final double ROTATIONS_PER_TICK = 1.0 / 2048.0;
     }
+    public static class Hood {
+      public static final double LOWER_HOOD_ANGLE = 0; //TODO: Add this value
+      public static final double RANGE_HOOD_ANGLES = 35.0;
+      public static final double UPPER_HOOD_ANGLE = LOWER_HOOD_ANGLE + RANGE_HOOD_ANGLES; //TODO: Does having all of these theoretical constants negate the zeroing we're doing?
+      public static final double TEETH_PER_SERVO_ROTATION = 20.0;
+      public static final double TEETH_PER_HOOD = 364.0;
+      public static final double SERVO_ROTATION_PER_HOOD = TEETH_PER_SERVO_ROTATION / TEETH_PER_HOOD;
+      public static final double HOOD_ANGLE_PER_SERVO_POSITION = RANGE_HOOD_ANGLES / SERVO_ROTATION_PER_HOOD; //TODO: Nomenclature can get confusing.
+    }
   }
 
   public static class DriveConstants {

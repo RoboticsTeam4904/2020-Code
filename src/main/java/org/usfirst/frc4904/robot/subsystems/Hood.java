@@ -18,20 +18,13 @@ public class Hood extends PositionSensorMotor {
         UPPER, LOWER
     }
 
-    private final double LOWER_HOOD_ANGLE = 0; //TODO: Add this value
-    private final double RANGE_HOOD_ANGLES = 35.0;
-    private final double UPPER_HOOD_ANGLE = LOWER_HOOD_ANGLE + RANGE_HOOD_ANGLES; //TODO: Does having all of these theoretical constants negate the zeroing we're doing?
-    private final double TEETH_PER_SERVO_ROTATION = 20.0;
-    private final double TEETH_PER_HOOD = 364.0;
-    private final double SERVO_ROTATION_PER_HOOD = TEETH_PER_SERVO_ROTATION / TEETH_PER_HOOD;
-    private final double HOOD_ANGLE_PER_SERVO_POSITION = RANGE_HOOD_ANGLES / SERVO_ROTATION_PER_HOOD; //TODO: Nomenclature can get confusing.
     protected Motor servo;
     protected CANEncoder hoodEncoder;
     protected CustomDigitalLimitSwitch lowLimit;
     protected CustomDigitalLimitSwitch highLimit;
     protected HoodStatus currentStatus = HoodStatus.IDLE;
     private final double lowerServoPosition = 0.0; //TODO: Refine this value.
-    private final double upperServoPosition = lowerServoPosition + SERVO_ROTATION_PER_HOOD;
+    private final double upperServoPosition = lowerServoPosition + RobotMap.Metrics.Hood.SERVO_ROTATION_PER_HOOD;
     private Util.Range servoRange = new Util.Range(lowerServoPosition, upperServoPosition);
 
     /**
@@ -74,21 +67,21 @@ public class Hood extends PositionSensorMotor {
 
     @Override
     public void set(double speed) {
-        if(speed > 0 && (isUpperLimitDown() || getHoodAngle() >= UPPER_HOOD_ANGLE)){
+        if(speed > 0 && (isUpperLimitDown() || getHoodAngle() >= RobotMap.Metrics.Hood.UPPER_HOOD_ANGLE)){
             speed = 0.0;
         }
-        if(speed < 0 && (isLowerLimitDown() || getHoodAngle() <= LOWER_HOOD_ANGLE)){
+        if(speed < 0 && (isLowerLimitDown() || getHoodAngle() <= RobotMap.Metrics.Hood.LOWER_HOOD_ANGLE)){
             speed = 0.0;
         }
         super.set(speed);
     }
 
     public double hoodAngleToServoPosition(double hoodAngle){
-        return hoodAngle / HOOD_ANGLE_PER_SERVO_POSITION;
+        return hoodAngle / RobotMap.Metrics.Hood.HOOD_ANGLE_PER_SERVO_POSITION;
     }
 
     public double servoPositionToHoodAngle(double servoPosition){
-        return servoPosition * HOOD_ANGLE_PER_SERVO_POSITION;
+        return servoPosition * RobotMap.Metrics.Hood.HOOD_ANGLE_PER_SERVO_POSITION;
     }
 
     public double getServoPosition(){
