@@ -1,24 +1,19 @@
 package org.usfirst.frc4904.robot.commands;
 
+import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.robot.subsystems.Hood;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 public class ZeroHood extends SequentialCommandGroup {
-    protected Hood hood;
     protected double ZERO_SERVO_CONSTANT = 0;
 
-    public ZeroHood(Hood hood) {
-        super(new HoodZeroConstant(hood, Hood.limitType.UPPER), new WaitUntilCommand(() -> {
-            return hood.isUpperLimitDown();
-        }), new HoodZeroConstant(hood, Hood.limitType.LOWER), new WaitUntilCommand(() -> {
-            return hood.isLowerLimitDown();
+    public ZeroHood() {
+        super(new HoodZeroConstant(Hood.limitType.UPPER), new WaitUntilCommand(() -> {
+            return RobotMap.Component.hood.isUpperLimitDown();
+        }), new HoodZeroConstant(Hood.limitType.LOWER), new WaitUntilCommand(() -> {
+            return RobotMap.Component.hood.isLowerLimitDown();
         }));
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        super.end(interrupted);
     }
 }

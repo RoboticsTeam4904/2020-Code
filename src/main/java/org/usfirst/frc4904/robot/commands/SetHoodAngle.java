@@ -1,40 +1,35 @@
 package org.usfirst.frc4904.robot.commands;
 
-import org.usfirst.frc4904.robot.subsystems.Hood;
-
+import org.usfirst.frc4904.robot.RobotMap;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+
 public class SetHoodAngle extends CommandBase {
-  protected Hood hood;
   protected double angle;
-  
-  public SetHoodAngle(String name, Hood hood, double angle){
+
+  public SetHoodAngle(double angle) {
     super();
-    setName(name);
-    addRequirements(hood);
-    this.hood = hood;
+    setName("SetHoodAngle");
+    addRequirements(RobotMap.Component.hood);
+    this.angle = angle;
   }
-  
-  public SetHoodAngle(Hood hood, double angle){
-    this("SetHoodAngle", hood, angle);
-  }
-  
+
   @Override
   public void initialize() {
-    hood.enableMotionController();
-    hood.setPosition(angle);
+    RobotMap.Component.hood.enableMotionController();
+    RobotMap.Component.hood.setPosition(angle);
   }
 
   @Override
-	public void execute() {
-		Exception potentialSensorException = hood.checkSensorException();
-		if (potentialSensorException != null) {
-			cancel();
-		}
-	}
+  public void execute() {
+    Exception potentialSensorException = RobotMap.Component.hood.checkSensorException();
+    if (potentialSensorException != null) {
+      cancel();
+    }
+  }
 
-	@Override
-	public boolean isFinished() {
-		return hood.onTarget();
-	}
+  @Override
+  public boolean isFinished() {
+    return RobotMap.Component.hood.onTarget();
+  }
 
 }
