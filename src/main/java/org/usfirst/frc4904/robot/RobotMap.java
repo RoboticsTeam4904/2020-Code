@@ -1,9 +1,16 @@
 package org.usfirst.frc4904.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
+import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
+import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class RobotMap {
     public static class Port {
@@ -13,12 +20,14 @@ public class RobotMap {
         }
 
         public static class CANMotor {
+            public static final int CONTROL_PANEL = -1; // TODO: determine
         }
 
         public static class PWM {
         }
 
         public static class CAN {
+            public static final int CONTROL_PANEL_ENCODER = -1;
         }
 
         public static class Pneumatics {
@@ -40,24 +49,11 @@ public class RobotMap {
             public static final double INCHES_PER_TICK = Metrics.Chassis.CIRCUMFERENCE_INCHES
                     / Metrics.Chassis.TICKS_PER_REVOLUTION;
         }
-    }
 
-    public static class DriveConstants {
-        public static final boolean kGyroReversed = false;
-        public static final double ksVolts = -1;
-        public static final double kvVoltSecondsPerMeter = -1;
-        public static final double kaVoltSecondsSquaredPerMeter = -1;
-        public static final double kTrackwidthMeters = -1;
-        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
-                kTrackwidthMeters);
-        public static final double kPDriveVel = -1;
-    }
-
-    public static class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = -1;
-        public static final double kMaxAccelerationMetersPerSecondSquared = -1;
-        public static final double kRamseteB = -1;
-        public static final double kRamseteZeta = -1;
+        public static class ControlPanel {
+            public static final double TICKS_PER_REVOLUTION = -1; // TODO: Depending on encoder, change this constant
+            public static final double DEGREES_PER_TICK = 360.0 / TICKS_PER_REVOLUTION;
+        }
     }
 
     public static class PID {
@@ -70,9 +66,25 @@ public class RobotMap {
     }
 
     public static class Component {
+        public static Motor controlPanel;
+        public static CustomCANCoder controlPanelEncoder;
     }
 
     public static class Input {
+    }
+
+    public static class NetworkTables {
+        public static NetworkTableInstance inst;
+        public static NetworkTable table;
+
+        public static class Vision {
+            public static NetworkTable table;
+
+            public static class ControlPanel {
+                public static NetworkTable table;
+                public static NetworkTableEntry color;
+            }
+        }
     }
 
     public static class HumanInput {
@@ -89,5 +101,15 @@ public class RobotMap {
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 
+        Component.controlPanel = new Motor("controlPanel", false, new CANTalonFX(Port.CANMotor.CONTROL_PANEL, NeutralMode.Brake));
+        Component.controlPanelEncoder = new CustomCANCoder(Port.CAN.CONTROL_PANEL_ENCODER,
+                Metrics.ControlPanel.DEGREES_PER_TICK);
+
+        /* NetworkTables */
+        NetworkTables.inst = NetworkTableInstance.getDefault();
+        NetworkTables.table = NetworkTables.inst.getTable("Team4904");
+        NetworkTables.Vision.table = NetworkTables.table.getSubTable("vision");
+        NetworkTables.Vision.ControlPanel.table = NetworkTables.Vision.table.getSubTable("controlPanel");
+        NetworkTables.Vision.ControlPanel.color = NetworkTables.Vision.ControlPanel.table.getEntry("controlPanelColor");
     }
 }
