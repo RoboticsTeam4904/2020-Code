@@ -11,9 +11,9 @@ public class ZeroHood extends SequentialCommandGroup {
 
     public ZeroHood(Hood hood) {
         super(new HoodZeroConstant(hood, Hood.LimitType.UPPER), new WaitUntilCommand(() -> {
-            return hood.isUpperLimitDown();
+            return hood.isLimitDown();
         }), new HoodZeroConstant(hood, Hood.LimitType.LOWER), new WaitUntilCommand(() -> {
-            return hood.isLowerLimitDown();
+            return hood.isLimitDown();
         }));
     }
 
