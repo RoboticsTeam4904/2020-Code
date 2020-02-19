@@ -1,25 +1,19 @@
 package org.usfirst.frc4904.robot.commands;
 
+import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.robot.subsystems.Intake;
 import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 
-public class RunIntake extends MotorConstant {
-  /**
-   * Run the intake
-   * 
-   * @param intake The intake to manipulate
-   * @param speed  The speed to intake at
-   */
-  RunIntake(Intake intake, double speed) {
-    super("RunIntake", intake.intake, speed);
-  }
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
+public class RunIntake extends ParallelCommandGroup {
   /**
    * Run the intake
-   * 
-   * @param intake The intake to manipulate
    */
-  RunIntake(Intake intake) {
-    super("RunIntake", intake.intake, Intake.DEFAULT_INTAKE_SPEED);
+  public RunIntake() {
+    super(new MotorConstant(RobotMap.Component.intake.intake, Intake.DEFAULT_INTAKE_SPEED),
+        new MotorConstant(RobotMap.Component.intake.funnel, Intake.DEFAULT_FUNNEL_SPEED),
+        new MotorConstant(RobotMap.Component.intake.lift, Intake.DEFAULT_LIFT_SPEED));
+
   }
 }

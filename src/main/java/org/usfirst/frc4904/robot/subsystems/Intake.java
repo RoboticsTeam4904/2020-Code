@@ -13,30 +13,36 @@ public class Intake {
   public static final double DEFAULT_OUTTAKE_SPEED = -0.0; // TODO: test this value
   public static final double DEFAULT_FUNNEL_SPEED = 0.0; // TODO: test this value
   public static final double DEFAULT_FUNNEL_REVERSE_SPEED = -0.0; // TODO: test this value
+  public static final double DEFAULT_LIFT_SPEED = 0.0; // TODO: test this value
+  public static final double DEFAULT_LIFT_REVERSE_SPEED = -0.0; // TODO: test this value
   public static final double DEFAULT_OFF_SPEED = 0.0;
 
   public final Motor intake;
   public final Motor funnel;
+  public final Motor lift;
   public final SolenoidSubsystem solenoid;
 
   /**
-   * Intake - Wraps the two intake SRXs (front intake and the funnel) and the
-   * intake solenoid
+   * Intake - Wraps the two intake SRXs (front intake and the funnel), the intake
+   * solenoid, and the SRX controlling the lift belts
    *
    * @param intakeMotor    The front intake motor that extends with the intake
    *                       solenoid
    * @param funnelMotor    The funnel motor
+   * @param liftBelts      The motor controlling the lift belts
+   * 
    * @param intakeSolenoid The solenoid that controls the position of the
    *                       intakeMotor rollers
    */
-  public Intake(Motor intakeMotor, Motor funnelMotor, SolenoidSubsystem intakeSolenoid) {
+  public Intake(Motor intakeMotor, Motor funnelMotor, Motor liftBelts, SolenoidSubsystem intakeSolenoid) {
     intake = intakeMotor;
     funnel = funnelMotor;
+    lift = liftBelts;
     solenoid = intakeSolenoid;
   }
 
   public Set<SubsystemBase> getSubsystems() {
-    return Set.of(intake, funnel, solenoid);
+    return Set.of(intake, funnel, lift, solenoid);
   }
 
   public void setIntakeSpeed(double speed) {
@@ -46,18 +52,22 @@ public class Intake {
   public void setFunnelSpeed(double speed) {
     funnel.set(speed);
   }
+  public void setLiftBeltSpeed(double speed) {
+    lift.set(speed);
+  }
 
-  public void setSpeed(double intakeSpeed, double funnelSpeed) {
+  public void setSpeed(double intakeSpeed, double funnelSpeed, double liftBeltSpeed) {
     setIntakeSpeed(intakeSpeed);
     setFunnelSpeed(funnelSpeed);
+    setLiftBeltSpeed(liftBeltSpeed);
   }
 
   public void setSpeed(double speed) {
-    setSpeed(speed, speed);
+    setSpeed(speed, speed, speed);
   }
 
   public void setSpeed() {
-    setSpeed(DEFAULT_INTAKE_SPEED, DEFAULT_FUNNEL_SPEED);
+    setSpeed(DEFAULT_INTAKE_SPEED, DEFAULT_FUNNEL_SPEED, DEFAULT_LIFT_SPEED);
   }
 
   public void stop() {
@@ -65,7 +75,7 @@ public class Intake {
   }
 
   public void reverse() {
-    setSpeed(DEFAULT_OUTTAKE_SPEED, DEFAULT_FUNNEL_REVERSE_SPEED);
+    setSpeed(DEFAULT_OUTTAKE_SPEED, DEFAULT_FUNNEL_REVERSE_SPEED, DEFAULT_LIFT_REVERSE_SPEED);
   }
 
   /**
