@@ -88,6 +88,15 @@ public class RobotMap {
         public static final double REVOLUTIONS_PER_TICK = 1 / TICKS_PER_REVOLUTION;
       }
     }
+    public static class Hood {
+      public static final double LOWER_HOOD_ANGLE = 0; //TODO: Add this value
+      public static final double RANGE_HOOD_ANGLES = 35.0;
+      public static final double UPPER_HOOD_ANGLE = LOWER_HOOD_ANGLE + RANGE_HOOD_ANGLES; //TODO: Does having all of these theoretical constants negate the zeroing we're doing?
+      public static final double TEETH_PER_SERVO_ROTATION = 20.0;
+      public static final double TEETH_PER_HOOD = 364.0;
+      public static final double SERVO_ROTATION_PER_HOOD = TEETH_PER_SERVO_ROTATION / TEETH_PER_HOOD;
+      public static final double HOOD_ANGLE_PER_SERVO_POSITION = RANGE_HOOD_ANGLES / SERVO_ROTATION_PER_HOOD; //TODO: Nomenclature can get confusing.
+    }
   }
 
   public static class DriveConstants {
@@ -156,8 +165,7 @@ public class RobotMap {
 
   public static class Input {
     public static CustomDigitalLimitSwitch indexerLimitSwitch;
-    public static CustomDigitalLimitSwitch hoodLowerLimitSwitch;
-    public static CustomDigitalLimitSwitch hoodUpperLimitSwitch;
+    public static CustomDigitalLimitSwitch hoodLimitSwitch;
   }
 
   public static class HumanInput {
@@ -192,8 +200,7 @@ public class RobotMap {
 
     /** Digital */
     Input.indexerLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.INDEXER_LIMIT_SWITCH);
-    Input.hoodLowerLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_LOWER_LIMIT_SWITCH);
-    Input.hoodUpperLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_UPPER_LIMIT_SWITCH);
+    Input.hoodLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_LOWER_LIMIT_SWITCH);
 
     /** Encoders */
     Component.flywheelEncoder = new CANTalonEncoder(flywheelATalon, Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK);
@@ -207,8 +214,7 @@ public class RobotMap {
     Component.flywheel = new Flywheel(new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D,
         PID.Flywheel.F, Component.flywheelEncoder), Component.flywheelMotorA, Component.flywheelMotorB);
 
-    Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLowerLimitSwitch,
-        Input.hoodUpperLimitSwitch);
+    Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLimitSwitch);
     Component.shooter = new Shooter(Component.flywheel, Component.runUpBeltMotor, Component.hood);
   }
 }
