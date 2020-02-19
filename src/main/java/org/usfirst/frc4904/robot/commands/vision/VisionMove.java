@@ -5,7 +5,6 @@ import java.util.List;
 import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.robot.VisionTarget;
 import org.usfirst.frc4904.robot.VisionTargetHub;
-import org.usfirst.frc4904.robot.VisionTargetHub.VisionTargetType;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 import org.usfirst.frc4904.standard.subsystems.chassis.SensorDrive;
 
@@ -19,11 +18,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
  */
 public class VisionMove extends SequentialCommandGroup {
 
-    public VisionMove(VisionTargetHub hub, VisionTargetType intendedTargetType, SensorDrive sensorChassis,
-            double robotLength) {
+    public VisionMove(VisionTargetHub hub, double intendedTargetType, SensorDrive sensorChassis, double robotLength) {
         VisionTarget target = hub.findIdealTarget(intendedTargetType);
-        Trajectory traj = sensorChassis.generateQuinticTrajectory(List.of(new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-                new Pose2d(target.poseX, target.poseY - robotLength / 2, Rotation2d.fromDegrees(target.deltaAngle))));
+        Trajectory traj = sensorChassis.generateQuinticTrajectory(List.of(new Pose2d(0, 0, new Rotation2d(0)),
+                new Pose2d(target.poseX, target.poseY - robotLength / 2, new Rotation2d(target.deltaAngle))));
 
         addCommands(new SimpleSplines(RobotMap.Component.splinesChassis, traj));
     }

@@ -1,7 +1,5 @@
 package org.usfirst.frc4904.robot;
 
-import org.usfirst.frc4904.robot.VisionTargetHub.VisionTargetType;
-
 public class VisionTarget {
     public final double targetType;
     public final double distance;
@@ -30,7 +28,7 @@ public class VisionTarget {
         return distance * Math.cos(theta + deltaAngle);
     }
 
-    public boolean checkTargetType(VisionTargetType type) {
-        return targetType == type.targetType;
+    public boolean checkTargetType(double type) {
+        return targetType == type;
     }
 }

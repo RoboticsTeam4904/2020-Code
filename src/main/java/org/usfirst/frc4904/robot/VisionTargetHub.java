@@ -21,16 +21,6 @@ public class VisionTargetHub implements Subsystem {
     public static VisionTarget[] targets;
     protected boolean isEnabled;
 
-    public enum VisionTargetType {
-        HIGH_PORT(0), LOADING_PORT(1);
-
-        public int targetType;
-
-        private VisionTargetType(int targetType) {
-            this.targetType = targetType;
-        }
-    }
-
     public VisionTargetHub(NetworkTableEntry targetTypesEntry, NetworkTableEntry distancesEntry,
             NetworkTableEntry betasEntry, NetworkTableEntry thetasEntry) {
         VisionTargetHub.targetTypesEntry = targetTypesEntry;
@@ -74,12 +64,12 @@ public class VisionTargetHub implements Subsystem {
         return VisionTargetHub.targets;
     }
 
-    public VisionTarget[] filterTargetsByTargetType(VisionTarget[] targets, VisionTargetType intendedTargetType) {
+    public VisionTarget[] filterTargetsByTargetType(VisionTarget[] targets, double intendedTargetType) {
         return (VisionTarget[]) Arrays.stream(targets).filter(target -> target.checkTargetType(intendedTargetType))
                 .toArray();
     }
 
-    public VisionTarget[] filterTargetsByTargetType(VisionTargetType intendedTargetType) {
+    public VisionTarget[] filterTargetsByTargetType(double intendedTargetType) {
         return filterTargetsByTargetType(VisionTargetHub.targets, intendedTargetType);
     }
 
@@ -92,12 +82,12 @@ public class VisionTargetHub implements Subsystem {
         return findClosestTarget(VisionTargetHub.targets);
     }
 
-    public VisionTarget findIdealTarget(VisionTarget[] targets, VisionTargetType intendedTargetType) {
+    public VisionTarget findIdealTarget(VisionTarget[] targets, double intendedTargetType) {
         VisionTarget[] usableTargets = filterTargetsByTargetType(intendedTargetType);
         return findClosestTarget(usableTargets);
     }
 
-    public VisionTarget findIdealTarget(VisionTargetType intendedTargetType) {
+    public VisionTarget findIdealTarget(double intendedTargetType) {
         return findIdealTarget(VisionTargetHub.targets, intendedTargetType);
     }
 
