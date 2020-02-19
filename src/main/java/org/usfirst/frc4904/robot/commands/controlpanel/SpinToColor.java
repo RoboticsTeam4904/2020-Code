@@ -15,7 +15,7 @@ import org.usfirst.frc4904.robot.RobotMap;
 public class SpinToColor extends SequentialCommandGroup {
     protected final ColorTracker tracker;
     protected final Color targetColor;
-    protected Color currentColor = null;
+    protected int currentColorID = Color.ERROR.id;
     protected boolean motorDirection = true;
     protected static final int MEDIAN_DISTANCE = 2; // it's equally as fast to go left or right if we're two away from
                                                     // the targetColor
@@ -33,26 +33,27 @@ public class SpinToColor extends SequentialCommandGroup {
         addRequirements(RobotMap.Component.controlPanel);
         this.targetColor = targetColor;
         this.tracker = new ColorTracker();
-        this.currentColor = tracker.getColor();
+        this.currentColorID = tracker.getColor();
         this.motorDirection = determineOptimalDirection();
         tracker.setMotorDirection(motorDirection);
 
         Supplier<Boolean> isDone = () -> {
             tracker.update();
-            Color currentColor = tracker.getColor();
+            double currentColorID = tracker.getColor();
 
-            if (currentColor == null) { // if we can't determine the color, just give up
+            if (currentColorID == Color.ERROR.id) { // if we can't determine the color, just give up
                 LogKitten.wtf("Can't determine current color.");
                 return true;
             }
-            return currentColor == targetColor;
+            return currentColorID == targetColor.id;
         };
 
-        addCommands(new RunUntil(new RunIfElse(new SpinPanelMotorForward(), new SpinPanelMotorReverse(), this::getMotorDirection
-        ), isDone), new StopPanelMotor());
+        addCommands(new RunUntil(
+                new RunIfElse(new SpinPanelMotorForward(), new SpinPanelMotorReverse(), this::getMotorDirection),
+                isDone), new StopPanelMotor());
     }
 
-    public boolean getMotorDirection () {
+    public boolean getMotorDirection() {
         return motorDirection;
     }
 
@@ -62,10 +63,10 @@ public class SpinToColor extends SequentialCommandGroup {
      * @return true if we should turn to the right, false if turn to the left
      */
     public boolean determineOptimalDirection() {
-        if (currentColor == null || targetColor == null) {
+        if (currentColorID == Color.ERROR.id || targetColor == Color.ERROR) {
             return true;
         }
-        int distance = tracker.getIndex(currentColor) - tracker.getIndex(targetColor);
+        int distance = currentColorID - targetColor.id;
         if (distance == 0) {
             return true;
         } else if (Math.abs(distance) == MEDIAN_DISTANCE) {

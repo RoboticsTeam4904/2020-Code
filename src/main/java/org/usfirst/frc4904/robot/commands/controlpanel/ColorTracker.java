@@ -18,14 +18,14 @@ public class ColorTracker {
     protected static final double PANEL_SPINNER_DIAMETER = -1.0;
     protected static final double PANEL_SPINNER_RATIO = CONTROL_PANEL_DIAMETER / PANEL_SPINNER_DIAMETER;
 
-    protected Color currentColor;
+    protected int currentColor;
     protected double currentPosition;
     protected int colorsPassed;
     protected CustomCANCoder encoder;
     protected boolean motorDirection; // if the motor is spinning to the right, set to true, else false
 
     public ColorTracker(CustomCANCoder encoder, boolean motorDirection) {
-        currentColor = null;
+        currentColor = Color.ERROR.id;
         this.encoder = encoder;
         setMotorDirection(motorDirection);
         reset();
@@ -37,12 +37,22 @@ public class ColorTracker {
     }
 
     /**
-     * An enum of the different colors on the control panel.
+     * An enum of the different colors on the control panel. The ids correspond to
+     * color order
      */
     enum Color {
-        RED, YELLOW, BLUE, GREEN;
+        RED(0), YELLOW(1), BLUE(2), GREEN(3), ERROR(-1);
+
+        public int id;
+
+        private Color(int id) {
+            this.id = id;
+        }
     }
 
+    /**
+     * Reset Colors passed count to 0
+     */
     public void reset() {
         colorsPassed = 0;
     }
@@ -51,57 +61,37 @@ public class ColorTracker {
         this.motorDirection = motorDirection;
     }
 
+    /**
+     * getter for number of color wedges passed
+     * 
+     * @return colorsPassed: number of color wedges passed
+     */
     public int getColorsPassed() {
         return colorsPassed;
     }
 
     /**
-     * 
      * @return String color
      */
-    public Color getColor() {
-        String colorResult = NetworkTables.Vision.ControlPanel.color.getString("ERROR");
-        if (colorResult == "ERROR") {
-            LogKitten.wtf("Control panel color not in network table. ERROR was returned instead.");
-            return null;
-        }
-        switch (colorResult) {
-            case "RED":
-                return Color.RED;
-            case "GREEN":
-                return Color.GREEN;
-            case "YELLOW":
-                return Color.YELLOW;
-            case "BLUE":
-                return Color.BLUE;
-            default:
-                return null;
-        }
-    }
-
-    public int getIndex(Color color) {
-        for (int index = 0; index < colorOrder.length; index++) {
-            if (colorOrder[index] == color) {
-                return index;
-            }
-        }
-        return -1;
+    public int getColor() {
+        return NetworkTables.Vision.ControlPanel.color.getNumber(Color.ERROR.id).intValue();
     }
 
     public void update() {
         double nextPosition = encoder.pidGet();
         double changeInPosition = nextPosition - currentPosition;
-        while (currentColor == null) {
+        while (currentColor == Color.ERROR.id) {
             currentColor = getColor();
         }
-        Color nextColor = getColor();
-        if (nextColor == null) {
+        int nextColor = getColor();
+        if (nextColor == Color.ERROR.id) {
+            LogKitten.e("Could not find a color");
             return;
         }
         if (currentColor != nextColor) {
-            int colorChange = getIndex(nextColor) - getIndex(currentColor)
-                    + ((int) NUM_COLORS) / 2 * ((int) changeInPosition) / 180; // if we've gone more than a half circle,
-                                                                               // we've passed a color twice
+            // if we've gone more than a half circle, we've passed a color twice
+            int colorChange = nextColor - currentColor
+                    + ((int) NUM_COLORS) / 2 * ((int) changeInPosition) / (int) (DEGREES_IN_A_CIRCLE / 2);
             if (!motorDirection) {
                 colorChange *= -1;
             }
