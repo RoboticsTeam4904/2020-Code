@@ -1,7 +1,6 @@
 package org.usfirst.frc4904.robot.commands.controlpanel;
 
 import org.usfirst.frc4904.standard.commands.motor.MotorIdle;
-import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import org.usfirst.frc4904.robot.RobotMap;
 
 /**

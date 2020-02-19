@@ -3,7 +3,6 @@ package org.usfirst.frc4904.robot.commands.controlpanel;
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.commands.RunIfElse;
 import org.usfirst.frc4904.standard.commands.RunUntil;
-import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
