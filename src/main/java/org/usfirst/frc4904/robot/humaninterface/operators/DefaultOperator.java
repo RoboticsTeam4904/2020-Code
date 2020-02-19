@@ -3,6 +3,9 @@ package org.usfirst.frc4904.robot.humaninterface.operators;
 import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.robot.commands.FlywheelSpinUp;
 import org.usfirst.frc4904.standard.humaninput.Operator;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 
@@ -29,7 +32,7 @@ public class DefaultOperator extends Operator {
 		// Oh no
 		RobotMap.HumanInput.Operator.joystick.button3.whileHeld(new MotorConstant(RobotMap.Component.liftBeltMotor, -0.5));
 
-		RobotMap.HumanInput.Operator.joystick.button12.whileHeld(new FlywheelSpinUp(50));
+		// RobotMap.HumanInput.Operator.joystick.button12.whileHeld(new FlywheelSpinUp(SmartDashboard.getNumber("flywheelSpeed", 0)));
 		// Climber
 		// RobotMap.HumanInput.Operator.joystick.button11.whileHeld(new MotorConstant(RobotMap.Component.hookMotor, 0.4));
 		// RobotMap.HumanInput.Operator.joystick.button12.whileHeld(new MotorConstant(RobotMap.Component.hookMotor, -0.4));
