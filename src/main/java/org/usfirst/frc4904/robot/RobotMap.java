@@ -2,6 +2,7 @@ package org.usfirst.frc4904.robot;
 
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
@@ -14,8 +15,8 @@ public class RobotMap {
 
     public static class CANMotor {
       // Climb
-      public static final int HOOK_MOTOR = -1;
-      public static final int WINCH_MOTOR = -1;
+      public static final int HOOK_MOTOR = 9;
+      public static final int WINCH_MOTOR = 0;
     }
 
     public static class PWM {
@@ -74,6 +75,6 @@ public class RobotMap {
     HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 
     Component.hookMotor = new Motor("HookMotor", new CANTalonSRX(Port.CANMotor.HOOK_MOTOR));
-    Component.winchMotor = new Motor("WinchMotor", new CANTalonSRX(Port.CANMotor.WINCH_MOTOR));
+    Component.winchMotor = new Motor("WinchMotor", new CANTalonFX(Port.CANMotor.WINCH_MOTOR));
   }
 }
