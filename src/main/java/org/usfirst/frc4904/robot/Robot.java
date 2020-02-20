@@ -34,7 +34,7 @@ public class Robot extends CommandRobotBase {
         teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
         RobotMap.Component.flywheelPIDController.setPIDF(SmartDashboard.getNumber("P", 0), SmartDashboard.getNumber("I", 0), SmartDashboard.getNumber("D", 0), SmartDashboard.getNumber("F", 0));
         FlywheelSpinUp f = new FlywheelSpinUp(SmartDashboard.getNumber("Setpoint", 0));
-        f.schedule();
+        // f.schedule();
     }
 
     @Override

@@ -1,8 +1,11 @@
 package org.usfirst.frc4904.robot.humaninterface.drivers;
 
 import org.usfirst.frc4904.robot.RobotMap;
-import org.usfirst.frc4904.robot.commands.MoveHook;
-import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
+import org.usfirst.frc4904.robot.commands.ClimberMoveHook;
+import org.usfirst.frc4904.robot.commands.ClimberMoveWinch;
+import org.usfirst.frc4904.standard.commands.RunIf;
+import org.usfirst.frc4904.standard.commands.RunWhile;
+import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 import org.usfirst.frc4904.standard.humaninput.Driver;
 
 public class NathanGain extends Driver {
@@ -23,7 +26,10 @@ public class NathanGain extends Driver {
 
 	@Override
 	public void bindCommands() {
-		RobotMap.HumanInput.Driver.xbox.lb.whileHeld(new MoveHook(RobotMap.Component.hookMotor));
+		RobotMap.HumanInput.Driver.xbox.lb.whileHeld(new ClimberMoveHook());
+		RobotMap.HumanInput.Driver.xbox.rb.whileHeld(new RunWhile(new ClimberMoveWinch(), () -> {
+			return RobotMap.HumanInput.Driver.xbox.getAxis(CustomXbox.RIGHT_Y_AXIS) >= 0;
+		}));
 	}
 
 	@Override

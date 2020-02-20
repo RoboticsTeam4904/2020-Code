@@ -11,6 +11,7 @@ import org.usfirst.frc4904.robot.subsystems.Shooter;
 import org.usfirst.frc4904.standard.custom.CustomPIDSourceType;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
@@ -126,6 +127,7 @@ public class RobotMap {
     public static CustomDigitalLimitSwitch indexerLimitSwitch;
     public static CustomDigitalLimitSwitch hoodLowerLimitSwitch;
     public static CustomDigitalLimitSwitch hoodUpperLimitSwitch;
+
   }
 
   public static class Component {
@@ -225,13 +227,15 @@ public class RobotMap {
         Metrics.Flywheel.ROTATIONS_PER_TICK, CustomPIDSourceType.kRate, FeedbackDevice.IntegratedSensor);
     Component.flywheelPIDController = new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D,
         PID.Flywheel.F, Component.flywheelEncoder);
-    Component.flywheel = new Flywheel(Component.flywheelPIDController, Component.flywheelMotorA, Component.flywheelMotorB);
+    Component.flywheel = new Flywheel(Component.flywheelPIDController, Component.flywheelMotorA,
+        Component.flywheelMotorB);
 
     // Component.hoodEncoder = new CANEncoder(Port.CAN.HOOD_ENCODER);
     // Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder,
     // Input.hoodLowerLimitSwitch, Input.hoodUpperLimitSwitch);
     // Component.shooter = new Shooter(Component.flywheel, Component.runUpBeltMotor,
     // Component.hood);
+
     Component.hookMotor = new Motor("HookMotor", new CANTalonSRX(Port.CANMotor.HOOK_MOTOR));
     Component.winchMotor = new Motor("WinchMotor", new CANTalonFX(Port.CANMotor.WINCH_MOTOR));
   }
