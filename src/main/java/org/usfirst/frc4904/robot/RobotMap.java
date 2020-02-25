@@ -31,6 +31,10 @@ import org.usfirst.frc4904.robot.subsystems.Hood;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;;
+
 public class RobotMap {
     public static class Port {
         public static class HumanInput {
@@ -196,6 +200,18 @@ public class RobotMap {
             public static CustomJoystick joystick;
         }
     }
+    
+    public static class NetworkTables {
+        public static NetworkTableInstance inst;
+        public static NetworkTable table;
+
+        public static class Localization {
+            public static NetworkTable locData;
+            public static NetworkTableEntry x;
+            public static NetworkTableEntry y;
+            public static NetworkTableEntry theta;
+        }
+    }
 
     public RobotMap() {
         Component.intakeSolenoid = new SolenoidSubsystem(Port.Pneumatics.INTAKE_SOLENOID.buildDoubleSolenoid());
@@ -256,5 +272,10 @@ public class RobotMap {
 
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
+
+        // Network Tables
+        NetworkTables.inst = NetworkTableInstance.getDefault();
+        NetworkTables.table = NetworkTables.inst.getTable("team4904");
+        // NetworkTables.Localization.locData = NetworkTables.inst.getSubTable("vision");
     }
 }
