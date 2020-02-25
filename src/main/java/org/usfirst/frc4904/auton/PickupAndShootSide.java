@@ -12,24 +12,23 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 
 class PickupAndShootSide extends AutonRoutine {
 
-    public PickupAndShootSide() {
-        Trajectory goingToPowerCells = RobotMap.Component.sensorChassis
-                .generateQuinticTrajectory(Arrays.asList(Poses.currentPos, Poses.sideCollectStart));
-        SimpleSplines approachSpline = new SimpleSplines(RobotMap.Component.sensorChassis, goingToPowerCells);
-        this.andThen(approachSpline);
-        this.andThen(new RunIntake(RobotMap.Component.intake));
-        Trajectory collect = RobotMap.Component.sensorChassis
-                .generateQuinticTrajectory(Arrays.asList(Poses.sideCollectStart, Poses.sideCollectEnd));
-        goingToPowerCells.relativeTo(Poses.currentPos);
-        SimpleSplines collectSpline = new SimpleSplines(RobotMap.Component.sensorChassis, collect);
-        this.andThen(collectSpline);
-        Trajectory moveToShoot = RobotMap.Component.sensorChassis
-                .generateQuinticTrajectory(Arrays.asList(Poses.sideCollectEnd, Poses.shootingPose));
-        SimpleSplines moveToShootSpline = new SimpleSplines(RobotMap.Component.sensorChassis, moveToShoot);
-        this.andThen(moveToShootSpline);
-        double FlywheelSpeed = 0.0;
-        andThen(new Shoot(RobotMap.Component.indexer, RobotMap.Component.shooter, FlywheelSpeed));
-        andThen(new FlywheelSpinDown(RobotMap.Component.flywheel));
-    }
+        public PickupAndShootSide() {
+                Trajectory goingToPowerCells = RobotMap.Component.sensorChassis
+                                .generateQuinticTrajectory(Arrays.asList(Poses.currentPos, Poses.sideCollectStart));
+                SimpleSplines approachSpline = new SimpleSplines(RobotMap.Component.sensorChassis, goingToPowerCells);
+                this.andThen(approachSpline);
+                this.andThen(new RunIntake(RobotMap.Component.intake));
+                Trajectory collect = RobotMap.Component.sensorChassis
+                                .generateQuinticTrajectory(Arrays.asList(Poses.sideCollectStart, Poses.sideCollectEnd));
+                SimpleSplines collectSpline = new SimpleSplines(RobotMap.Component.sensorChassis, collect);
+                this.andThen(collectSpline);
+                Trajectory moveToShoot = RobotMap.Component.sensorChassis
+                                .generateQuinticTrajectory(Arrays.asList(Poses.sideCollectEnd, Poses.shootingPose));
+                SimpleSplines moveToShootSpline = new SimpleSplines(RobotMap.Component.sensorChassis, moveToShoot);
+                this.andThen(moveToShootSpline);
+                double FlywheelSpeed = 0.0;
+                andThen(new Shoot(RobotMap.Component.indexer, RobotMap.Component.shooter, FlywheelSpeed));
+                andThen(new FlywheelSpinDown(RobotMap.Component.flywheel));
+        }
 
 }

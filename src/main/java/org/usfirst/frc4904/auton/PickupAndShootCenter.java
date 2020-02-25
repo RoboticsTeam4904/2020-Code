@@ -20,7 +20,6 @@ class PickupAndShootCenter extends AutonRoutine {
                 this.andThen(new RunIntake(RobotMap.Component.intake));
                 Trajectory collect = RobotMap.Component.sensorChassis.generateQuinticTrajectory(
                                 Arrays.asList(Poses.centerCollectStart, Poses.centerCollectEnd));
-                goingToPowerCells.relativeTo(Poses.currentPos);
                 SimpleSplines collectSpline = new SimpleSplines(RobotMap.Component.sensorChassis, collect);
                 this.andThen(collectSpline);
                 Trajectory moveToShoot = RobotMap.Component.sensorChassis
