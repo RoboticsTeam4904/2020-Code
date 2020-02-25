@@ -1,6 +1,6 @@
 package org.usfirst.frc4904.robot.udp;
 
-import static org.junit.*;
+import org.junit.*;
 
 public class UDPTest {
     Client client;

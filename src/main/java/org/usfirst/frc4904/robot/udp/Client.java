@@ -18,7 +18,6 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public String sendEcho(String msg) {
@@ -37,9 +36,15 @@ public class Client {
     }
 
     public String receiveData() {
-        DatagramPacket packet = null;
-        String received = new String(packet.getData(), 0, packet.getLength());
-        return received;
+        DatagramPacket packet = new DatagramPacket(new byte[256], 256);
+        try {
+            socket.receive(packet);
+            String received = new String(packet.getData(), 0, packet.getLength());
+            return received;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void close() {
