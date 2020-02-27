@@ -3,8 +3,7 @@ package org.usfirst.frc4904.robot.subsystems;
 import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.standard.Util;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
-import org.usfirst.frc4904.standard.custom.motioncontrollers.MotionController;
-import org.usfirst.frc4904.standard.custom.sensors.CANEncoder;
+import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomDigitalLimitSwitch;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import org.usfirst.frc4904.standard.subsystems.motor.PositionSensorMotor;
@@ -19,7 +18,7 @@ public class Hood extends PositionSensorMotor {
     }
 
     protected Motor servo;
-    protected CANEncoder hoodEncoder;
+    protected CANTalonEncoder hoodEncoder;
     protected CustomDigitalLimitSwitch limitSwitch;
     protected HoodStatus currentStatus = HoodStatus.IDLE;
     private final double lowerServoPosition = 0.0; //TODO: Refine this value.
@@ -31,7 +30,7 @@ public class Hood extends PositionSensorMotor {
      * + servo speed moves it towards the upper limit, - servo speed moves it towards the lower limit
      * "true" for limitType is upper, "false" is lower.
      */
-    public Hood(Motor servo, CANEncoder hoodEncoder, CustomDigitalLimitSwitch limitSwitch) {
+    public Hood(Motor servo, CANTalonEncoder hoodEncoder, CustomDigitalLimitSwitch limitSwitch) {
         super(new CustomPIDController(RobotMap.PID.Hood.P, RobotMap.PID.Hood.I, RobotMap.PID.Hood.D, hoodEncoder), servo);
         this.servo = servo;
         this.hoodEncoder = hoodEncoder;
@@ -46,10 +45,7 @@ public class Hood extends PositionSensorMotor {
 
     public void syncStatus(){
         if(isLowerLimitDown()){
-            setLimit(LimitType.LOWER);
-        }
-        if(isUpperLimitDown()){
-            setLimit(LimitType.UPPER);
+            setLimit();
         }
     }
 
@@ -117,11 +113,7 @@ public class Hood extends PositionSensorMotor {
         return this.servo;
     }
 
-    public void setLimit(LimitType type) {
-        if (type == LimitType.UPPER) {
-            hoodEncoder.resetViaOffset(upperServoPosition);
-        } else {
-            hoodEncoder.resetViaOffset(lowerServoPosition);
-        }
+    public void setLimit() {
+        hoodEncoder.reset();
     }
 }
