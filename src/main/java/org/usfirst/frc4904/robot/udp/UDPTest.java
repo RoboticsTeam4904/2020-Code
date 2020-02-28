@@ -1,27 +1,36 @@
 package org.usfirst.frc4904.robot.udp;
 
-import static org.junit.*;
+import java.io.*;
 
 public class UDPTest {
     Client client;
  
-    @Before
-    public void setup(){
+    public void setup() {
+        try{
         new Server().start();
         client = new Client();
+        }
+        catch (IOException ex){
+
+            System.out.println(ex);
+        }
     }
  
-    @Test
     public void whenCanSendAndReceivePacket_thenCorrect() {
-        String echo = client.sendEcho("hello server");
-        assertEquals("hello server", echo);
-        echo = client.sendEcho("server is working");
-        assertFalse(echo.equals("hello server"));
+        System.out.println(this.client);
+        client.sendEcho("hello server");
+        client.sendEcho("server is working");
     }
  
-    @After
     public void tearDown() {
         client.sendEcho("end");
         client.close();
+    }
+
+    public static void main(String[] args) {
+        UDPTest udpthing = new UDPTest();
+        udpthing.setup();
+        udpthing.whenCanSendAndReceivePacket_thenCorrect();
+        udpthing.tearDown();
     }
 }

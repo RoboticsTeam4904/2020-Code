@@ -5,6 +5,9 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+import java.io.*;
+
+
 public class Client {
     private DatagramSocket socket;
     private InetAddress address;
@@ -30,6 +33,7 @@ public class Client {
             packet = new DatagramPacket(buf, buf.length);
             socket.receive(packet);
         } catch (IOException e) {
+            System.out.println("exception ajsdfjasdflaksdfjl");
             e.printStackTrace();
         }
         String received = new String(packet.getData(), 0, packet.getLength());
