@@ -91,14 +91,6 @@ public class RobotMap {
                                                                                                 // of these theoretical
                                                                                                 // constants negate the
                                                                                                 // zeroing we're doing?
-            public static final double TEETH_PER_SERVO_ROTATION = 22.0;
-            public static final double TEETH_PER_HOOD = 364.0;
-            public static final double SERVO_ROTATION_PER_HOOD = TEETH_PER_SERVO_ROTATION / TEETH_PER_HOOD;
-            public static final double HOOD_ANGLE_PER_SERVO_POSITION = RANGE_HOOD_ANGLES / SERVO_ROTATION_PER_HOOD; // TODO:
-                                                                                                                    // Nomenclature
-                                                                                                                    // can
-                                                                                                                    // get
-                                                                                                                    // confusing.
         }
     }
 
