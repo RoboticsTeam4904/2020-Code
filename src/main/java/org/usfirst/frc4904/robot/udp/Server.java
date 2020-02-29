@@ -17,8 +17,8 @@ public class Server extends Thread {
     }
 
     public void run() {
+        System.out.println("Server Running");
         running = true;
-
         while (running) {
             try {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
@@ -26,13 +26,18 @@ public class Server extends Thread {
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();
                 packet = new DatagramPacket(buf, buf.length, address, port);
-                String received = new String(packet.getData(), 0, packet.getLength());
+                String received = new String(packet.getData());//, 0, packet.getLength());
+                received.replaceAll("\\s+","");
+                System.out.println("received: " + received);
+                System.out.println(received.length());
                 if (received.equals("end")) {
+                    System.out.println("Server received 'end'");
                     running = false;
                     System.out.println(packet.getData());
                     continue;
                 }
                 socket.send(packet);
+                buf = new byte[256];
             } catch (IOException e) {
                 e.printStackTrace();
                 running = false;

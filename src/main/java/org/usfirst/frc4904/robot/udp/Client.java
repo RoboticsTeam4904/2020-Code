@@ -5,9 +5,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import java.io.*;
-
-
 public class Client {
     private DatagramSocket socket;
     private InetAddress address;
@@ -24,6 +21,7 @@ public class Client {
     }
 
     public String sendEcho(String msg) {
+        System.out.println("sending Echo " + "'" + msg + "'");
         DatagramPacket packet = null;
         try {
             buf = msg.getBytes();
@@ -32,7 +30,7 @@ public class Client {
             packet = new DatagramPacket(buf, buf.length);
             socket.receive(packet);
         } catch (IOException e) {
-            System.out.println("exception ajsdfjasdflaksdfjl");
+            System.out.println("Echo failed");
             e.printStackTrace();
         }
         String received = new String(packet.getData(), 0, packet.getLength());
