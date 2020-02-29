@@ -31,9 +31,9 @@ public class UDPTest {
     }
 
     public static void main(String[] args) {
-        UDPTest udpthing = new UDPTest();
-        udpthing.setup();
-        udpthing.whenCanSendAndReceivePacket_thenCorrect();
-        udpthing.tearDown();
+        UDPTest udpTest = new UDPTest();
+        udpTest.setup();
+        udpTest.whenCanSendAndReceivePacket_thenCorrect();
+        udpTest.tearDown();
     }
 }

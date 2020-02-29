@@ -28,9 +28,17 @@ public class Server extends Thread {
                 packet = new DatagramPacket(buf, buf.length, address, port);
                 String received = new String(packet.getData());//, 0, packet.getLength());
                 received.replaceAll("\\s+","");
-                System.out.println("received: " + received);
-                System.out.println(received.length());
-                if (received.equals("end")) {
+                System.out.println("received: " + received + ", length: " + received.length());
+                String convertedReceived = "";
+                try {
+                    byte[] utf8Bytes = received.getBytes("UTF16");
+                    convertedReceived = new String(utf8Bytes, "UTF16");
+                }
+                catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                String endString = "end";
+                if (convertedReceived.equals(testArr)) {
                     System.out.println("Server received 'end'");
                     running = false;
                     System.out.println(packet.getData());
