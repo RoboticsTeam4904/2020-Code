@@ -22,6 +22,7 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.AccelerationCap;
 import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.EnableableModifier;
 
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -212,9 +213,10 @@ public class RobotMap {
 
     // IntializeNetworktables
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    Network.odometryXEntry = inst.getEntry("odometry/x");
-    Network.odometryYEntry = inst.getEntry("odometry/y");
-    Network.odometryAngleEntry = inst.getEntry("odometry/angle");
+    NetworkTable table = inst.getTable("odometry");
+    Network.odometryXEntry = table.getEntry("x");
+    Network.odometryYEntry = table.getEntry("y");
+    Network.odometryAngleEntry = table.getEntry("angle");
 
     HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
     HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
