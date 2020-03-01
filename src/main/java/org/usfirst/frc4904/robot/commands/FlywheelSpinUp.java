@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class FlywheelSpinUp extends SequentialCommandGroup {
 
-    public static final double DEFAULT_FLYWHEEL_SPEED = 0.0; // TODO: This is an untested value
-    public static final double THRESHOLD = 0.0;
+    public static final double DEFAULT_FLYWHEEL_SPEED = 50.0; // TODO: This is an untested value
+    public static final double THRESHOLD = 5.0;
 
     /**
      * Spin up the flywheel to a speed

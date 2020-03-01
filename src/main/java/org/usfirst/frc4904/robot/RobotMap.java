@@ -114,10 +114,10 @@ public class RobotMap {
 
     public static class PID {
         public static class Flywheel {
-            public static final double P = 0.0;
-            public static final double I = 0.0;
-            public static final double D = 0.0;
-            public static final double F = 0.0;
+            public static final double P = 0.0084;
+            public static final double I = 0.000017;
+            public static final double D = 0.85;
+            public static final double F = 0.01;
         }
 
         public static class Hood {
@@ -178,9 +178,9 @@ public class RobotMap {
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 
         /** Pneumatics */
-        Component.intakeSolenoid = new SolenoidSubsystem(Port.Pneumatics.INTAKE_SOLENOID.buildDoubleSolenoid());
-        Component.shooterAimSolenoid = new SolenoidSubsystem(
-                Port.Pneumatics.SHOOTER_AIM_SOLENOID.buildDoubleSolenoid());
+        // Component.intakeSolenoid = new SolenoidSubsystem(Port.Pneumatics.INTAKE_SOLENOID.buildDoubleSolenoid());
+        // Component.shooterAimSolenoid = new SolenoidSubsystem(
+        //         Port.Pneumatics.SHOOTER_AIM_SOLENOID.buildDoubleSolenoid());
 
         /** Motors */
         Component.intakeRollerMotor = new Motor("intakeRollerMotor",
@@ -191,17 +191,17 @@ public class RobotMap {
         CANTalonFX flywheelATalon = new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_A);
         Component.flywheelMotorA = new Motor("flywheelMotorA", flywheelATalon);
         Component.flywheelMotorB = new Motor("flywheelMotorB", new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_B));
-        CANTalonFX hoodTalon = new CANTalonFX(Port.CAN.HOOD_MOTOR);
-        Component.hoodMotor = new Motor("hoodMotor", hoodTalon);
+        // CANTalonFX hoodTalon = new CANTalonFX(Port.CAN.HOOD_MOTOR);
+        // Component.hoodMotor = new Motor("hoodMotor", hoodTalon);
 
         /** Digital */
-        Input.indexerLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.INDEXER_LIMIT_SWITCH);
-        Input.hoodLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_LIMIT_SWITCH);
+        // Input.indexerLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.INDEXER_LIMIT_SWITCH);
+        // Input.hoodLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_LIMIT_SWITCH);
 
         /** Encoders */
         Component.flywheelEncoder = new CANTalonEncoder(flywheelATalon,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK);
-        Component.hoodEncoder = new CANTalonEncoder(hoodTalon, Metrics.Hood.HOOD_ANGLE_PER_TICK);
+        // Component.hoodEncoder = new CANTalonEncoder(hoodTalon, Metrics.Hood.HOOD_ANGLE_PER_TICK);
 
         /** Classes */
         Component.intake = new Intake(Component.intakeRollerMotor, Component.liftBeltMotor, Component.funnelMotor,
@@ -210,7 +210,7 @@ public class RobotMap {
         Component.flywheel = new Flywheel(new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D,
                 PID.Flywheel.F, Component.flywheelEncoder), Component.flywheelMotorA, Component.flywheelMotorB);
 
-        Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLimitSwitch);
+        // Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLimitSwitch);
         Component.shooter = new Shooter(Component.flywheel, Component.runUpBeltMotor, Component.hood);
     }
 }
