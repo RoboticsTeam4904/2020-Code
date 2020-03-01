@@ -42,7 +42,7 @@ public class RobotMap {
         }
 
         public static class Pneumatics {
-            public static final PCMPort SHIFTER = new PCMPort(-1, -1, -1);
+            public static final PCMPort SHIFTER = new PCMPort(0, -1, -1);
         }
 
         public static class Digital {
@@ -117,10 +117,10 @@ public class RobotMap {
     public RobotMap() {
         Component.pdp = new PDP();
 
-        Component.leftWheelEncoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,
-                RobotMap.Metrics.Chassis.METERS_PER_TICK);
-        Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
-                RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        // Component.leftWheelEncoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,
+        //         RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        // Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
+        //         RobotMap.Metrics.Chassis.METERS_PER_TICK);
 
         Component.leftDriveA = new Motor("leftDriveA", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A));
         Component.leftDriveB = new Motor("leftDriveB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
