@@ -11,6 +11,9 @@ import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.AccelerationCap;
 import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.EnableableModifier;
+
+import edu.wpi.first.wpilibj.Solenoid;
+
 import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
@@ -27,10 +30,10 @@ public class RobotMap {
         }
 
         public static class CANMotor {
-            public static final int LEFT_DRIVE_A = 0;
-            public static final int LEFT_DRIVE_B = 3;
-            public static final int RIGHT_DRIVE_A = 1;
-            public static final int RIGHT_DRIVE_B = 2;
+            public static final int LEFT_DRIVE_A = 4;
+            public static final int LEFT_DRIVE_B = 11;
+            public static final int RIGHT_DRIVE_A = 7;
+            public static final int RIGHT_DRIVE_B = 3;
         }
 
         public static class PWM {
@@ -90,7 +93,7 @@ public class RobotMap {
         public static Motor leftDriveB;
         public static Motor rightDriveA;
         public static Motor rightDriveB;
-        public static TankDriveShifting chassis;
+        public static TankDrive chassis;
         public static SolenoidShifters shifter;
         public static EnableableModifier leftWheelAccelerationCap;
         public static EnableableModifier rightWheelAccelerationCap;
@@ -127,12 +130,34 @@ public class RobotMap {
         Component.rightDriveA = new Motor("rightDriveA", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A));
         Component.rightDriveB = new Motor("rightDriveB", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
 
-        Component.shifter = new SolenoidShifters(Port.Pneumatics.SHIFTER.buildDoubleSolenoid());
+        // Component.shifter = new SolenoidShifters(Port.Pneumatics.SHIFTER.buildDoubleSolenoid());
 
-        Component.chassis = new TankDriveShifting(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA,
-                Component.leftDriveB, Component.rightDriveA, Component.rightDriveB, Component.shifter);
+        Component.chassis = new TankDrive(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA,
+                Component.leftDriveB, Component.rightDriveA, Component.rightDriveB);
+
 
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
+    }
+
+    public static class SinglePCMPort {
+        public int pcmID;
+        public int forward;
+    
+        /**
+         * Defines a piston based on two ports and a PCM number
+         * 
+         * @param pcmID   The ID of the PCM attached to the piston. Usually 0 or 1.
+         * @param forward The forward port of the piston.
+         * @param reverse The reverse port of the piston.
+         */
+        public SinglePCMPort(int pcmID, int forward) { // First variable PCM number, second forward, third reverse.
+            this.pcmID = pcmID;
+            this.forward = forward;
+        }
+    
+        public Solenoid buildSolenoid() {
+            return new Solenoid(pcmID, forward);
+        }
     }
 }
