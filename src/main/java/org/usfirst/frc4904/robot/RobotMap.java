@@ -40,12 +40,8 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.util.Units;
 
-import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.SensorTimeBase;
-
-import org.usfirst.frc4904.robot.VisionTargetHub;
 
 public class RobotMap {
     public static class Port {
