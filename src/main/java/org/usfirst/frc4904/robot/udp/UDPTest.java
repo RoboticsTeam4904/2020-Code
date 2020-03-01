@@ -1,27 +1,27 @@
 package org.usfirst.frc4904.robot.udp;
 
 import java.io.*;
-
+ 
 public class UDPTest {
     Client client;
  
     public void setup() {
-        System.out.println("Setting up test");
+        System.out.println("Setting up the test.");
         try{
             new Server().start();
             client = new Client();
         }
         catch (IOException ex){
-            System.out.println("Setup error");
-            System.out.println(ex);
+            System.out.println("ERR: IOException during setup. This error is from creating the Server.");
+            ex.printStackTrace();
         }
     }
  
-    public void whenCanSendAndReceivePacket_thenCorrect() {
+    public void whenCanSendAndReceivePacket_thenCorrect() { // the name of this function is nonsensical and this function is useless
         System.out.println("Sending and receiving");
         System.out.println("Client is " + this.client);
-        System.out.println(client.sendEcho("hello server"));
-        System.out.println(client.sendEcho("server is working"));
+        System.out.println(client.sendEcho("Hello server!")); // this is pointless
+        System.out.println(client.sendEcho("Server is working")); // not necissarily
     }
  
     public void tearDown() {
