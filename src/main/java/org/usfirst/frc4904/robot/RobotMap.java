@@ -8,6 +8,7 @@ import org.usfirst.frc4904.robot.subsystems.Intake;
 import org.usfirst.frc4904.robot.subsystems.Shooter;
 import org.usfirst.frc4904.robot.subsystems.Hood;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.SplineAutoConstants;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.SplineDriveConstants;
 import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
@@ -130,6 +131,8 @@ public class RobotMap {
         public static final double VOLT_SECONDS_SQUARED_PER_METER = -1;
         public static final double TRACK_WIDTH_METERS = -1; // 0.5842 // 0.6063751884752512
         public static final double DRIVE_VEL = -1;
+        public static final SplineDriveConstants DRIVE_CONSTANTS = new SplineDriveConstants(VOLTS,
+                VOLT_SECONDS_PER_METER, VOLT_SECONDS_SQUARED_PER_METER, TRACK_WIDTH_METERS, DRIVE_VEL);
         }
 
     public static class PID {
@@ -260,7 +263,7 @@ public class RobotMap {
         }
     }
 
-    private static Object Metrics;
+    // private static Object Metrics;
 
     public RobotMap() {
         Component.intakeSolenoid = new SolenoidSubsystem(Port.Pneumatics.INTAKE_SOLENOID.buildDoubleSolenoid());
@@ -328,8 +331,8 @@ public class RobotMap {
         // NetworkTables.Localization.locData = NetworkTables.inst.getSubTable("vision");
         Component.pdp = new PDP();
         Component.navx = new NavX(SerialPort.Port.kMXP);
-        Component.leftWheelEncoder = new CANCoder(Port.CAN.LEFT_WHEEL_ENCODER);
-        Component.rightWheelEncoder = new CANCoder(Port.CAN.RIGHT_WHEEL_ENCODER);
+        Component.leftWheelEncoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER, RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER, RobotMap.Metrics.Chassis.METERS_PER_TICK);
         Component.canCoderConfiguration = new CANCoderConfiguration();
         Component.leftWheelEncoder.configAllSettings(Component.canCoderConfiguration);
         Component.rightWheelEncoder.configAllSettings(Component.canCoderConfiguration);
@@ -354,10 +357,9 @@ public class RobotMap {
                 DriveConstants.DRIVE_CONSTANTS, Component.leftWheelEncoder, Component.rightWheelEncoder,
                 Component.navx);
 
-        HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.Driver.xbox);
-        HumanInput.Operator.joystick = new CustomJoystick(Port.Operator.joystick);
+        HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
+        HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
 
-        /** Vision */
         // Network Tables
         NetworkTables.inst = NetworkTableInstance.getDefault();
         NetworkTables.table = NetworkTables.inst.getTable("team4904");
@@ -368,7 +370,6 @@ public class RobotMap {
         NetworkTables.Vision.VisionTargets.distances = NetworkTables.Vision.VisionTargets.table.getEntry("distances");
         NetworkTables.Vision.VisionTargets.betas = NetworkTables.Vision.VisionTargets.table.getEntry("betas");
         NetworkTables.Vision.VisionTargets.thetas = NetworkTables.Vision.VisionTargets.table.getEntry("thetas");
-
         Component.hub = new VisionTargetHub(NetworkTables.Vision.VisionTargets.targetTypes,
                 NetworkTables.Vision.VisionTargets.distances, NetworkTables.Vision.VisionTargets.betas,
                 NetworkTables.Vision.VisionTargets.thetas);
