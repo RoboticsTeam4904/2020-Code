@@ -22,8 +22,11 @@ import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.AccelerationCap;
 import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.EnableableModifier;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc4904.standard.subsystems.chassis.SensorDrive;
 import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.custom.sensors.CANEncoder;
@@ -130,6 +133,13 @@ public class RobotMap {
 
   }
 
+  public static class Network {
+    // These should be in units of meters, meters, and radians, respectively
+    public static NetworkTableEntry odometryXEntry;
+    public static NetworkTableEntry odometryYEntry;
+    public static NetworkTableEntry odometryAngleEntry;
+  }
+
   public static class Component {
     public static PDP pdp;
     public static Motor leftDriveA;
@@ -143,6 +153,7 @@ public class RobotMap {
     public static CustomCANCoder leftWheelEncoder;
     public static CustomCANCoder rightWheelEncoder;
     public static NavX navx;
+    public static SensorDrive sensorDrive;
 
     public static Intake intake;
     public static Indexer indexer;
@@ -194,8 +205,16 @@ public class RobotMap {
     Component.rightDriveB = new Motor("rightDriveB", true,
         new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B, NeutralMode.Coast));
 
+    // Make Chassises
     Component.chassis = new TankDrive(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA, Component.leftDriveB,
         Component.rightDriveA, Component.rightDriveB);
+    Component.sensorDrive = new SensorDrive(Component.chassis, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
+
+    // IntializeNetworktables
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    Network.odometryXEntry = inst.getEntry("odometry/x");
+    Network.odometryYEntry = inst.getEntry("odometry/y");
+    Network.odometryAngleEntry = inst.getEntry("odometry/angle");
 
     HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
     HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);

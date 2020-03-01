@@ -13,6 +13,7 @@ import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends CommandRobotBase {
@@ -27,6 +28,7 @@ public class Robot extends CommandRobotBase {
         SmartDashboard.putNumber("D", 0);
         SmartDashboard.putNumber("F", 0);
         SmartDashboard.putNumber("Setpoint", 0);
+        RobotMap.Component.sensorDrive.resetOdometry(new Pose2d());
     }
 
     @Override
@@ -44,6 +46,7 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
+        RobotMap.Component.sensorDrive.resetOdometry(new Pose2d());
     }
 
     @Override
@@ -69,6 +72,10 @@ public class Robot extends CommandRobotBase {
     @Override
     public void alwaysExecute() {
         SmartDashboard.putNumber("Flywheel RPS", RobotMap.Component.flywheelEncoder.getRate());
+        Pose2d deadReckoningPose = RobotMap.Component.sensorDrive.getPose();
+        RobotMap.Network.odometryXEntry.setDouble(deadReckoningPose.getTranslation().getX());
+        RobotMap.Network.odometryYEntry.setDouble(deadReckoningPose.getTranslation().getY());
+        RobotMap.Network.odometryAngleEntry.setDouble(deadReckoningPose.getRotation().getRadians());
     }
 
 }
