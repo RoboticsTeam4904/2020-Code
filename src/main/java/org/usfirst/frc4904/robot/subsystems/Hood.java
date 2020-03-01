@@ -5,6 +5,7 @@ import org.usfirst.frc4904.standard.Util;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
 import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomDigitalLimitSwitch;
+import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import org.usfirst.frc4904.standard.subsystems.motor.PositionSensorMotor;
 
 public class Hood extends PositionSensorMotor {
@@ -16,24 +17,24 @@ public class Hood extends PositionSensorMotor {
         UPPER, LOWER, NONE
     }
 
+    protected Motor hoodMotor;
     protected CANTalonEncoder hoodEncoder;
     protected CustomDigitalLimitSwitch limitSwitch;
     protected HoodStatus currentStatus = HoodStatus.IDLE;
-    private final double ENCODER_TICKS = 2048.0;
-    private final double TICK_MULTIPLIER = 360.0 / ENCODER_TICKS;
-    private Util.Range motorAngleRange = new Util.Range(RobotMap.Metrics.Hood.LOWER_HOOD_ANGLE,
-            RobotMap.Metrics.Hood.UPPER_HOOD_ANGLE);
+    private static double lower_hood_angle = 0.0;
+    private static double upper_hood_angle = 35.0;
+    private static Util.Range hood_range = new Util.Range(lower_hood_angle, upper_hood_angle);
 
     /**
      * We are currently making some pretty big assumptions. Those are: + speed is
      * towards the upper limit, - speed is towards the lower limit. The LimitType
      * "true" is upper limit, "false" is lower limit.
      */
-    public Hood(CANTalonEncoder hoodEncoder, CustomDigitalLimitSwitch limitSwitch) {
+    public Hood(Motor hoodMotor, CANTalonEncoder hoodEncoder, CustomDigitalLimitSwitch limitSwitch) {
         super(new CustomPIDController(RobotMap.PID.Hood.P, RobotMap.PID.Hood.I, RobotMap.PID.Hood.D, hoodEncoder));
+        this.hoodMotor = hoodMotor;
         this.hoodEncoder = hoodEncoder;
         this.limitSwitch = limitSwitch;
-        this.hoodEncoder.setDistancePerPulse(TICK_MULTIPLIER); // makes it so the getDistance() method for the encoder is in degrees
     }
 
     @Override
@@ -43,9 +44,7 @@ public class Hood extends PositionSensorMotor {
     }
 
     public void syncStatus() {
-        if (isLowerLimitDown()) {
-            setLimit();
-        }
+        setLimit(getPredictedLimitPress()); // If the limitType is None, it should fail silently.
     }
 
     /**
@@ -53,16 +52,16 @@ public class Hood extends PositionSensorMotor {
      */
     @Override
     public void setPosition(double angle) {
-        double safePosition = motorAngleRange.limitValue(angle);
-        super.setPosition(safePosition);
+        // double safePosition = RobotMap.Hood.
+        super.setPosition(angle); // TODO: Do we still want safe position conversion?
     }
 
     @Override
     public void set(double speed) {
-        if (speed > 0 && (isLimitDown() || getHoodAngle() >= RobotMap.Metrics.Hood.UPPER_HOOD_ANGLE)) {
+        if (speed > 0 && (isLimitDown() || getHoodAngle() >= upper_hood_angle)) {
             speed = 0.0;
         }
-        if (speed < 0 && (isLimitDown() || getHoodAngle() <= RobotMap.Metrics.Hood.LOWER_HOOD_ANGLE)) {
+        if (speed < 0 && (isLimitDown() || getHoodAngle() <= lower_hood_angle)) {
             speed = 0.0;
         }
         super.set(speed);
@@ -78,7 +77,7 @@ public class Hood extends PositionSensorMotor {
 
     public LimitType getPredictedLimitPress() {
         if (isLimitDown()) {
-            if (getHoodAngle() > RobotMap.Metrics.Hood.RANGE_HOOD_ANGLES / 2) {
+            if (getHoodAngle() > (hood_range.getRange()) / 2) {
                 return LimitType.UPPER;
             } else {
                 return LimitType.LOWER;
@@ -96,7 +95,16 @@ public class Hood extends PositionSensorMotor {
         return getPredictedLimitPress() == LimitType.UPPER;
     }
 
-    public void setLimit() {
-        hoodEncoder.reset();
+    public void setLimit(LimitType limitType) {
+        if(limitType == LimitType.LOWER){
+            hoodEncoder.reset();
+        }else if(limitType == LimitType.UPPER){
+            upper_hood_angle = getHoodAngle();
+            hood_range = new Util.Range(lower_hood_angle, upper_hood_angle);
+        }
+    }
+
+    public Motor getMotor() {
+        return hoodMotor;
     }
 }

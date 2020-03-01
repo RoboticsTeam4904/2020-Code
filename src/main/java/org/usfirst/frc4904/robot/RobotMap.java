@@ -4,6 +4,7 @@ import org.usfirst.frc4904.robot.subsystems.Flywheel;
 import org.usfirst.frc4904.robot.subsystems.Indexer;
 import org.usfirst.frc4904.robot.subsystems.Intake;
 import org.usfirst.frc4904.robot.subsystems.Shooter;
+import org.usfirst.frc4904.standard.Util;
 import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
@@ -43,19 +44,16 @@ public class RobotMap {
 
         public static class CAN { // TODO: CHANGE CONSTS
             public static final int HOOD_MOTOR = -1;
-            public static final int HOOD_ENCODER = -1;
         }
 
         public static class Pneumatics { // TODO: CHANGE CONSTS
             public static final PCMPort INTAKE_SOLENOID = new PCMPort(0, -1, -1);
-            public static final PCMPort FLIPPER_SOLENOID = new PCMPort(0, -1, -1);
             public static final PCMPort SHOOTER_AIM_SOLENOID = new PCMPort(0, -1, -1);
         }
 
         public static class Digital { // TODO: CHANGE CONSTS
             public static final int INDEXER_LIMIT_SWITCH = -1;
-            public static final int HOOD_LOWER_LIMIT_SWITCH = -1;
-            public static final int HOOD_UPPER_LIMIT_SWITCH = -1;
+            public static final int HOOD_LIMIT_SWITCH = -1;
         }
     }
 
@@ -85,12 +83,14 @@ public class RobotMap {
         }
 
         public static class Hood {
-            public static final double LOWER_HOOD_ANGLE = 0; // TODO: Add this value
-            public static final double RANGE_HOOD_ANGLES = 35.0;
-            public static final double UPPER_HOOD_ANGLE = LOWER_HOOD_ANGLE + RANGE_HOOD_ANGLES; // TODO: Does having all
-                                                                                                // of these theoretical
-                                                                                                // constants negate the
-                                                                                                // zeroing we're doing?
+            public static final double DEFAULT_RANGE_HOOD_ANGLES = 35.0;
+            public static final double ENCODER_TICKS = 2048.0;
+            public static final double TICKS_PER_ROTATION = ENCODER_TICKS / 360.0;
+            public static final double TEETH_PER_ROTATION = 22.0;
+            public static final double TEETH_PER_HOOD = 364.0;	      
+            public static final double ROTATION_PER_HOOD = TEETH_PER_ROTATION / TEETH_PER_HOOD;
+            public static final double HOOD_ANGLE_PER_ROTATION = DEFAULT_RANGE_HOOD_ANGLES / ROTATION_PER_HOOD;
+            public static final double HOOD_ANGLE_PER_TICK = HOOD_ANGLE_PER_ROTATION / TICKS_PER_ROTATION;
         }
     }
 
@@ -143,7 +143,6 @@ public class RobotMap {
         public static Hood hood;
 
         public static SolenoidSubsystem intakeSolenoid;
-        public static SolenoidSubsystem flipperSolenoid;
         public static SolenoidSubsystem shooterAimSolenoid;
 
         public static Motor intakeRollerMotor;
@@ -180,7 +179,6 @@ public class RobotMap {
 
         /** Pneumatics */
         Component.intakeSolenoid = new SolenoidSubsystem(Port.Pneumatics.INTAKE_SOLENOID.buildDoubleSolenoid());
-        Component.flipperSolenoid = new SolenoidSubsystem(Port.Pneumatics.FLIPPER_SOLENOID.buildDoubleSolenoid());
         Component.shooterAimSolenoid = new SolenoidSubsystem(
                 Port.Pneumatics.SHOOTER_AIM_SOLENOID.buildDoubleSolenoid());
 
@@ -198,18 +196,17 @@ public class RobotMap {
 
         /** Digital */
         Input.indexerLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.INDEXER_LIMIT_SWITCH);
-        Input.hoodLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_LOWER_LIMIT_SWITCH);
+        Input.hoodLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_LIMIT_SWITCH);
 
         /** Encoders */
         Component.flywheelEncoder = new CANTalonEncoder(flywheelATalon,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK);
-        Component.hoodEncoder = new CANTalonEncoder(hoodTalon, Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK);
+        Component.hoodEncoder = new CANTalonEncoder(hoodTalon, Metrics.Hood.HOOD_ANGLE_PER_TICK);
 
         /** Classes */
         Component.intake = new Intake(Component.intakeRollerMotor, Component.liftBeltMotor, Component.funnelMotor,
                 Component.intakeSolenoid);
-        Component.indexer = new Indexer(Component.flipperSolenoid, Input.indexerLimitSwitch);
-
+                
         Component.flywheel = new Flywheel(new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D,
                 PID.Flywheel.F, Component.flywheelEncoder), Component.flywheelMotorA, Component.flywheelMotorB);
 

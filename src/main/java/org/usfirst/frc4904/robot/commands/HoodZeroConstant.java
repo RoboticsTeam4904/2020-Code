@@ -1,6 +1,7 @@
 package org.usfirst.frc4904.robot.commands;
 
 import org.usfirst.frc4904.robot.RobotMap;
+import org.usfirst.frc4904.robot.subsystems.Hood.LimitType;
 import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 
 /**
@@ -8,16 +9,18 @@ import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
  */
 public class HoodZeroConstant extends MotorConstant {
     public final static double DEFAULT_SPEED = 0;
+    public LimitType limitType;
 
-    public HoodZeroConstant() {
-        super("HoodZeroConstant", RobotMap.Component.hood.getServo(), DEFAULT_SPEED);
+    public HoodZeroConstant(LimitType limitType) {
+        super("HoodZeroConstant", RobotMap.Component.hood.getMotor(), DEFAULT_SPEED * (limitType == LimitType.UPPER ? 1.0 : -1.0));
+        this.limitType = limitType;
     }
 
     @Override
     public void end(boolean interrupted) {
         super.end(interrupted);
         if (!interrupted) {
-            RobotMap.Component.hood.setLimit();
+            RobotMap.Component.hood.setLimit(limitType);
         }
     }
 
