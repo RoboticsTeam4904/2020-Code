@@ -28,7 +28,7 @@ public class Robot extends CommandRobotBase {
         SmartDashboard.putNumber("D", 0);
         SmartDashboard.putNumber("F", 0);
         SmartDashboard.putNumber("Setpoint", 0);
-        RobotMap.Component.sensorDrive.resetOdometry(new Pose2d());
+        // RobotMap.Component.sensorDrive.resetOdometry(new Pose2d());
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Robot extends CommandRobotBase {
         teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
         RobotMap.Component.flywheelPIDController.setPIDF(SmartDashboard.getNumber("P", 0),
                 SmartDashboard.getNumber("I", 0), SmartDashboard.getNumber("D", 0), SmartDashboard.getNumber("F", 0));
-        FlywheelSpinUp f = new FlywheelSpinUp(SmartDashboard.getNumber("Setpoint", 0));
+        // FlywheelSpinUp f = new FlywheelSpinUp(SmartDashboard.getNumber("Setpoint", 0));
         // f.schedule();
     }
 
@@ -46,7 +46,7 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
-        RobotMap.Component.sensorDrive.resetOdometry(new Pose2d());
+        // RobotMap.Component.sensorDrive.resetOdometry(new Pose2d());
     }
 
     @Override
@@ -71,11 +71,11 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void alwaysExecute() {
-        SmartDashboard.putNumber("Flywheel RPS", RobotMap.Component.flywheelEncoder.getRate());
-        Pose2d deadReckoningPose = RobotMap.Component.sensorDrive.getPose();
-        RobotMap.Network.odometryXEntry.setDouble(deadReckoningPose.getTranslation().getX());
-        RobotMap.Network.odometryYEntry.setDouble(deadReckoningPose.getTranslation().getY());
-        RobotMap.Network.odometryAngleEntry.setDouble(deadReckoningPose.getRotation().getRadians());
+        // SmartDashboard.putNumber("Flywheel RPS", RobotMap.Component.flywheelEncoder.getRate());
+        // Pose2d deadReckoningPose = RobotMap.Component.sensorDrive.getPose();
+        // RobotMap.Network.odometryXEntry.setDouble(deadReckoningPose.getTranslation().getX());
+        // RobotMap.Network.odometryYEntry.setDouble(deadReckoningPose.getTranslation().getY());
+        // RobotMap.Network.odometryAngleEntry.setDouble(deadReckoningPose.getRotation().getRadians());
     }
 
 }

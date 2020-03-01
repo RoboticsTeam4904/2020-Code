@@ -61,8 +61,9 @@ public class RobotMap {
       // Shooter
       public static final int RUN_UP_BELT_MOTOR = 8;
       // Climber
-      public static final int WINCH_MOTOR = 0;
+      public static final int WINCH_MOTOR = 13;
       public static final int HOOK_MOTOR = 9;
+      public static final int CONTROL_PANEL_MOTOR = 12;
     }
 
     public static class PWM {
@@ -192,10 +193,10 @@ public class RobotMap {
   public RobotMap() {
     Component.pdp = new PDP();
 
-    Component.leftWheelAccelerationCap = new EnableableModifier(new AccelerationCap(Component.pdp));
-    Component.leftWheelAccelerationCap.enable();
-    Component.rightWheelAccelerationCap = new EnableableModifier(new AccelerationCap(Component.pdp));
-    Component.rightWheelAccelerationCap.enable();
+    // Component.leftWheelAccelerationCap = new EnableableModifier(new AccelerationCap(Component.pdp));
+    // Component.leftWheelAccelerationCap.enable();
+    // Component.rightWheelAccelerationCap = new EnableableModifier(new AccelerationCap(Component.pdp));
+    // Component.rightWheelAccelerationCap.enable();
 
     Component.leftDriveA = new Motor("leftDriveA", false,
         new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A, NeutralMode.Coast));
@@ -209,7 +210,7 @@ public class RobotMap {
     // Make Chassises
     Component.chassis = new TankDrive(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA, Component.leftDriveB,
         Component.rightDriveA, Component.rightDriveB);
-    Component.sensorDrive = new SensorDrive(Component.chassis, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
+    // Component.sensorDrive = new SensorDrive(Component.chassis, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
 
     // IntializeNetworktables
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
