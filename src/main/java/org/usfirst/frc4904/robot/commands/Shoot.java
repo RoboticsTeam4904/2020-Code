@@ -13,7 +13,7 @@ public class Shoot extends SequentialCommandGroup {
   /**
    * Check that the flywheel is spun up, spin up if it isn't, then call IndexOne
    * 
-   * Psudo code:  
+   * Pseudo code:  
    * is flywheel target speed correct?  
    * yes -> continue  
    * no  -> FlywheelSpinUp()  

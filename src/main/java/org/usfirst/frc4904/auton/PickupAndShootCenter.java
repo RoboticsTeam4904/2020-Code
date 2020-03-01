@@ -6,6 +6,7 @@ import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.robot.commands.FlywheelSpinDown;
 import org.usfirst.frc4904.robot.commands.RunIntake;
 import org.usfirst.frc4904.robot.commands.Shoot;
+import org.usfirst.frc4904.robot.commands.vision.VisionMoveHighPort;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -22,10 +23,7 @@ class PickupAndShootCenter extends AutonRoutine {
                                 Arrays.asList(Poses.centerCollectStart, Poses.centerCollectEnd));
                 SimpleSplines collectSpline = new SimpleSplines(RobotMap.Component.sensorChassis, collect);
                 this.andThen(collectSpline);
-                Trajectory moveToShoot = RobotMap.Component.sensorChassis
-                                .generateQuinticTrajectory(Arrays.asList(Poses.centerCollectEnd, Poses.shootingPose));
-                SimpleSplines moveToShootSpline = new SimpleSplines(RobotMap.Component.sensorChassis, moveToShoot);
-                this.andThen(moveToShootSpline);
+                andThen(new VisionMoveHighPort());
                 double FlywheelSpeed = 0.0;
                 andThen(new Shoot(RobotMap.Component.indexer, RobotMap.Component.shooter, FlywheelSpeed));
                 andThen(new FlywheelSpinDown(RobotMap.Component.flywheel));
