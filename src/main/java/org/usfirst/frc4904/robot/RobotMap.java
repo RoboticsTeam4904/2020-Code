@@ -92,10 +92,35 @@ public class RobotMap {
           / Metrics.Chassis.TICKS_PER_REVOLUTION;
       public static final double TURN_CORRECTION = 0.0;
     }
-
     public static class Flywheel {
-      public static final double ROTATIONS_PER_TICK = 1.0 / 2048.0;
+      public static final double ROTATIONS_PER_TICK = 1.0/2048.0;
     }
+  }
+
+  public static class PID {
+    public static class Flywheel {
+      public static final double P = 0;//0.0084;
+      public static final double I = 0;//0.000017;
+      public static final double D = 0;//0.085;
+      public static final double F = 0.01;
+    }
+
+    public static class Hood {
+      public static final double P = 0.0;
+      public static final double I = 0.0;
+      public static final double D = 0.0;
+      public static final double F = 0.0;
+    }
+
+    public static class Drive {
+    }
+
+    public static class Turn {
+    }
+
+    // public static class Flywheel {
+    // public static final double ROTATIONS_PER_TICK = 1.0 / 2048.0;
+    // }
 
   }
   // public static class PWM {
@@ -106,27 +131,22 @@ public class RobotMap {
   // public static final int HOOD_ENCODER = -1;
   // }
 
-  public static class PID {
-    public static class Flywheel {
-      public static final double P = SmartDashboard.getNumber("P", 0);// 0.001;
-      public static final double I = SmartDashboard.getNumber("I", 0);// 0.000000001;
-      public static final double D = SmartDashboard.getNumber("D", 0);// 0;
-      public static final double F = SmartDashboard.getNumber("F", 0);// 0.01;
-    }
+  // public static class PID {
+  // public static class Flywheel {
+  // public static final double P = SmartDashboard.getNumber("P", 0.0084);//
+  // 0.001;
+  // public static final double I = SmartDashboard.getNumber("I", 0.000017);//
+  // 0.000000001;
+  // public static final double D = SmartDashboard.getNumber("D", 0);// 0;
+  // public static final double F = SmartDashboard.getNumber("F", 0);// 0.01;
+  // }
 
-    public static class Hood {
-      public static final double P = 0;
-      public static final double I = 0;
-      public static final double D = 0;
-      public static final double F = 0;
-    }
-
-    public static class Drive {
-    }
-
-    public static class Turn {
-    }
-  }
+  // public static class Hood {
+  // public static final double P = 0;
+  // public static final double I = 0;
+  // public static final double D = 0;
+  // public static final double F = 0;
+  // }
 
   public static class Input {
     public static CustomDigitalLimitSwitch indexerLimitSwitch;
@@ -188,15 +208,29 @@ public class RobotMap {
     public static class Operator {
       public static CustomJoystick joystick;
     }
+
   }
 
   public RobotMap() {
-    Component.pdp = new PDP();
+    /** Human Input */
+    HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
+    HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
 
-    // Component.leftWheelAccelerationCap = new EnableableModifier(new AccelerationCap(Component.pdp));
-    // Component.leftWheelAccelerationCap.enable();
-    // Component.rightWheelAccelerationCap = new EnableableModifier(new AccelerationCap(Component.pdp));
-    // Component.rightWheelAccelerationCap.enable();
+    /** Motors */
+    Component.intakeRollerMotor = new Motor("intakeRollerMotor", true, new CANTalonSRX(Port.CANMotor.INTAKE_ROLLER_MOTOR));
+    Component.funnelMotor = new Motor("funnelMotor", true, new CANTalonSRX(Port.CANMotor.INTAKE_FUNNEL_MOTOR));
+    Component.liftBeltMotor = new Motor("liftBeltMotor", new CANTalonSRX(Port.CANMotor.LIFT_BELT_MOTOR));
+    Component.runUpBeltMotor = new Motor("runUpBeltMotor", new CANTalonSRX(Port.CANMotor.RUN_UP_BELT_MOTOR));
+    CANTalonFX flywheelATalon = new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_A);
+    Component.flywheelMotorA = new Motor("flywheelMotorA", false, flywheelATalon);
+    Component.flywheelMotorB = new Motor("flywheelMotorB", false, new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_B));
+
+    Component.flywheelEncoder = new CANTalonEncoder("flywheelEncoder", flywheelATalon, true,
+    Metrics.Flywheel.ROTATIONS_PER_TICK, CustomPIDSourceType.kRate, FeedbackDevice.IntegratedSensor);
+
+    Component.flywheel = new Flywheel(new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D,
+        PID.Flywheel.F, Component.flywheelEncoder), Component.flywheelMotorA, Component.flywheelMotorB);
+
 
     Component.leftDriveA = new Motor("leftDriveA", false,
         new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A, NeutralMode.Coast));
@@ -210,53 +244,15 @@ public class RobotMap {
     // Make Chassises
     Component.chassis = new TankDrive(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA, Component.leftDriveB,
         Component.rightDriveA, Component.rightDriveB);
-    // Component.sensorDrive = new SensorDrive(Component.chassis, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
 
-    // IntializeNetworktables
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    NetworkTable table = inst.getTable("odometry");
-    Network.odometryXEntry = table.getEntry("x");
-    Network.odometryYEntry = table.getEntry("y");
-    Network.odometryAngleEntry = table.getEntry("angle");
 
-    HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
-    HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
 
-    Component.intakeRollerMotor = new Motor("intakeRollerMotor", true,
-        new CANTalonSRX(Port.CANMotor.INTAKE_ROLLER_MOTOR));
-    Component.funnelMotor = new Motor("funnelMotor", true, new CANTalonSRX(Port.CANMotor.INTAKE_FUNNEL_MOTOR));
-    Component.liftBeltMotor = new Motor("liftBeltMotor", new CANTalonSRX(Port.CANMotor.LIFT_BELT_MOTOR));
-    Component.runUpBeltMotor = new Motor("runUpBeltMotor", new CANTalonSRX(Port.CANMotor.RUN_UP_BELT_MOTOR));
-    CANTalonFX flywheelATalon = new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_A);
-    Component.flywheelMotorA = new Motor("flywheelMotorA", true, flywheelATalon);
-    Component.flywheelMotorB = new Motor("flywheelMotorB", new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_B));
-    // Component.hoodMotor = new Motor("hoodMotor", new
-    // ContinuousServoController(Port.PWM.HOOD_MOTOR));
 
-    // Input.indexerLimitSwitch = new
-    // CustomDigitalLimitSwitch(Port.Digital.INDEXER_LIMIT_SWITCH);
-    // Input.hoodLowerLimitSwitch = new
-    // CustomDigitalLimitSwitch(Port.Digital.HOOD_LOWER_LIMIT_SWITCH);
-    // Input.hoodUpperLimitSwitch = new
-    // CustomDigitalLimitSwitch(Port.Digital.HOOD_UPPER_LIMIT_SWITCH);
+    // Component.flywheelPIDController = new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D,
+    //     PID.Flywheel.F, Component.flywheelEncoder);
+    // Component.flywheel = new Flywheel(Component.flywheelPIDController, Component.flywheelMotorA,
+    //     Component.flywheelMotorB);
 
-    // Component.intake = new Intake(Component.intakeRollerMotor,
-    // Component.funnelMotor, Component.intakeSolenoid);
-    // Component.indexer = new Indexer(Component.liftBeltMotor,
-    // Component.flipperSolenoid, Input.indexerLimitSwitch);
-
-    Component.flywheelEncoder = new CANTalonEncoder("flywheelEncoder", flywheelATalon, true,
-        Metrics.Flywheel.ROTATIONS_PER_TICK, CustomPIDSourceType.kRate, FeedbackDevice.IntegratedSensor);
-    Component.flywheelPIDController = new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D,
-        PID.Flywheel.F, Component.flywheelEncoder);
-    Component.flywheel = new Flywheel(Component.flywheelPIDController, Component.flywheelMotorA,
-        Component.flywheelMotorB);
-
-    // Component.hoodEncoder = new CANEncoder(Port.CAN.HOOD_ENCODER);
-    // Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder,
-    // Input.hoodLowerLimitSwitch, Input.hoodUpperLimitSwitch);
-    // Component.shooter = new Shooter(Component.flywheel, Component.runUpBeltMotor,
-    // Component.hood);
 
     Component.hookMotor = new Motor("HookMotor", new CANTalonSRX(Port.CANMotor.HOOK_MOTOR));
     Component.winchMotor = new Motor("WinchMotor", new CANTalonFX(Port.CANMotor.WINCH_MOTOR));

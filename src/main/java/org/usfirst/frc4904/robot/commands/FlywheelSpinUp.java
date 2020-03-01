@@ -16,6 +16,7 @@ public class FlywheelSpinUp extends MotorVelocitySet {
   public FlywheelSpinUp(double speed) {
     super("FlywheelSpinUp", RobotMap.Component.flywheel, speed);
     addRequirements(RobotMap.Component.flywheelMotorA, RobotMap.Component.flywheelMotorB);
+    RobotMap.Component.flywheel.enableMotionController();
   }
 
   /**
@@ -25,5 +26,10 @@ public class FlywheelSpinUp extends MotorVelocitySet {
    */
   public FlywheelSpinUp() {
     this(DEFAULT_FLYWHEEL_SPEED);
+  }
+
+  @Override
+  public void end(boolean interrupted){
+    RobotMap.Component.flywheel.disableMotionController();
   }
 }

@@ -36,7 +36,7 @@ public class DefaultOperator extends Operator {
 		RobotMap.HumanInput.Operator.joystick.button1
 				.whileHeld(new MotorConstant(RobotMap.Component.liftBeltMotor, 0.4));
 		// Oh no
-		RobotMap.HumanInput.Operator.joystick.button3
+		RobotMap.HumanInput.Operator.joystick.button4
 				.whileHeld(new MotorConstant(RobotMap.Component.liftBeltMotor, -0.3));
 
 		// RobotMap.HumanInput.Operator.joystick.button12.whileHeld(new
@@ -46,5 +46,8 @@ public class DefaultOperator extends Operator {
 		// MotorConstant(RobotMap.Component.hookMotor, 0.4));
 		// RobotMap.HumanInput.Operator.joystick.button12.whileHeld(new
 		// MotorConstant(RobotMap.Component.hookMotor, -0.4));
+		// RobotMap.HumanInput.Operator.joystick.button3.whileHeld(new FlywheelSpinUp(50));
+		RobotMap.HumanInput.Operator.joystick.button3.onlyWhileHeld(new MotorConstant(RobotMap.Component.flywheelMotorA, 0.5));
+		RobotMap.HumanInput.Operator.joystick.button3.onlyWhileHeld(new MotorConstant(RobotMap.Component.flywheelMotorB, 0.5));
 	}
 }

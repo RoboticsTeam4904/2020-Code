@@ -35,7 +35,7 @@ public class Flywheel extends VelocitySensorMotor {
   public Flywheel(String name, SpeedModifier speedModifier, MotionController motionController,
       SpeedController... motors) {
     super(name, speedModifier, motionController, motors);
-    super.enableMotionController();
+    // super.enableMotionController();
   }
 
   /**
