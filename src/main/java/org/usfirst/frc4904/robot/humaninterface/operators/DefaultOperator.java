@@ -33,14 +33,16 @@ public class DefaultOperator extends Operator {
 		// MotorConstant(RobotMap.Component.flywheelMotorA, 1));
 		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new
 		// MotorConstant(RobotMap.Component.flywheelMotorB, 1));
-		RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new MotorConstant(RobotMap.Component.funnelMotor, 1));
-		RobotMap.HumanInput.Operator.joystick.button1
+		RobotMap.HumanInput.Operator.joystick.button3.whileHeld(new MotorConstant(RobotMap.Component.funnelMotor, 1));
+		RobotMap.HumanInput.Operator.joystick.button3
 				.whileHeld(new MotorConstant(RobotMap.Component.runUpBeltMotor, 1));
-		RobotMap.HumanInput.Operator.joystick.button1
+		RobotMap.HumanInput.Operator.joystick.button3
 				.whileHeld(new MotorConstant(RobotMap.Component.liftBeltMotor, 1));
 		// Oh no
 		RobotMap.HumanInput.Operator.joystick.button4
-				.whileHeld(new MotorConstant(RobotMap.Component.liftBeltMotor, -0.3));
+				.whileHeld(new MotorConstant(RobotMap.Component.liftBeltMotor, -0.5));
+		RobotMap.HumanInput.Operator.joystick.button4
+				.whileHeld(new MotorConstant(RobotMap.Component.runUpBeltMotor, -0.5));
 
 		// RobotMap.HumanInput.Operator.joystick.button12.whileHeld(new
 		// FlywheelSpinUp(SmartDashboard.getNumber("flywheelSpeed", 0)));
