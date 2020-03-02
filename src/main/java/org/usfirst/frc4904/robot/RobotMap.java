@@ -48,7 +48,7 @@ public class RobotMap {
       // Drive
       public static final int LEFT_DRIVE_A = 7;
       public static final int LEFT_DRIVE_B = 3;
-      public static final int RIGHT_DRIVE_A = 4;
+      public static final int RIGHT_DRIVE_A = 15;
       public static final int RIGHT_DRIVE_B = 11;
       // Intake
       public static final int INTAKE_ROLLER_MOTOR = 10;
@@ -56,7 +56,7 @@ public class RobotMap {
       // Indexer
       public static final int LIFT_BELT_MOTOR = 6;
       // Flywheel
-      public static final int FLYWHEEL_MOTOR_A = 2;
+      public static final int FLYWHEEL_MOTOR_A = 4;
       public static final int FLYWHEEL_MOTOR_B = 1;
       // Shooter
       public static final int RUN_UP_BELT_MOTOR = 8;
@@ -194,6 +194,7 @@ public class RobotMap {
     public static Motor hookMotor;
     public static Motor winchMotor;
 
+    public static Motor controlPanel;
     public static CANTalonEncoder flywheelEncoder;
     public static CANEncoder hoodEncoder;
 
@@ -222,14 +223,15 @@ public class RobotMap {
     Component.liftBeltMotor = new Motor("liftBeltMotor", new CANTalonSRX(Port.CANMotor.LIFT_BELT_MOTOR));
     Component.runUpBeltMotor = new Motor("runUpBeltMotor", new CANTalonSRX(Port.CANMotor.RUN_UP_BELT_MOTOR));
     CANTalonFX flywheelATalon = new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_A);
-    Component.flywheelMotorA = new Motor("flywheelMotorA", false, flywheelATalon);
+    Component.flywheelMotorA = new Motor("flywheelMotorA", true, flywheelATalon);
     Component.flywheelMotorB = new Motor("flywheelMotorB", false, new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_B));
 
-    Component.flywheelEncoder = new CANTalonEncoder("flywheelEncoder", flywheelATalon, true,
-    Metrics.Flywheel.ROTATIONS_PER_TICK, CustomPIDSourceType.kRate, FeedbackDevice.IntegratedSensor);
+    Component.controlPanel = new Motor("controlPanel", new CANTalonFX(Port.CANMotor.CONTROL_PANEL_MOTOR));
+    // Component.flywheelEncoder = new CANTalonEncoder("flywheelEncoder", flywheelATalon, true,
+    // Metrics.Flywheel.ROTATIONS_PER_TICK, CustomPIDSourceType.kRate, FeedbackDevice.IntegratedSensor);
 
-    Component.flywheel = new Flywheel(new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D,
-        PID.Flywheel.F, Component.flywheelEncoder), Component.flywheelMotorA, Component.flywheelMotorB);
+    // Component.flywheel = new Flywheel(new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D,
+    //     PID.Flywheel.F, Component.flywheelEncoder), Component.flywheelMotorA, Component.flywheelMotorB);
 
 
     Component.leftDriveA = new Motor("leftDriveA", false,
