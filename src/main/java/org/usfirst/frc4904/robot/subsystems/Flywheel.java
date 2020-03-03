@@ -35,7 +35,7 @@ public class Flywheel extends VelocitySensorMotor {
   public Flywheel(String name, SpeedModifier speedModifier, MotionController motionController,
       SpeedController... motors) {
     super(name, speedModifier, motionController, motors);
-    super.enableMotionController();
+    // super.enableMotionController();
   }
 
   /**
@@ -70,10 +70,14 @@ public class Flywheel extends VelocitySensorMotor {
     this("Flywheel", motionController, motors);
   }
 
+  @Override
+  public void periodic() {
+    syncStatus();
+  }
+
   protected void syncStatus() {
-    if (Math.abs(targetSpeed) < motionController.getAbsoluteTolerance() || currentStatus == FlywheelStatus.IDLE) { // TODO:
-                                                                                                                   // Infinitely
-                                                                                                                   // idle?
+    // TODO:// Infinitely idle?
+    if (Math.abs(targetSpeed) < motionController.getAbsoluteTolerance() || currentStatus == FlywheelStatus.IDLE) {
       currentStatus = FlywheelStatus.IDLE;
       return;
     }
@@ -85,25 +89,27 @@ public class Flywheel extends VelocitySensorMotor {
   }
 
   public FlywheelStatus getStatus() {
-    syncStatus();
     return currentStatus;
   }
 
-  public double getSpeed() {
+  public double getVelocity() {
     return motionController.getSensorValue();
   }
 
-  public double getTargetSpeed() {
+  public double getTargetVelocity() {
     return targetSpeed;
   }
 
-  public void setSpeed() {
+  public void setVelocity() {
     super.set(targetSpeed);
-    syncStatus();
   }
 
-  public void setSpeed(double speed) {
+  public void setVelocity(double speed) {
     targetSpeed = speed;
-    setSpeed();
+    setVelocity();
+  }
+
+  public MotionController getMC() {
+    return motionController;
   }
 }

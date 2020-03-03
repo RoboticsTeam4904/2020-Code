@@ -24,8 +24,8 @@ public class Shoot extends SequentialCommandGroup {
    * @param speed   The target speed of the flywheel
    */
   public Shoot(double speed) {
-    super(new RunIf(new FlywheelSpinUp(speed), () -> {
-      return Math.abs(RobotMap.Component.shooter.flywheel.getTargetSpeed() - speed) > SPEED_TOLERANCE;
+    super(new RunIf(new FlywheelSpinUp(RobotMap.Component.flywheel, speed), () -> {
+      return Math.abs(RobotMap.Component.shooter.flywheel.getTargetVelocity() - speed) > SPEED_TOLERANCE;
     }), new WaitUntil(() -> {
       return RobotMap.Component.shooter.flywheel.getStatus() == FlywheelStatus.AT_SPEED;
     }), new IndexOne());

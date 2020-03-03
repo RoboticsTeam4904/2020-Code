@@ -33,15 +33,15 @@ public class Shooter {
   }
 
   public double getFlywheelSpeed() {
-    return flywheel.getSpeed();
+    return flywheel.getVelocity();
   }
 
   public double getFlywheelTargetSpeed() {
-    return flywheel.getTargetSpeed();
+    return flywheel.getTargetVelocity();
   }
 
   public void setFlywheelSpeed(double speed) {
-    flywheel.setSpeed(speed);
+    flywheel.setVelocity(speed);
   }
 
   public void setFlywheelSpeedForDistance(double distance) {

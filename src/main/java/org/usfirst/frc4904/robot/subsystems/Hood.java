@@ -52,8 +52,8 @@ public class Hood extends PositionSensorMotor {
      */
     @Override
     public void setPosition(double angle) {
-        // double safePosition = RobotMap.Hood.
-        super.setPosition(angle); // TODO: Do we still want safe position conversion?
+        double safePosition = Hood.hood_range.limitValue(angle);
+        super.setPosition(safePosition); // TODO: Do we still want safe position conversion?
     }
 
     @Override
@@ -96,9 +96,10 @@ public class Hood extends PositionSensorMotor {
     }
 
     public void setLimit(LimitType limitType) {
-        if(limitType == LimitType.LOWER){
+        if (limitType == LimitType.LOWER) {
             hoodEncoder.reset();
-        }else if(limitType == LimitType.UPPER){
+        } else if (limitType == LimitType.UPPER) {
+            // hoodEncoder.getTalon().setSelectedSensorPosition(upp)
             upper_hood_angle = getHoodAngle();
             hood_range = new Util.Range(lower_hood_angle, upper_hood_angle);
         }

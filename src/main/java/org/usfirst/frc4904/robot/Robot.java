@@ -9,6 +9,8 @@ package org.usfirst.frc4904.robot;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Robot extends CommandRobotBase {
     private RobotMap map = new RobotMap();
 
@@ -51,7 +53,8 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void alwaysExecute() {
-
+        SmartDashboard.putNumber("Flywheel Get Speed", RobotMap.Component.flywheel.getVelocity());
+        // LogKitten.wtf(RobotMap.Component.flywheelEncoderA.getRate());
     }
 
 }
