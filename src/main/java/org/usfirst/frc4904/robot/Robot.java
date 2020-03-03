@@ -9,6 +9,7 @@ package org.usfirst.frc4904.robot;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
+import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 
 
@@ -58,8 +59,10 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void alwaysExecute() {
-        SmartDashboard.putNumber("Flywheel Get Speed", RobotMap.Component.flywheel.getVelocity());
-        // LogKitten.wtf(RobotMap.Component.flywheelEncoderA.getRate());
+        SmartDashboard.putNumber("Left Encoder Distance", RobotMap.Component.rightWheelEncoder.pidGet());
+        LogKitten.wtf("Left Encoder Distance" + RobotMap.Component.rightWheelEncoder.pidGet());
+        // SmartDashboard.putNumber("Right Encoder Distance", RobotMap.Component.rightWheelEncoder.pidGet());
+
     }
 
 }

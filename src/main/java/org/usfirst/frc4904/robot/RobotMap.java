@@ -13,6 +13,7 @@ import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
 import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
+import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomDigitalLimitSwitch;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
@@ -21,6 +22,7 @@ import org.usfirst.frc4904.standard.subsystems.motor.VelocitySensorMotor;
 import org.usfirst.frc4904.robot.subsystems.Hood;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.util.Units;
 
 public class RobotMap {
     public static class Port {
@@ -40,6 +42,8 @@ public class RobotMap {
             public static final int FLYWHEEL_MOTOR_B = 1;
             // Shooter
             public static final int RUN_UP_BELT_MOTOR = 8;
+            public static final int HOOD_MOTOR = -1;
+
 
             public static final int LEFT_DRIVE_A = 7;
             public static final int LEFT_DRIVE_B = 3;
@@ -56,7 +60,8 @@ public class RobotMap {
         }
 
         public static class CAN { // TODO: CHANGE CONSTS
-            public static final int HOOD_MOTOR = -1;
+            // public static final int LEFT_WHEEL_ENCODER = 2;
+            public static final int RIGHT_WHEEL_ENCODER = 2;
         }
 
         public static class Pneumatics { // TODO: CHANGE CONSTS
@@ -73,7 +78,7 @@ public class RobotMap {
     public static class Metrics {
         public static class Chassis {
             public static final double TICKS_PER_REVOLUTION = -1; // TODO: CHANGE CONSTS
-            public static final double DIAMETER_METERS = -1;
+            public static final double DIAMETER_METERS = Units.inchesToMeters(5);
             public static final double CIRCUMFERENCE_METERS = Metrics.Chassis.DIAMETER_METERS * Math.PI;
             public static final double TICKS_PER_INCH = Metrics.Chassis.TICKS_PER_REVOLUTION
                     / Metrics.Chassis.CIRCUMFERENCE_METERS;
@@ -180,6 +185,9 @@ public class RobotMap {
         public static Motor rightDriveB;
         public static TankDrive chassis;
 
+        public static CustomCANCoder leftWheelEncoder;
+        public static CustomCANCoder rightWheelEncoder;
+
 
     }
 
@@ -229,7 +237,7 @@ public class RobotMap {
 
         Component.chassis = new TankDrive(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA, Component.leftDriveB,
                 Component.rightDriveA, Component.rightDriveB);
-        // CANTalonFX hoodTalon = new CANTalonFX(Port.CAN.HOOD_MOTOR);
+        // CANTalonFX hoodTalon = new CANTalonFX(Port.CANMotor.HOOD_MOTOR);
         // Component.hoodMotor = new Motor("hoodMotor", hoodTalon);
 
         /** Digital */
@@ -241,6 +249,10 @@ public class RobotMap {
         Component.flywheelEncoderA = new CANTalonEncoder(flywheelATalon, true,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK);
         Component.flywheelEncoderA.setCustomPIDSourceType(CustomPIDSourceType.kRate);
+        Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
+                RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        // Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
+        //         RobotMap.Metrics.Chassis.METERS_PER_TICK);
         // Component.hoodEncoder = new CANTalonEncoder(hoodTalon,
         // Metrics.Hood.HOOD_ANGLE_PER_TICK);
 
