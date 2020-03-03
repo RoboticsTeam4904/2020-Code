@@ -209,23 +209,6 @@ public class RobotMap {
     flywheelATalon.setInverted(true);
     CANTalonFX flywheelBTalon = new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_B);
 
-    // Motor flywheelA = new Motor("flywheelMotorA", true, flywheelATalon);
-    // Motor flywheelB = new Motor("flywheelMotorB", false, new
-    // CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_B));
-    // Component.flywheelMotorA = new Motor("flywheelMotorA", true, flywheelATalon);
-    // Component.flywheelMotorB = new Motor("flywheelMotorB", false, new
-    // CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_B));
-    Component.flywheelEncoderA = new CANTalonEncoder(flywheelATalon, true,
-        Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK);
-    Component.flywheelEncoderA.setCustomPIDSourceType(CustomPIDSourceType.kRate);
-    // Component.flywheelEncoderB = new CANTalonEncoder(flywheelBTalon,
-    //     Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK);
-    Component.flywheelPID = new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, PID.Flywheel.F,
-        Component.flywheelEncoderA);
-    // Component.flywheelMotorA = new VelocitySensorMotor(Component.flywheelPID, flywheelATalon, flywheelBTalon);
-    // Component.flywheelMotorB = new VelocitySensorMotor(new
-    // CustomPIDController(PID.Flywheel.P, PID.Flywheel.I,
-    // PID.Flywheel.D, PID.Flywheel.F, Component.flywheelEncoderB), flywheelB);
     // CANTalonFX hoodTalon = new CANTalonFX(Port.CAN.HOOD_MOTOR);
     // Component.hoodMotor = new Motor("hoodMotor", hoodTalon);
 
@@ -236,11 +219,15 @@ public class RobotMap {
     // CustomDigitalLimitSwitch(Port.Digital.HOOD_LIMIT_SWITCH);
 
     /** Encoders */
-    // Component.flywheelEncoder = new CANTalonEncoder(flywheelATalon,
-    // Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK);
+    Component.flywheelEncoderA = new CANTalonEncoder(flywheelATalon, true,
+        Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK);
+    Component.flywheelEncoderA.setCustomPIDSourceType(CustomPIDSourceType.kRate);
     // Component.hoodEncoder = new CANTalonEncoder(hoodTalon,
     // Metrics.Hood.HOOD_ANGLE_PER_TICK);
 
+    /** Motion Controllers */
+    Component.flywheelPID = new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, PID.Flywheel.F,
+        Component.flywheelEncoderA);
     /** Classes */
     // Component.intake = new Intake(Component.intakeRollerMotor,
     // Component.liftBeltMotor, Component.funnelMotor,
