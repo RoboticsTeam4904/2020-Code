@@ -23,7 +23,7 @@ public class FlywheelSpinUp extends SequentialCommandGroup {
         super(new RunUntil("FlywheelSpinUp", new MotorConstant(flywheel, ((CustomPIDController) flywheel.getMC()).getF() * targetSpeed), () -> {
             return Math.abs(flywheel.getVelocity() - targetSpeed) < THRESHOLD || flywheel.getVelocity() > targetSpeed;
         }, false), new FlywheelMaintainSpeed(flywheel, targetSpeed));
-        addRequirements(flywheel);
+        // addRequirements(flywheel);
     }
 
     public FlywheelSpinUp(double speed) {

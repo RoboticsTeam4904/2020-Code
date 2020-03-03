@@ -188,7 +188,7 @@ public class RobotMap {
         public static CustomCANCoder leftWheelEncoder;
         public static CustomCANCoder rightWheelEncoder;
 
-
+        public static Motor testMotor;
     }
 
     public static class Input {
@@ -218,9 +218,9 @@ public class RobotMap {
         // Port.Pneumatics.SHOOTER_AIM_SOLENOID.buildDoubleSolenoid());
 
         /** Motors */
-        Component.intakeRollerMotor = new Motor("intakeRollerMotor",
+        Component.intakeRollerMotor = new Motor("intakeRollerMotor", true,
                 new CANTalonSRX(Port.CANMotor.INTAKE_ROLLER_MOTOR));
-        Component.funnelMotor = new Motor("funnelMotor", new CANTalonSRX(Port.CANMotor.INTAKE_FUNNEL_MOTOR));
+        Component.funnelMotor = new Motor("funnelMotor", true, new CANTalonSRX(Port.CANMotor.INTAKE_FUNNEL_MOTOR));
         Component.liftBeltMotor = new Motor("liftBeltMotor", new CANTalonSRX(Port.CANMotor.LIFT_BELT_MOTOR));
         Component.runUpBeltMotor = new Motor("runUpBeltMotor", new CANTalonSRX(Port.CANMotor.RUN_UP_BELT_MOTOR));
         CANTalonFX flywheelATalon = new CANTalonFX(Port.CANMotor.FLYWHEEL_MOTOR_A);
@@ -243,14 +243,14 @@ public class RobotMap {
         /** Digital */
         // Input.indexerLimitSwitch = new
         // CustomDigitalLimitSwitch(Port.Digital.INDEXER_LIMIT_SWITCH);
-        Input.hoodLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_LIMIT_SWITCH);
+        // Input.hoodLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_LIMIT_SWITCH);
 
         /** Encoders */
         Component.flywheelEncoderA = new CANTalonEncoder(flywheelATalon, true,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK);
         Component.flywheelEncoderA.setCustomPIDSourceType(CustomPIDSourceType.kRate);
-        Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
-                RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        // Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
+        //         RobotMap.Metrics.Chassis.METERS_PER_TICK);
         // Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
         //         RobotMap.Metrics.Chassis.METERS_PER_TICK);
         // Component.hoodEncoder = new CANTalonEncoder(hoodTalon,

@@ -59,10 +59,10 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void alwaysExecute() {
-        SmartDashboard.putNumber("Left Encoder Distance", RobotMap.Component.rightWheelEncoder.pidGet());
-        LogKitten.wtf("Left Encoder Distance" + RobotMap.Component.rightWheelEncoder.pidGet());
+        SmartDashboard.putNumber("Flywheel", RobotMap.Component.flywheelEncoderA.getRate());
+        // LogKitten.wtf("Left Encoder Distance" + RobotMap.Component.rightWheelEncoder.pidGet());
         // SmartDashboard.putNumber("Right Encoder Distance", RobotMap.Component.rightWheelEncoder.pidGet());
-
+        // LogKitten.wtf("Hood limit " + RobotMap.Input.hoodLimitSwitch.get());
     }
 
 }

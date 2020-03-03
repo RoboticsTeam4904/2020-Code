@@ -60,9 +60,8 @@ public class DefaultOperator extends Operator {
 		// MotorConstant(RobotMap.Component.hookMotor, -0.4));
 		// RobotMap.HumanInput.Operator.joystick.button3.whileHeld(new
 		// FlywheelSpinUp(50));
-		RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelSpinUp(70.0));
-		// RobotMap.HumanInput.Operator.joystick.button1
-		// .whileHeld(new MotorConstant(RobotMap.Component.flywheelMotorB, 0.5));
+		RobotMap.HumanInput.Operator.joystick.button1.onlyWhileHeld(new FlywheelMaintainSpeed(58.0));
+		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new MotorConstant(RobotMap.Component.testMotor, 0.5));
 		// RobotMap.HumanInput.Operator.joystick.button5
 		// .whileHeld(new MotorConstant(RobotMap.Component.controlPanel, 0.75));
 
