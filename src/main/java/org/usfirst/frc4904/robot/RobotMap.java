@@ -65,7 +65,7 @@ public class RobotMap {
 
     public static class Digital { // TODO: CHANGE CONSTS
       public static final int INDEXER_LIMIT_SWITCH = -1;
-      public static final int HOOD_LIMIT_SWITCH = -1;
+      public static final int HOOD_LIMIT_SWITCH = 9;
     }
   }
 
@@ -215,8 +215,7 @@ public class RobotMap {
     /** Digital */
     // Input.indexerLimitSwitch = new
     // CustomDigitalLimitSwitch(Port.Digital.INDEXER_LIMIT_SWITCH);
-    // Input.hoodLimitSwitch = new
-    // CustomDigitalLimitSwitch(Port.Digital.HOOD_LIMIT_SWITCH);
+    Input.hoodLimitSwitch = new CustomDigitalLimitSwitch(Port.Digital.HOOD_LIMIT_SWITCH);
 
     /** Encoders */
     Component.flywheelEncoderA = new CANTalonEncoder(flywheelATalon, true,
