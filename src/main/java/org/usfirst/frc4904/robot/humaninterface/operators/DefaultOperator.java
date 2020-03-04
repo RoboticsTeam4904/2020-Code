@@ -3,6 +3,7 @@ package org.usfirst.frc4904.robot.humaninterface.operators;
 import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.robot.commands.FlywheelMaintainSpeed;
 import org.usfirst.frc4904.robot.commands.FlywheelSpinUp;
+import org.usfirst.frc4904.robot.commands.FlywheelToSpeed;
 import org.usfirst.frc4904.standard.humaninput.Operator;
 import org.usfirst.frc4904.standard.commands.RunUntil;
 import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
@@ -61,7 +62,8 @@ public class DefaultOperator extends Operator {
 		// MotorConstant(RobotMap.Component.hookMotor, 0.4));
 		// RobotMap.HumanInput.Operator.joystick.button12.whileHeld(new
 		// MotorConstant(RobotMap.Component.hookMotor, -0.4));
-		RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelSpinUp(58.0));
+		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelSpinUp(58.0));
+		RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelToSpeed(RobotMap.Component.flywheel, 58.0));
 		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelMaintainSpeed(58.0));
 		// RobotMap.HumanInput.Operator.joystick.button2.whileHeld(new MotorConstant(RobotMap.Component.flywheel, ((CustomPIDController) RobotMap.Component.flywheel.getMC()).getF() * 58.0));
 		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new RunUntil("runtest", new MotorConstant(RobotMap.Component.flywheel, ((CustomPIDController) RobotMap.Component.flywheel.getMC()).getF() * 58.0), () -> {
