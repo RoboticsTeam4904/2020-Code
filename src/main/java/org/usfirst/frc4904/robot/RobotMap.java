@@ -114,9 +114,6 @@ public class RobotMap {
             public static final double HOOD_ANGLE_PER_HOOD_TOOTH = 360.0 / TEETH_IF_FULL_CIRCLE;
             public static final double HOOD_ANGLE_PER_SHAFT = HOOD_ANGLE_PER_HOOD_TOOTH * TEETH_PER_SHAFT_ROTATION;
             public static final double HOOD_ANGLE_PER_TICK =  HOOD_ANGLE_PER_SHAFT / TICKS_PER_SHAFT_ROTATION;
-            // public static final double HOOD_ANGLE_PER_ROTATION = TEETH_PER_HOOD / TEETH_PER_ROTATION;
-            // public static final double HOOD_ANGLE_PER_ROTATION = DEFAULT_RANGE_HOOD_ANGLES / ROTATION_PER_HOOD_ANGLE ;
-            // public static final double HOOD_ANGLE_PER_TICK = HOOD_ANGLE_PER_ROTATION / (TICKS_PER_DEGREE * FALCON_TO_SHAFT);
         }
     }
 
