@@ -30,10 +30,10 @@ public class RobotMap {
         }
 
         public static class CANMotor {
-            public static final int LEFT_DRIVE_A = 4;
-            public static final int LEFT_DRIVE_B = 11;
-            public static final int RIGHT_DRIVE_A = 7;
-            public static final int RIGHT_DRIVE_B = 3;
+            public static final int LEFT_DRIVE_A = 7;
+            public static final int LEFT_DRIVE_B = 3;
+            public static final int RIGHT_DRIVE_A = 15;
+            public static final int RIGHT_DRIVE_B = 11;
         }
 
         public static class PWM {
@@ -45,7 +45,7 @@ public class RobotMap {
         }
 
         public static class Pneumatics {
-            public static final PCMPort SHIFTER = new PCMPort(0, -1, -1);
+            public static final PCMPort SHIFTER = new PCMPort(0, 1, 3);
         }
 
         public static class Digital {
@@ -93,7 +93,7 @@ public class RobotMap {
         public static Motor leftDriveB;
         public static Motor rightDriveA;
         public static Motor rightDriveB;
-        public static TankDrive chassis;
+        public static TankDriveShifting chassis;
         public static SolenoidShifters shifter;
         public static EnableableModifier leftWheelAccelerationCap;
         public static EnableableModifier rightWheelAccelerationCap;
@@ -121,43 +121,23 @@ public class RobotMap {
         Component.pdp = new PDP();
 
         // Component.leftWheelEncoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,
-        //         RobotMap.Metrics.Chassis.METERS_PER_TICK);
-        // Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
-        //         RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        // RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        // Component.rightWheelEncoder = new
+        // CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
+        // RobotMap.Metrics.Chassis.METERS_PER_TICK);
 
         Component.leftDriveA = new Motor("leftDriveA", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A));
         Component.leftDriveB = new Motor("leftDriveB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
         Component.rightDriveA = new Motor("rightDriveA", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A));
         Component.rightDriveB = new Motor("rightDriveB", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
 
-        // Component.shifter = new SolenoidShifters(Port.Pneumatics.SHIFTER.buildDoubleSolenoid());
+        Component.shifter = new SolenoidShifters(Port.Pneumatics.SHIFTER.buildDoubleSolenoid());
 
-        Component.chassis = new TankDrive(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA,
-                Component.leftDriveB, Component.rightDriveA, Component.rightDriveB);
-
+        Component.chassis = new TankDriveShifting(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA, Component.leftDriveB,
+                Component.rightDriveA, Component.rightDriveB, Component.shifter);
 
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
     }
 
-    public static class SinglePCMPort {
-        public int pcmID;
-        public int forward;
-    
-        /**
-         * Defines a piston based on two ports and a PCM number
-         * 
-         * @param pcmID   The ID of the PCM attached to the piston. Usually 0 or 1.
-         * @param forward The forward port of the piston.
-         * @param reverse The reverse port of the piston.
-         */
-        public SinglePCMPort(int pcmID, int forward) { // First variable PCM number, second forward, third reverse.
-            this.pcmID = pcmID;
-            this.forward = forward;
-        }
-    
-        public Solenoid buildSolenoid() {
-            return new Solenoid(pcmID, forward);
-        }
-    }
 }
