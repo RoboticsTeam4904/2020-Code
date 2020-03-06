@@ -1,21 +1,20 @@
 package org.usfirst.frc4904.robot;
 
-import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.CANCoderConfiguration;
-import com.ctre.phoenix.sensors.SensorTimeBase;
-
 import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
-import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.AccelerationCap;
-import org.usfirst.frc4904.standard.subsystems.motor.speedmodifiers.EnableableModifier;
 
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.util.Units;
 
+import org.usfirst.frc4904.standard.subsystems.chassis.SensorDrive;
 import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
-import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
 import org.usfirst.frc4904.standard.custom.sensors.NavX;
@@ -54,16 +53,27 @@ public class RobotMap {
 
     public static class Metrics {
         public static class Chassis {
-            public static final double TICKS_PER_REVOLUTION = -1;
-            public static final double DIAMETER_METERS = -1;
+            public static final double DIAMETER_METERS = Units.inchesToMeters(5.0);
             public static final double CIRCUMFERENCE_METERS = Metrics.Chassis.DIAMETER_METERS * Math.PI;
-            public static final double TICKS_PER_METER = Metrics.Chassis.TICKS_PER_REVOLUTION
+            public static final double TICKS_PER_METER = Metrics.Encoders.CANCoders.TICKS_PER_REVOLUTION
                     / Metrics.Chassis.CIRCUMFERENCE_METERS;
-            public static final double DISTANCE_FRONT_BACK = -1;
-            public static final double DISTANCE_SIDE_SIDE = -1;
+            public static final double DISTANCE_FRONT_BACK = Units.inchesToMeters(29.5); // TODO: DOUBLE CHECK DISTANCES
+            public static final double DISTANCE_SIDE_SIDE = Units.inchesToMeters(29.5); // The robot's a square
             public static final double METERS_PER_TICK = Metrics.Chassis.CIRCUMFERENCE_METERS
-                    / Metrics.Chassis.TICKS_PER_REVOLUTION;
+                    / Metrics.Encoders.CANCoders.TICKS_PER_REVOLUTION;
             public static final double TURN_CORRECTION = 0.0;
+        }
+
+        public static class Encoders {
+            public static class TalonEncoders {
+                public static final double TICKS_PER_REVOLUTION = 2048.0;
+                public static final double REVOLUTIONS_PER_TICK = 1 / TICKS_PER_REVOLUTION;
+            }
+
+            public static class CANCoders {
+                public static final double TICKS_PER_REVOLUTION = 4096.0;
+                public static final double REVOLUTIONS_PER_TICK = 1 / TICKS_PER_REVOLUTION;
+            }
         }
     }
 
@@ -78,12 +88,24 @@ public class RobotMap {
         }
 
         public static class Turn {
-            public static final double P = -1;
-            public static final double I = -1;
-            public static final double D = -1;
-            public static final double F = -1;
+            public static final double P = 0;
+            public static final double I = 0;
+            public static final double D = 0;
+            public static final double F = 0.01;
             public static final double TOLERANCE = -1;
             public static final double D_TOLERANCE = -1;
+        }
+    }
+
+    public static class NetworkTables {
+        public static NetworkTableInstance inst;
+
+        // These should be in units of meters and radians
+        public static class Odometry {
+            public static NetworkTable odometry;
+            public static NetworkTableEntry odometryXEntry;
+            public static NetworkTableEntry odometryYEntry;
+            public static NetworkTableEntry odometryAngleEntry;
         }
     }
 
@@ -95,12 +117,12 @@ public class RobotMap {
         public static Motor rightDriveB;
         public static TankDriveShifting chassis;
         public static SolenoidShifters shifter;
-        public static EnableableModifier leftWheelAccelerationCap;
-        public static EnableableModifier rightWheelAccelerationCap;
+        public static CustomPIDController chassisTurnPID;
+        public static SensorDrive sensorDrive;
+
         public static CustomCANCoder leftWheelEncoder;
         public static CustomCANCoder rightWheelEncoder;
         public static EncoderPair chassisEncoders;
-        public static CANCoderConfiguration canCoderConfiguration;
         public static NavX navx;
     }
 
@@ -118,14 +140,17 @@ public class RobotMap {
     }
 
     public RobotMap() {
+        /** Chassis */
         Component.pdp = new PDP();
+        Component.navx = new NavX(SerialPort.Port.kMXP);
 
-        // Component.leftWheelEncoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,
-        // RobotMap.Metrics.Chassis.METERS_PER_TICK);
-        // Component.rightWheelEncoder = new
-        // CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
-        // RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        // Chassis Encoders
+        Component.leftWheelEncoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,
+                RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
+                RobotMap.Metrics.Chassis.METERS_PER_TICK);
 
+        // Chassis Motors
         Component.leftDriveA = new Motor("leftDriveA", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A));
         Component.leftDriveB = new Motor("leftDriveB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
         Component.rightDriveA = new Motor("rightDriveA", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A));
@@ -133,11 +158,26 @@ public class RobotMap {
 
         Component.shifter = new SolenoidShifters(Port.Pneumatics.SHIFTER.buildDoubleSolenoid());
 
-        Component.chassis = new TankDriveShifting(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA, Component.leftDriveB,
-                Component.rightDriveA, Component.rightDriveB, Component.shifter);
+        // Classes
+        Component.chassis = new TankDriveShifting(Metrics.Chassis.TURN_CORRECTION, Component.leftDriveA,
+                Component.leftDriveB, Component.rightDriveA, Component.rightDriveB, Component.shifter);
 
+        Component.sensorDrive = new SensorDrive(Component.chassis, Component.leftWheelEncoder,
+                Component.rightWheelEncoder, Component.navx);
+
+        Component.chassisTurnPID = new CustomPIDController(PID.Turn.P, PID.Turn.I, PID.Turn.D, PID.Turn.F,
+                Component.sensorDrive);
+
+        /** HumanInput */
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
+
+        /** NetworkTables */
+        NetworkTables.inst = NetworkTableInstance.getDefault();
+        NetworkTables.Odometry.odometry = NetworkTables.inst.getTable("odometry");
+        NetworkTables.Odometry.odometryXEntry = NetworkTables.Odometry.odometry.getEntry("x");
+        NetworkTables.Odometry.odometryYEntry = NetworkTables.Odometry.odometry.getEntry("y");
+        NetworkTables.Odometry.odometryAngleEntry = NetworkTables.Odometry.odometry.getEntry("angle");
     }
 
 }

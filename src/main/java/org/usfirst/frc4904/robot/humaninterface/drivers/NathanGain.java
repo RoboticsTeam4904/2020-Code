@@ -8,7 +8,7 @@ import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
 public class NathanGain extends Driver {
 	public static final double SPEED_GAIN = 1;
 	public static final double SPEED_EXP = 2;
-	public static final double TURN_GAIN = 0.7;
+	public static final double TURN_GAIN = 0.35;
 	public static final double TURN_EXP = 1;
 	public static final double Y_SPEED_SCALE = 1;
 	public static final double TURN_SPEED_SCALE = 1;
@@ -23,8 +23,8 @@ public class NathanGain extends Driver {
 
 	@Override
 	public void bindCommands() {
-		// RobotMap.HumanInput.Driver.xbox.lb.whenPressed(new ChassisShift(RobotMap.Component.chassis.getShifter(), SolenoidShifters.SolenoidState.EXTEND));
-		// RobotMap.HumanInput.Driver.xbox.rb.whenPressed(new ChassisShift(RobotMap.Component.chassis.getShifter(), SolenoidShifters.SolenoidState.RETRACT));
+		RobotMap.HumanInput.Driver.xbox.lb.whenPressed(new ChassisShift(RobotMap.Component.chassis.getShifter(), SolenoidShifters.SolenoidState.EXTEND));
+		RobotMap.HumanInput.Driver.xbox.rb.whenPressed(new ChassisShift(RobotMap.Component.chassis.getShifter(), SolenoidShifters.SolenoidState.RETRACT));
 
 	}
 

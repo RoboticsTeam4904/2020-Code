@@ -10,6 +10,9 @@ import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
+import org.usfirst.frc4904.standard.commands.chassis.ChassisTurn;
+
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 
 public class Robot extends CommandRobotBase {
     private RobotMap map = new RobotMap();
@@ -18,6 +21,7 @@ public class Robot extends CommandRobotBase {
     public void initialize() {
         driverChooser.setDefaultOption(new NathanGain());
         operatorChooser.setDefaultOption(new DefaultOperator());
+        RobotMap.Component.sensorDrive.resetOdometry(new Pose2d());
     }
 
     @Override
@@ -31,6 +35,9 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
+        RobotMap.Component.sensorDrive.resetOdometry(new Pose2d());
+        ChassisTurn turn = new ChassisTurn(RobotMap.Component.chassis, 90, RobotMap.Component.navx, RobotMap.Component.chassisTurnPID);
+        turn.schedule();
     }
 
     @Override
@@ -56,7 +63,10 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void alwaysExecute() {
-
+        Pose2d deadReckoningPose = RobotMap.Component.sensorDrive.getPose();
+        RobotMap.NetworkTables.Odometry.odometryXEntry.setDouble(deadReckoningPose.getTranslation().getX());
+        RobotMap.NetworkTables.Odometry.odometryYEntry.setDouble(deadReckoningPose.getTranslation().getY());
+        RobotMap.NetworkTables.Odometry.odometryAngleEntry.setDouble(RobotMap.Component.sensorDrive.pidGet() * (Math.PI / 180.0));
     }
 
 }
