@@ -44,11 +44,11 @@ public class RobotMap {
             public static final int FLYWHEEL_MOTOR_B = 1;
             // Shooter
             public static final int RUN_UP_BELT_MOTOR = 8;
-            public static final int HOOD_MOTOR = 0;
+            public static final int HOOD_MOTOR = 3;
 
 
             public static final int RIGHT_DRIVE_A = 7;
-            public static final int RIGHT_DRIVE_B = 3;
+            public static final int RIGHT_DRIVE_B = 0;
             public static final int LEFT_DRIVE_A = 15;
             public static final int LEFT_DRIVE_B = 11;
 
@@ -62,8 +62,8 @@ public class RobotMap {
         }
 
         public static class CAN { // TODO: CHANGE CONSTS
-            // public static final int LEFT_WHEEL_ENCODER = 2;
-            public static final int RIGHT_WHEEL_ENCODER = 2;
+            public static final int LEFT_WHEEL_ENCODER = 2;
+            public static final int RIGHT_WHEEL_ENCODER = 0;
         }
 
         public static class Pneumatics { // TODO: CHANGE CONSTS
@@ -80,7 +80,7 @@ public class RobotMap {
 
     public static class Metrics {
         public static class Chassis {
-            public static final double TICKS_PER_REVOLUTION = -1; // TODO: CHANGE CONSTS
+            public static final double TICKS_PER_REVOLUTION = 4096.0; // TODO: CHANGE CONSTS
             public static final double DIAMETER_METERS = Units.inchesToMeters(5);
             public static final double CIRCUMFERENCE_METERS = Metrics.Chassis.DIAMETER_METERS * Math.PI;
             public static final double TICKS_PER_INCH = Metrics.Chassis.TICKS_PER_REVOLUTION
@@ -147,7 +147,7 @@ public class RobotMap {
             public static final double P = 0.0;
             public static final double I = 0.0;
             public static final double D = 0.0;
-            public static final double F = 0.0;
+            public static final double F = 0.1;
         }
 
         public static class Drive {
@@ -257,10 +257,10 @@ public class RobotMap {
         Component.flywheelEncoderB = new CANTalonEncoder(flywheelBTalon, false,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK);
         Component.flywheelEncoderB.setCustomPIDSourceType(CustomPIDSourceType.kRate);
-        // Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
-        //         RobotMap.Metrics.Chassis.METERS_PER_TICK);
-        // Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
-        //         RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        Component.leftWheelEncoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,
+                RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
+                RobotMap.Metrics.Chassis.METERS_PER_TICK);
         Component.hoodEncoder = new CANTalonEncoder(hoodTalon, Metrics.Hood.HOOD_ANGLE_PER_TICK);
 
         /** Motion Controllers */
@@ -273,8 +273,7 @@ public class RobotMap {
 
         Component.flywheel = new Flywheel(Component.flywheelPID, flywheelATalon, flywheelBTalon);
 
-        // Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder,
-        // Input.hoodLimitSwitch);
+        Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLimitSwitch);
         // Component.shooter = new Shooter(Component.flywheel, Component.runUpBeltMotor,
         // Component.hood);
     }

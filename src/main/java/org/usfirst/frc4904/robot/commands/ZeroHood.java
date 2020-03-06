@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 public class ZeroHood extends SequentialCommandGroup {
     public ZeroHood() {
-        super(new HoodZeroConstant(LimitType.LOWER), new WaitUntilCommand(() -> {
-            return RobotMap.Component.hood.isLimitDown();
-        }));
+        super(new HoodZeroConstant(LimitType.LOWER));
     }
 }

@@ -67,6 +67,8 @@ public class Robot extends CommandRobotBase {
         SmartDashboard.putBoolean("Hood Limit", RobotMap.Input.hoodLimitSwitch.get());
         SmartDashboard.putNumber("Hood Position", RobotMap.Component.hoodEncoder.getDistance());
         SmartDashboard.putNumber("Hood Conversion", RobotMap.Metrics.Hood.HOOD_ANGLE_PER_TICK);
+        SmartDashboard.putNumber("Left Encoder", RobotMap.Component.leftWheelEncoder.getDistance());
+        SmartDashboard.putNumber("Right Encoder", RobotMap.Component.rightWheelEncoder.getDistance());
     }
 
 }

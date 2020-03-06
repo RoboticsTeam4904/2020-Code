@@ -8,12 +8,17 @@ import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
  * Goes to the lower limit and zeroes
  */
 public class HoodZeroConstant extends MotorConstant {
-    public final static double DEFAULT_SPEED = 0;
+    public final static double DEFAULT_SPEED = 0.1;
     public LimitType limitType;
 
     public HoodZeroConstant(LimitType limitType) {
         super("HoodZeroConstant", RobotMap.Component.hood.getMotor(), DEFAULT_SPEED * (limitType == LimitType.UPPER ? 1.0 : -1.0));
         this.limitType = limitType;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return RobotMap.Component.hood.isLimitDown();
     }
 
     @Override

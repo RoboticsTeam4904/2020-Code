@@ -5,6 +5,8 @@ import org.usfirst.frc4904.robot.commands.FlywheelMaintainSpeed;
 import org.usfirst.frc4904.robot.commands.FlywheelSpinUp;
 import org.usfirst.frc4904.robot.commands.FlywheelThroughThreshold;
 import org.usfirst.frc4904.robot.commands.FlywheelToSpeed;
+import org.usfirst.frc4904.robot.commands.SetHoodAngle;
+import org.usfirst.frc4904.robot.commands.ZeroHood;
 import org.usfirst.frc4904.standard.humaninput.Operator;
 import org.usfirst.frc4904.standard.commands.RunUntil;
 import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
@@ -58,6 +60,10 @@ public class DefaultOperator extends Operator {
 				.whileHeld(new MotorConstant(RobotMap.Component.runUpBeltMotor, -0.5));
 
 		RobotMap.HumanInput.Operator.joystick.button7.whileHeld(new MotorControl(RobotMap.Component.hoodMotor, RobotMap.HumanInput.Operator.joystick, 1, .2));
+
+		RobotMap.HumanInput.Operator.joystick.button8.whenPressed(new ZeroHood());
+
+		RobotMap.HumanInput.Operator.joystick.button9.whileHeld(new SetHoodAngle(10));
 
 		// RobotMap.HumanInput.Operator.joystick.button12.whileHeld(new
 		// FlywheelSpinUp(SmartDashboard.getNumber("flywheelSpeed", 0)));
