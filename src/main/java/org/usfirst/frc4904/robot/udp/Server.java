@@ -38,10 +38,10 @@ public class Server extends Thread {
                     e.printStackTrace();
                 }
                 String endString = "end";
+                System.out.println("This is the string reformatted: " + convertedReceived);
                 if (convertedReceived.equals(endString)) {
-                    System.out.println("Server received 'end'");
+                    System.out.println("It's a SUCCESS!");
                     running = false;
-                    System.out.println(packet.getData());
                     continue;
                 }
                 socket.send(packet);

@@ -1,6 +1,8 @@
 package org.usfirst.frc4904.robot.udp;
 
 import java.io.*;
+import org.usfirst.frc4904.robot.udp.Client;
+import org.usfirst.frc4904.robot.udp.Server;
  
 public class UDPTest {
     Client client;
