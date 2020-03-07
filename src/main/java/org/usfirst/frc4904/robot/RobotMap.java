@@ -5,6 +5,7 @@ import org.usfirst.frc4904.robot.subsystems.Indexer;
 import org.usfirst.frc4904.robot.subsystems.Intake;
 import org.usfirst.frc4904.robot.subsystems.Shooter;
 import org.usfirst.frc4904.standard.Util;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 import org.usfirst.frc4904.standard.custom.CustomPIDSourceType;
 import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
@@ -15,14 +16,17 @@ import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController
 import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomDigitalLimitSwitch;
+import org.usfirst.frc4904.standard.custom.sensors.NavX;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
+import org.usfirst.frc4904.standard.subsystems.chassis.SplinesDrive;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 import org.usfirst.frc4904.standard.subsystems.motor.VelocitySensorMotor;
 import org.usfirst.frc4904.robot.subsystems.Hood;
 
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.util.Units;
 
@@ -48,9 +52,9 @@ public class RobotMap {
 
 
             public static final int RIGHT_DRIVE_A = 7;
-            public static final int RIGHT_DRIVE_B = 0;
-            public static final int LEFT_DRIVE_A = 15;
-            public static final int LEFT_DRIVE_B = 11;
+            public static final int RIGHT_DRIVE_B = 11;
+            public static final int LEFT_DRIVE_A = 0; //15
+            public static final int LEFT_DRIVE_B = 15;
 
             // Climber
             public static final int WINCH_MOTOR = 13;
@@ -119,20 +123,21 @@ public class RobotMap {
 
     public static class DriveConstants {
         public static final boolean kGyroReversed = false;
-        public static final double ksVolts = -1;
-        public static final double kvVoltSecondsPerMeter = -1;
-        public static final double kaVoltSecondsSquaredPerMeter = -1;
-        public static final double kTrackwidthMeters = -1;
-        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
-                kTrackwidthMeters);
-        public static final double kPDriveVel = -1;
+        public static final double ksVolts = 0.318;
+        public static final double kvVoltSecondsPerMeter = 2.16;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.415;
+        public static final double kTrackwidthMeters = 0.5609370624495477;
+        public static final double kPDriveVel = 15.0;
+        public static final SimpleSplines.SplineDriveConstants driveConstants = new SimpleSplines.SplineDriveConstants(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, kTrackwidthMeters, kPDriveVel);
+        
     }
 
     public static class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = -1;
-        public static final double kMaxAccelerationMetersPerSecondSquared = -1;
-        public static final double kRamseteB = -1;
-        public static final double kRamseteZeta = -1;
+        public static final double kMaxSpeedMetersPerSecond = 2.3;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 2;
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
+        public static final SimpleSplines.SplineAutoConstants autoConstants = new SimpleSplines.SplineAutoConstants(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared, kRamseteB, kRamseteZeta);
     }
 
     public static class PID {
@@ -195,6 +200,10 @@ public class RobotMap {
         public static CustomCANCoder rightWheelEncoder;
 
         public static Motor testMotor;
+
+        public static NavX navx;
+
+        public static SplinesDrive nikhilChassis;
     }
 
     public static class Input {
@@ -213,6 +222,8 @@ public class RobotMap {
     }
 
     public RobotMap() {
+        Component.navx = new NavX(SerialPort.Port.kMXP);
+
         /** Human Input */
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
@@ -259,6 +270,7 @@ public class RobotMap {
         Component.flywheelEncoderB.setCustomPIDSourceType(CustomPIDSourceType.kRate);
         Component.leftWheelEncoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,
                 RobotMap.Metrics.Chassis.METERS_PER_TICK);
+        Component.leftWheelEncoder.configSensorDirection(false);
         Component.rightWheelEncoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
                 RobotMap.Metrics.Chassis.METERS_PER_TICK);
         Component.hoodEncoder = new CANTalonEncoder(hoodTalon, Metrics.Hood.HOOD_ANGLE_PER_TICK);
@@ -276,5 +288,7 @@ public class RobotMap {
         Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLimitSwitch);
         // Component.shooter = new Shooter(Component.flywheel, Component.runUpBeltMotor,
         // Component.hood);
+
+        Component.nikhilChassis = new SplinesDrive(Component.chassis, AutoConstants.autoConstants, DriveConstants.driveConstants, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
     }
 }

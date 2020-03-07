@@ -6,14 +6,21 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc4904.robot;
 
+import java.util.List;
+
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 
-
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj2.command.Command;
 
 public class Robot extends CommandRobotBase {
     private RobotMap map = new RobotMap();
@@ -35,6 +42,18 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
+        RobotMap.Component.navx.zeroYaw();
+        Trajectory traj = RobotMap.Component.nikhilChassis.generateSimpleTrajectory(
+            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+            List.of(),
+            // new Pose2d(1, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(Units.feetToMeters(3), Units.feetToMeters(-3), Rotation2d.fromDegrees(0)));
+        // Command sendSplines = new SendSplines(traj);
+        // sendSplines.schedule();
+        Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, traj);
+        if (autoCommand != null) {
+            autoCommand.schedule();
+        }
     }
 
     @Override
@@ -69,6 +88,7 @@ public class Robot extends CommandRobotBase {
         SmartDashboard.putNumber("Hood Conversion", RobotMap.Metrics.Hood.HOOD_ANGLE_PER_TICK);
         SmartDashboard.putNumber("Left Encoder", RobotMap.Component.leftWheelEncoder.getDistance());
         SmartDashboard.putNumber("Right Encoder", RobotMap.Component.rightWheelEncoder.getDistance());
+        SmartDashboard.putNumber("Yaw", RobotMap.Component.navx.getYaw());
     }
 
 }
