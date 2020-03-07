@@ -21,11 +21,11 @@ public class Client {
     }
 
     public String sendEcho(String msg) {
-        System.out.println("sending Echo " + "'" + msg + "'");
+        System.out.println("sending Echo: " + "'" + msg + "'");
         DatagramPacket packet = null;
         try {
             buf = msg.getBytes();
-            packet = new DatagramPacket(buf, buf.length, address, 4445);
+            packet = new DatagramPacket(buf, buf.length, address, 4444);
             socket.send(packet);
             packet = new DatagramPacket(buf, buf.length);
             socket.receive(packet);
