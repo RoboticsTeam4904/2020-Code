@@ -8,10 +8,14 @@ import org.usfirst.frc4904.robot.commands.FlywheelToSpeed;
 import org.usfirst.frc4904.robot.commands.SetHoodAngle;
 import org.usfirst.frc4904.robot.commands.ZeroHood;
 import org.usfirst.frc4904.standard.humaninput.Operator;
+import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
 import org.usfirst.frc4904.standard.commands.RunUntil;
+import org.usfirst.frc4904.standard.commands.chassis.ChassisShift;
 import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 import org.usfirst.frc4904.standard.commands.motor.MotorControl;
 import org.usfirst.frc4904.standard.commands.motor.MotorVelocitySet;
+import org.usfirst.frc4904.standard.commands.solenoid.SolenoidExtend;
+import org.usfirst.frc4904.standard.commands.solenoid.SolenoidRetract;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
 
@@ -63,11 +67,16 @@ public class DefaultOperator extends Operator {
 
 		RobotMap.HumanInput.Operator.joystick.button8.whenPressed(new ZeroHood());
 
-		RobotMap.HumanInput.Operator.joystick.button9.whileHeld(new SetHoodAngle(10));
+		RobotMap.HumanInput.Operator.joystick.button9.whenPressed(new SetHoodAngle(10));
 
 		// RobotMap.HumanInput.Operator.joystick.button12.whileHeld(new
 		// FlywheelSpinUp(SmartDashboard.getNumber("flywheelSpeed", 0)));
 		// Climber
+		// RobotMap.HumanInput.Operator.joystick.button7.whenPressed(new ChassisShift(RobotMap.Component.chassis.getShifter(), SolenoidShifters.SolenoidState.RETRACT));
+		// RobotMap.HumanInput.Operator.joystick.button8.whenPressed(new ChassisShift(RobotMap.Component.chassis.getShifter(), SolenoidShifters.SolenoidState.EXTEND));
+		// RobotMap.HumanInput.Operator.joystick.button9.whenPressed(new SolenoidRetract(RobotMap.Component.intakeSolenoid));
+		// RobotMap.HumanInput.Operator.joystick.button10.whenPressed(new SolenoidExtend(RobotMap.Component.intakeSolenoid));
+		
 		// RobotMap.HumanInput.Operator.joystick.button11.whileHeld(new
 		// MotorConstant(RobotMap.Component.hookMotor, 0.4));
 		// RobotMap.HumanInput.Operator.joystick.button12.whileHeld(new
@@ -75,7 +84,7 @@ public class DefaultOperator extends Operator {
 		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelThroughThreshold(RobotMap.Component.flywheel, 58.0));
 		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelSpinUp(58.0));
 		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelToSpeed(RobotMap.Component.flywheel, 58.0));
-		RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelMaintainSpeed(58.0));
+		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelMaintainSpeed(58.0));
 		// RobotMap.HumanInput.Operator.joystick.button2.whileHeld(new MotorConstant(RobotMap.Component.flywheel, ((CustomPIDController) RobotMap.Component.flywheel.getMC()).getF() * 58.0));
 		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new RunUntil("runtest", new MotorConstant(RobotMap.Component.flywheel, ((CustomPIDController) RobotMap.Component.flywheel.getMC()).getF() * 58.0), () -> {
 		// 	return RobotMap.HumanInput.Operator.joystick.button11.get();

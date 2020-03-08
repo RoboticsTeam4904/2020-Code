@@ -71,9 +71,9 @@ public class RobotMap {
         }
 
         public static class Pneumatics { // TODO: CHANGE CONSTS
-            // public static final PCMPort INTAKE_SOLENOID = new PCMPort(0, -1, -1);
+            public static final PCMPort INTAKE_SOLENOID = new PCMPort(0, 0, 1);
             // public static final PCMPort SHOOTER_AIM_SOLENOID = new PCMPort(0, -1, -1);
-            public static final PCMPort SHIFTER = new PCMPort(0, 1, 3);
+            public static final PCMPort SHIFTER = new PCMPort(0, 2, 3);
         }
 
         public static class Digital { // TODO: CHANGE CONSTS
@@ -129,7 +129,6 @@ public class RobotMap {
         public static final double kTrackwidthMeters = 0.5609370624495477;
         public static final double kPDriveVel = 15.0;
         public static final SimpleSplines.SplineDriveConstants driveConstants = new SimpleSplines.SplineDriveConstants(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, kTrackwidthMeters, kPDriveVel);
-        
     }
 
     public static class AutoConstants {
@@ -152,7 +151,7 @@ public class RobotMap {
             public static final double P = 0.0;
             public static final double I = 0.0;
             public static final double D = 0.0;
-            public static final double F = 0.1;
+            public static final double F = 0.2;
         }
 
         public static class Drive {
@@ -204,6 +203,7 @@ public class RobotMap {
         public static NavX navx;
 
         public static SplinesDrive nikhilChassis;
+
     }
 
     public static class Input {
@@ -229,8 +229,8 @@ public class RobotMap {
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 
         /** Pneumatics */
-        // Component.intakeSolenoid = new
-        // SolenoidSubsystem(Port.Pneumatics.INTAKE_SOLENOID.buildDoubleSolenoid());
+        Component.intakeSolenoid = new
+        SolenoidSubsystem(Port.Pneumatics.INTAKE_SOLENOID.buildDoubleSolenoid());
         // Component.shooterAimSolenoid = new SolenoidSubsystem(
         // Port.Pneumatics.SHOOTER_AIM_SOLENOID.buildDoubleSolenoid());
 

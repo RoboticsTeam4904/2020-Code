@@ -42,18 +42,18 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
-        RobotMap.Component.navx.zeroYaw();
-        Trajectory traj = RobotMap.Component.nikhilChassis.generateSimpleTrajectory(
-            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-            List.of(),
-            // new Pose2d(1, 0, Rotation2d.fromDegrees(0)),
-            new Pose2d(Units.feetToMeters(3), Units.feetToMeters(-3), Rotation2d.fromDegrees(0)));
-        // Command sendSplines = new SendSplines(traj);
-        // sendSplines.schedule();
-        Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, traj);
-        if (autoCommand != null) {
-            autoCommand.schedule();
-        }
+        // RobotMap.Component.navx.zeroYaw();
+        // Trajectory traj = RobotMap.Component.nikhilChassis.generateSimpleTrajectory(
+        //     new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+        //     List.of(),
+        //     // new Pose2d(1, 0, Rotation2d.fromDegrees(0)),
+        //     new Pose2d(Units.feetToMeters(3), Units.feetToMeters(-3), Rotation2d.fromDegrees(0)));
+        // // Command sendSplines = new SendSplines(traj);
+        // // sendSplines.schedule();
+        // Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, traj);
+        // if (autoCommand != null) {
+        //     autoCommand.schedule();
+        // }
     }
 
     @Override

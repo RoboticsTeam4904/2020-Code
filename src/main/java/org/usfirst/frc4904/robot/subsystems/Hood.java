@@ -95,7 +95,8 @@ public class Hood extends PositionSensorMotor {
         return getPredictedLimitPress() == LimitType.UPPER;
     }
 
-    public void setLimit(LimitType limitType) {
+    public void 
+    setLimit(LimitType limitType) {
         if (limitType == LimitType.LOWER) {
             hoodEncoder.reset();
         } else if (limitType == LimitType.UPPER) {
