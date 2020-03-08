@@ -4,28 +4,54 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Arrays;
 
 public class Client {
     private DatagramSocket socket;
     private InetAddress address;
+    private byte[] header;
+    private int socketNum;
 
     private byte[] buf;
 
-    public Client() {
+    public Client(String header, int socketNum) {
         try {
             socket = new DatagramSocket();
             address = InetAddress.getByName("localhost");
+            this.socketNum = socketNum;
+            this.header = header.getBytes("UTF-8");
+            if (this.header.length > 8) {
+                this.header = Arrays.copyOfRange(this.header, 0, 8);
+            } else if (this.header.length < 8) {
+                byte[] tempArr = new byte[8];
+                for (int index = 0; index < this.header.length; index++) {
+                    tempArr[index] = this.header[index];
+                }
+                for (int index = this.header.length; index < 8; index++) {
+                    tempArr[index] = "#".getBytes("UTF-8")[0];
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public String sendEcho(String msg) {
-        System.out.println("sending Echo: " + "'" + msg + "'");
+        System.out.println("Sending Echo: " + "'" + msg + "'.");
         DatagramPacket packet = null;
         try {
-            buf = msg.getBytes();
-            packet = new DatagramPacket(buf, buf.length, address, 4444);
+            byte[] tempArr = new byte[msg.length() + 8];
+            int index = 0;
+            for (byte byt : header) {
+                tempArr[index] = byt;
+                index++;
+            }
+            for (byte byt : msg.getBytes("UTF-8")) {
+                tempArr[index] = byt;
+                index++;
+            }
+            buf = tempArr;
+            packet = new DatagramPacket(buf, buf.length, address, socketNum);
             socket.send(packet);
             packet = new DatagramPacket(buf, buf.length);
             socket.receive(packet);
@@ -33,7 +59,10 @@ public class Client {
             System.out.println("Echo failed");
             e.printStackTrace();
         }
-        String received = new String(packet.getData(), 0, packet.getLength());
+        String received = new String(packet.getData());
+        String data = received.substring(8, packet.getLength());
+        String header = received.substring(0, 8);
+        received = ("Received back: '" + data + "', length: " + data.length() + ", from server: '" + header + "'.");
         return received;
     }
 
