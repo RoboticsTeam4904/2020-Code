@@ -6,6 +6,8 @@ import org.usfirst.frc4904.robot.subsystems.Intake;
 import org.usfirst.frc4904.robot.subsystems.Shooter;
 import org.usfirst.frc4904.standard.Util;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.AutoConstants;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.DriveConstants;
 import org.usfirst.frc4904.standard.custom.CustomPIDSourceType;
 import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
@@ -128,7 +130,7 @@ public class RobotMap {
         public static final double kaVoltSecondsSquaredPerMeter = 0.415;
         public static final double kTrackwidthMeters = 0.5609370624495477;
         public static final double kPDriveVel = 15.0;
-        public static final SimpleSplines.SplineDriveConstants driveConstants = new SimpleSplines.SplineDriveConstants(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, kTrackwidthMeters, kPDriveVel);
+        // public static final SplineDriveConstants driveConstants = new SimpleSplines.SplineDriveConstants(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, kTrackwidthMeters, kPDriveVel);
     }
 
     public static class AutoConstants {
@@ -136,7 +138,7 @@ public class RobotMap {
         public static final double kMaxAccelerationMetersPerSecondSquared = 2;
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
-        public static final SimpleSplines.SplineAutoConstants autoConstants = new SimpleSplines.SplineAutoConstants(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared, kRamseteB, kRamseteZeta);
+        // public static final SimpleSplines.SplineAutoConstants autoConstants = new SimpleSplines.SplineAutoConstants(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared, kRamseteB, kRamseteZeta);
     }
 
     public static class PID {
@@ -203,6 +205,7 @@ public class RobotMap {
         public static NavX navx;
 
         public static SplinesDrive nikhilChassis;
+        public static CustomPIDController hoodPID;
 
     }
 
@@ -278,6 +281,7 @@ public class RobotMap {
         /** Motion Controllers */
         Component.flywheelPID = new CustomPIDController(PID.Flywheel.P, PID.Flywheel.I, PID.Flywheel.D, PID.Flywheel.F,
                 Component.flywheelEncoderB);
+        Component.hoodPID = new CustomPIDController(RobotMap.PID.Hood.P, RobotMap.PID.Hood.I, RobotMap.PID.Hood.D, RobotMap.PID.Hood.F, Component.hoodEncoder);
         /** Classes */
         // Component.intake = new Intake(Component.intakeRollerMotor,
         // Component.liftBeltMotor, Component.funnelMotor,
@@ -285,10 +289,10 @@ public class RobotMap {
 
         Component.flywheel = new Flywheel(Component.flywheelPID, flywheelATalon, flywheelBTalon);
 
-        Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Input.hoodLimitSwitch);
+        Component.hood = new Hood(Component.hoodMotor, Component.hoodEncoder, Component.hoodPID, Input.hoodLimitSwitch);
         // Component.shooter = new Shooter(Component.flywheel, Component.runUpBeltMotor,
         // Component.hood);
 
-        Component.nikhilChassis = new SplinesDrive(Component.chassis, AutoConstants.autoConstants, DriveConstants.driveConstants, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
+        // Component.nikhilChassis = new SplinesDrive(Component.chassis, AutoConstants.autoConstants, DriveConstants.driveConstants, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
     }
 }
