@@ -6,17 +6,28 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc4904.robot;
 
+import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
+import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
+import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
+import org.usfirst.frc4904.standard.commands.chassis.ChassisTurn;
+
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends CommandRobotBase {
     private RobotMap map = new RobotMap();
 
     @Override
     public void initialize() {
+        driverChooser.setDefaultOption(new NathanGain());
+        operatorChooser.setDefaultOption(new DefaultOperator());
+        RobotMap.Component.sensorDrive.resetOdometry(new Pose2d());
     }
 
     @Override
     public void teleopInitialize() {
+        teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
     }
 
     @Override
@@ -25,10 +36,14 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
+        RobotMap.Component.sensorDrive.resetOdometry(new Pose2d());
+        ChassisTurn turn = new ChassisTurn(RobotMap.Component.chassis, 90, RobotMap.Component.navx, RobotMap.Component.chassisTurnPID);
+        turn.schedule();
     }
 
     @Override
     public void autonomousExecute() {
+
     }
 
     @Override
@@ -49,7 +64,13 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void alwaysExecute() {
+        SmartDashboard.putNumber("leftEncoder", RobotMap.Component.leftWheelEncoder.getDistance());
+        SmartDashboard.putNumber("rightEncoder", RobotMap.Component.rightWheelEncoder.getDistance());
 
+        // Pose2d deadReckoningPose = RobotMap.Component.sensorDrive.getPose();
+        // RobotMap.NetworkTables.Odometry.odometryXEntry.setDouble(deadReckoningPose.getTranslation().getX());
+        // RobotMap.NetworkTables.Odometry.odometryYEntry.setDouble(deadReckoningPose.getTranslation().getY());
+        // RobotMap.NetworkTables.Odometry.odometryAngleEntry.setDouble(RobotMap.Component.sensorDrive.pidGet() * (Math.PI / 180.0));
     }
 
 }
