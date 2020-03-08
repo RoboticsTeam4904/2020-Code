@@ -30,7 +30,7 @@ public class RobotMap {
 
         public static class CANMotor {
             public static final int LEFT_DRIVE_A = 7;
-            public static final int LEFT_DRIVE_B = 3;
+            public static final int LEFT_DRIVE_B = 0;
             public static final int RIGHT_DRIVE_A = 15;
             public static final int RIGHT_DRIVE_B = 11;
         }
@@ -39,8 +39,8 @@ public class RobotMap {
         }
 
         public static class CAN {
-            public static final int LEFT_WHEEL_ENCODER = -1;
-            public static final int RIGHT_WHEEL_ENCODER = -1;
+            public static final int LEFT_WHEEL_ENCODER = 2;
+            public static final int RIGHT_WHEEL_ENCODER = 0;
         }
 
         public static class Pneumatics {

@@ -13,6 +13,7 @@ import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisTurn;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends CommandRobotBase {
     private RobotMap map = new RobotMap();
@@ -63,10 +64,13 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void alwaysExecute() {
-        Pose2d deadReckoningPose = RobotMap.Component.sensorDrive.getPose();
-        RobotMap.NetworkTables.Odometry.odometryXEntry.setDouble(deadReckoningPose.getTranslation().getX());
-        RobotMap.NetworkTables.Odometry.odometryYEntry.setDouble(deadReckoningPose.getTranslation().getY());
-        RobotMap.NetworkTables.Odometry.odometryAngleEntry.setDouble(RobotMap.Component.sensorDrive.pidGet() * (Math.PI / 180.0));
+        SmartDashboard.putNumber("leftEncoder", RobotMap.Component.leftWheelEncoder.getDistance());
+        SmartDashboard.putNumber("rightEncoder", RobotMap.Component.rightWheelEncoder.getDistance());
+
+        // Pose2d deadReckoningPose = RobotMap.Component.sensorDrive.getPose();
+        // RobotMap.NetworkTables.Odometry.odometryXEntry.setDouble(deadReckoningPose.getTranslation().getX());
+        // RobotMap.NetworkTables.Odometry.odometryYEntry.setDouble(deadReckoningPose.getTranslation().getY());
+        // RobotMap.NetworkTables.Odometry.odometryAngleEntry.setDouble(RobotMap.Component.sensorDrive.pidGet() * (Math.PI / 180.0));
     }
 
 }
