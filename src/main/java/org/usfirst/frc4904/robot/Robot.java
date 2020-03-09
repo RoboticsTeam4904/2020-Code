@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc4904.robot;
 
-import org.usfirst.frc4904.robot.commands.setLeds;
+// import org.usfirst.frc4904.robot.commands.setLeds;
 import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.custom.CustomCAN;
