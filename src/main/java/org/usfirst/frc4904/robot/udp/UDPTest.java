@@ -1,10 +1,11 @@
 package org.usfirst.frc4904.robot.udp;
 
 import java.io.*;
+import java.util.HashMap;
 
 public class UDPTest {
     Client client;
-    private int socketNum = 3344;
+    private int socketNum = 3375;
 
     public void setup() {
         System.out.println("Setting up the test on socket #" + socketNum + ".");
@@ -18,7 +19,12 @@ public class UDPTest {
     }
 
     public void test() {
-        System.out.println(client.sendEcho("test"));
+        HashMap<String, Object> testMap = new HashMap<String, Object>();
+        testMap.put("value-1", "test");
+        float val_2 = 1f/3f;
+        testMap.put("value-2", val_2);
+        testMap.put("value-3", Math.PI);
+        System.out.println(client.sendGenericEcho(testMap));
         client.close();
     }
 

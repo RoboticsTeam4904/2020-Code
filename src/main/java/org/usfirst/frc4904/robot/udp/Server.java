@@ -3,6 +3,10 @@ package org.usfirst.frc4904.robot.udp;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Map;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 
 public class Server extends Thread {
@@ -12,6 +16,7 @@ public class Server extends Thread {
     protected byte[] buf = new byte[256];
     protected String expectedString = "test";
     protected String serverHeader = "##SERVER";
+    private final Double EPSILON = 0.0001;
 
     public Server(int socketNum) throws IOException {
         socket = new DatagramSocket(socketNum);
@@ -29,11 +34,21 @@ public class Server extends Thread {
                 String header = received.substring(0, 8);
                 System.out.println(
                         "Received: '" + data + "', length: " + data.length() + ", from client: '" + header + "'.");
-                if (expectedString.equals(data)) {
-                    System.out.println("It's a SUCCESS!");
-                    running = false;
-                    continue;
+                try {
+                    ObjectMapper mapper = new ObjectMapper();
+                    Map<String, Object> map = mapper.readValue(data, Map.class);
+
+                    if (expectedString.equals(map.get("value-1"))
+                            && Math.abs((Double) map.get("value-2") - (1D / 3D)) < EPSILON
+                            && Math.abs((Double) map.get("value-3") - Math.PI) < EPSILON) {
+                        System.out.println("It's a SUCCESS!");
+                        running = false;
+                        continue;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();
                 byte[] tempArr = new byte[buf.length];

@@ -1,13 +1,14 @@
 package org.usfirst.frc4904.robot.udp;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Client {
     private DatagramSocket socket;
@@ -69,11 +70,18 @@ public class Client {
         return received;
     }
 
-    /*public String sendGeneralEcho(HashMap<String, Object> map) {
-        byte[] convertedMap;
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
+    public String sendGenericEcho(HashMap<String, Object> map) {
+        String json = "";
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            json = mapper.writeValueAsString(map);
+            // json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(map);
+            // ^ not compact json
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
-        System.out.println("Sending Echo: " + "'" + map + "'.");
+        byte[] convertedMap = json.getBytes();
+        System.out.println("Sending Echo: " + "'" + json + "'.");
         DatagramPacket packet = null;
         try {
             byte[] tempArr = new byte[convertedMap.length + 8];
@@ -100,7 +108,7 @@ public class Client {
         String header = received.substring(0, 8);
         received = ("Received back: '" + data + "', length: " + data.length() + ", from server: '" + header + "'.");
         return received;
-    }*/
+    }
 
     public String receiveData() {
         DatagramPacket packet = new DatagramPacket(new byte[256], 256);
