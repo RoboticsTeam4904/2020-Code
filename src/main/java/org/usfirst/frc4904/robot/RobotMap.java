@@ -28,6 +28,7 @@ public class RobotMap {
 
         public static class CAN {
             public static final int CONTROL_PANEL_ENCODER = -1;
+            public static final int LED = 0x612;
         }
 
         public static class Pneumatics {
@@ -98,18 +99,18 @@ public class RobotMap {
     }
 
     public RobotMap() {
-        HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
-        HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
+        // HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
+        // HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 
-        Component.controlPanel = new Motor("controlPanel", false, new CANTalonFX(Port.CANMotor.CONTROL_PANEL, NeutralMode.Brake));
-        Component.controlPanelEncoder = new CustomCANCoder(Port.CAN.CONTROL_PANEL_ENCODER,
-                Metrics.ControlPanel.DEGREES_PER_TICK);
+        // Component.controlPanel = new Motor("controlPanel", false, new CANTalonFX(Port.CANMotor.CONTROL_PANEL, NeutralMode.Brake));
+        // Component.controlPanelEncoder = new CustomCANCoder(Port.CAN.CONTROL_PANEL_ENCODER,
+        //         Metrics.ControlPanel.DEGREES_PER_TICK);
 
-        /* NetworkTables */
-        NetworkTables.inst = NetworkTableInstance.getDefault();
-        NetworkTables.table = NetworkTables.inst.getTable("Team4904");
-        NetworkTables.Vision.table = NetworkTables.table.getSubTable("vision");
-        NetworkTables.Vision.ControlPanel.table = NetworkTables.Vision.table.getSubTable("controlPanel");
-        NetworkTables.Vision.ControlPanel.color = NetworkTables.Vision.ControlPanel.table.getEntry("controlPanelColor");
+        // /* NetworkTables */
+        // NetworkTables.inst = NetworkTableInstance.getDefault();
+        // NetworkTables.table = NetworkTables.inst.getTable("Team4904");
+        // NetworkTables.Vision.table = NetworkTables.table.getSubTable("vision");
+        // NetworkTables.Vision.ControlPanel.table = NetworkTables.Vision.table.getSubTable("controlPanel");
+        // NetworkTables.Vision.ControlPanel.color = NetworkTables.Vision.ControlPanel.table.getEntry("controlPanelColor");
     }
 }
