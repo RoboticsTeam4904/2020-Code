@@ -1,5 +1,7 @@
 package org.usfirst.frc4904.robot.subsystems;
 
+import org.usfirst.frc4904.robot.RobotMap;
+import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.Util;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
 import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
@@ -21,8 +23,8 @@ public class Hood extends PositionSensorMotor {
     protected CustomDigitalLimitSwitch limitSwitch;
     protected HoodStatus currentStatus = HoodStatus.IDLE;
     private static double lowerHoodAngle = 0.0;
-    private static double upperHoodAngle = 35.0;
-    public static double tolerance = 5.0;
+    private static double upperHoodAngle = 20.0;
+    public static double tolerance = 0.1;
     private static Util.Range hoodRange = new Util.Range(lowerHoodAngle, upperHoodAngle);
 
     /**
@@ -58,13 +60,16 @@ public class Hood extends PositionSensorMotor {
 
     @Override
     public void set(double speed) {
-        if (speed > 0 && (isLimitDown() || getHoodAngle() >= upperHoodAngle)) {
+        LogKitten.wtf("speed0: " + speed);
+        LogKitten.wtf("angle: " + getHoodAngle());
+        if (speed > 0 && getHoodAngle() >= upperHoodAngle) {
             speed = 0.0;
         }
         if (speed < 0 && (isLimitDown() || getHoodAngle() <= lowerHoodAngle)) {
             speed = 0.0;
         }
-        super.set(speed);
+        LogKitten.wtf("speed1: " + speed);
+        getMotor().set(speed);
     }
 
     public double getHoodAngle() {

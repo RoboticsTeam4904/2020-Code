@@ -8,6 +8,8 @@ package org.usfirst.frc4904.robot;
 
 import java.util.List;
 
+import org.usfirst.frc4904.robot.commands.SetHoodAngle;
+import org.usfirst.frc4904.robot.commands.ZeroHood;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
@@ -21,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class Robot extends CommandRobotBase {
     private RobotMap map = new RobotMap();
@@ -29,11 +32,22 @@ public class Robot extends CommandRobotBase {
     public void initialize() {
         driverChooser.setDefaultOption(new NathanGain());
         operatorChooser.setDefaultOption(new DefaultOperator());
+        SmartDashboard.putNumber("setpoint", 0);
+        SmartDashboard.putNumber("P", 0);
+        SmartDashboard.putNumber("I", 0);
+        SmartDashboard.putNumber("D", 0);
+        SmartDashboard.putNumber("F", 0);
     }
 
     @Override
     public void teleopInitialize() {
         teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
+        LogKitten.wtf("SET: " +  SmartDashboard.getNumber("setpoint", 10));
+        LogKitten.wtf("F: " +  SmartDashboard.getNumber("F", 0));
+        ZeroHood zero = new ZeroHood();
+        SetHoodAngle set = new SetHoodAngle(SmartDashboard.getNumber("setpoint", 10));
+        SequentialCommandGroup a = new SequentialCommandGroup(zero, set);
+        a.schedule();
     }
 
     @Override
@@ -44,15 +58,17 @@ public class Robot extends CommandRobotBase {
     public void autonomousInitialize() {
         // RobotMap.Component.navx.zeroYaw();
         // Trajectory traj = RobotMap.Component.nikhilChassis.generateSimpleTrajectory(
-        //     new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-        //     List.of(),
-        //     // new Pose2d(1, 0, Rotation2d.fromDegrees(0)),
-        //     new Pose2d(Units.feetToMeters(3), Units.feetToMeters(-3), Rotation2d.fromDegrees(0)));
+        // new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+        // List.of(),
+        // // new Pose2d(1, 0, Rotation2d.fromDegrees(0)),
+        // new Pose2d(Units.feetToMeters(3), Units.feetToMeters(-3),
+        // Rotation2d.fromDegrees(0)));
         // // Command sendSplines = new SendSplines(traj);
         // // sendSplines.schedule();
-        // Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, traj);
+        // Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis,
+        // traj);
         // if (autoCommand != null) {
-        //     autoCommand.schedule();
+        // autoCommand.schedule();
         // }
     }
 
@@ -78,10 +94,15 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void alwaysExecute() {
+        RobotMap.Component.hoodPID.setPIDF(SmartDashboard.getNumber("P", 0), SmartDashboard.getNumber("I", 0),
+                SmartDashboard.getNumber("D", 0), SmartDashboard.getNumber("F", 0));
         SmartDashboard.putNumber("Flywheel", RobotMap.Component.flywheelEncoderB.getRate());
-        SmartDashboard.putBoolean("Within", Math.abs(RobotMap.Component.flywheel.getVelocity() - 58.0) < 10.0 || RobotMap.Component.flywheel.getVelocity() > 58.0);
-        // LogKitten.wtf("Left Encoder Distance" + RobotMap.Component.rightWheelEncoder.pidGet());
-        // SmartDashboard.putNumber("Right Encoder Distance", RobotMap.Component.rightWheelEncoder.pidGet());
+        SmartDashboard.putBoolean("Within", Math.abs(RobotMap.Component.flywheel.getVelocity() - 58.0) < 10.0
+                || RobotMap.Component.flywheel.getVelocity() > 58.0);
+        // LogKitten.wtf("Left Encoder Distance" +
+        // RobotMap.Component.rightWheelEncoder.pidGet());
+        // SmartDashboard.putNumber("Right Encoder Distance",
+        // RobotMap.Component.rightWheelEncoder.pidGet());
         // LogKitten.wtf("Hood limit " + RobotMap.Input.hoodLimitSwitch.get());
         SmartDashboard.putBoolean("Hood Limit", RobotMap.Input.hoodLimitSwitch.get());
         SmartDashboard.putNumber("Hood Position", RobotMap.Component.hoodEncoder.getDistance());
@@ -89,6 +110,7 @@ public class Robot extends CommandRobotBase {
         SmartDashboard.putNumber("Left Encoder", RobotMap.Component.leftWheelEncoder.getDistance());
         SmartDashboard.putNumber("Right Encoder", RobotMap.Component.rightWheelEncoder.getDistance());
         SmartDashboard.putNumber("Yaw", RobotMap.Component.navx.getYaw());
+
     }
 
 }

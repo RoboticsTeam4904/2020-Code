@@ -9,6 +9,9 @@ import org.usfirst.frc4904.robot.commands.SetHoodAngle;
 import org.usfirst.frc4904.robot.commands.ZeroHood;
 import org.usfirst.frc4904.standard.humaninput.Operator;
 import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc4904.standard.commands.RunUntil;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisShift;
 import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
@@ -63,7 +66,7 @@ public class DefaultOperator extends Operator {
 		RobotMap.HumanInput.Operator.joystick.button4
 				.whileHeld(new MotorConstant(RobotMap.Component.runUpBeltMotor, -0.5));
 
-		RobotMap.HumanInput.Operator.joystick.button7.whileHeld(new MotorControl(RobotMap.Component.hoodMotor, RobotMap.HumanInput.Operator.joystick, 1, .2));
+		RobotMap.HumanInput.Operator.joystick.button7.whileHeld(new MotorControl(RobotMap.Component.hood, RobotMap.HumanInput.Operator.joystick, 1, .2));
 
 		RobotMap.HumanInput.Operator.joystick.button8.whenPressed(new ZeroHood());
 

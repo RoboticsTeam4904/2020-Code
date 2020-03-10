@@ -23,6 +23,7 @@ public class SetHoodAngle extends CommandBase {
 
   @Override
   public void execute() {
+    RobotMap.Component.hood.set(RobotMap.Component.hoodPID.get());
     Exception potentialSensorException = RobotMap.Component.hood.checkSensorException();
     if (potentialSensorException != null) {
       cancel();
