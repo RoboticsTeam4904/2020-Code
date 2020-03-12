@@ -8,6 +8,7 @@ package org.usfirst.frc4904.robot;
 
 import java.util.List;
 
+import org.usfirst.frc4904.robot.commands.FlywheelMaintainSpeed;
 import org.usfirst.frc4904.robot.commands.SetHoodAngle;
 import org.usfirst.frc4904.robot.commands.ZeroHood;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
@@ -16,6 +17,7 @@ import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
+import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -37,6 +39,7 @@ public class Robot extends CommandRobotBase {
         SmartDashboard.putNumber("I", 0);
         SmartDashboard.putNumber("D", 0);
         SmartDashboard.putNumber("F", 0);
+        SmartDashboard.putNumber("flyhweelSpeed", 0);
     }
 
     @Override
@@ -45,7 +48,11 @@ public class Robot extends CommandRobotBase {
         LogKitten.wtf("SET: " +  SmartDashboard.getNumber("setpoint", 10));
         LogKitten.wtf("F: " +  SmartDashboard.getNumber("F", 0));
         ZeroHood zero = new ZeroHood();
+        // MotorConstant m = new MotorConstant(RobotMap.Component.flywheel, 0.1);
+        // m.schedule();
+        RobotMap.Component.hoodEncoder.reset();
         SetHoodAngle set = new SetHoodAngle(SmartDashboard.getNumber("setpoint", 10));
+        // FlywheelMaintainSpeed b = new FlywheelMaintainSpeed(RobotMap.Component.flywheel, SmartDashboard.getNumber("flywheelSpeed", 0));
         SequentialCommandGroup a = new SequentialCommandGroup(zero, set);
         a.schedule();
     }

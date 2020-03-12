@@ -14,6 +14,7 @@ public class FlywheelMaintainSpeed extends MotorVelocitySet {
    */
   public FlywheelMaintainSpeed(Flywheel flywheel, double speed) {
     super("FlywheelMaintainSpeed", flywheel, speed);
+    addRequirements(RobotMap.Component.flywheel);
   }
 
   public FlywheelMaintainSpeed(double speed) {

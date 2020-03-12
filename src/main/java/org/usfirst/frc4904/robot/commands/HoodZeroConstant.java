@@ -8,7 +8,7 @@ import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
  * Goes to the lower limit and zeroes
  */
 public class HoodZeroConstant extends MotorConstant {
-    public final static double DEFAULT_SPEED = 0.1;
+    public final static double DEFAULT_SPEED = 0.07;
     public LimitType limitType;
 
     public HoodZeroConstant(LimitType limitType) {

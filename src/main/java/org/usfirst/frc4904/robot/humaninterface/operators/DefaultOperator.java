@@ -66,11 +66,11 @@ public class DefaultOperator extends Operator {
 		RobotMap.HumanInput.Operator.joystick.button4
 				.whileHeld(new MotorConstant(RobotMap.Component.runUpBeltMotor, -0.5));
 
-		RobotMap.HumanInput.Operator.joystick.button7.whileHeld(new MotorControl(RobotMap.Component.hood, RobotMap.HumanInput.Operator.joystick, 1, .2));
+		// RobotMap.HumanInput.Operator.joystick.button7.whileHeld(new MotorControl(RobotMap.Component.hood, RobotMap.HumanInput.Operator.joystick, 1, .2));
 
-		RobotMap.HumanInput.Operator.joystick.button8.whenPressed(new ZeroHood());
+		// RobotMap.HumanInput.Operator.joystick.button8.whenPressed(new ZeroHood());
 
-		RobotMap.HumanInput.Operator.joystick.button9.whenPressed(new SetHoodAngle(10));
+		// RobotMap.HumanInput.Operator.joystick.button9.whenPressed(new SetHoodAngle(10));
 
 		// RobotMap.HumanInput.Operator.joystick.button12.whileHeld(new
 		// FlywheelSpinUp(SmartDashboard.getNumber("flywheelSpeed", 0)));
@@ -87,7 +87,10 @@ public class DefaultOperator extends Operator {
 		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelThroughThreshold(RobotMap.Component.flywheel, 58.0));
 		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelSpinUp(58.0));
 		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelToSpeed(RobotMap.Component.flywheel, 58.0));
-		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelMaintainSpeed(58.0));
+		RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new FlywheelMaintainSpeed(RobotMap.Component.flywheel, 58.0));
+		RobotMap.HumanInput.Operator.joystick.button5.whenPressed(new SolenoidExtend(RobotMap.Component.intakeSolenoid));
+		RobotMap.HumanInput.Operator.joystick.button6.whenPressed(new SolenoidRetract(RobotMap.Component.intakeSolenoid));
+
 		// RobotMap.HumanInput.Operator.joystick.button2.whileHeld(new MotorConstant(RobotMap.Component.flywheel, ((CustomPIDController) RobotMap.Component.flywheel.getMC()).getF() * 58.0));
 		// RobotMap.HumanInput.Operator.joystick.button1.whileHeld(new RunUntil("runtest", new MotorConstant(RobotMap.Component.flywheel, ((CustomPIDController) RobotMap.Component.flywheel.getMC()).getF() * 58.0), () -> {
 		// 	return RobotMap.HumanInput.Operator.joystick.button11.get();

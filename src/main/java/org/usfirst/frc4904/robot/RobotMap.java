@@ -73,7 +73,7 @@ public class RobotMap {
         }
 
         public static class Pneumatics { // TODO: CHANGE CONSTS
-            public static final PCMPort INTAKE_SOLENOID = new PCMPort(0, 0, 1);
+            public static final PCMPort INTAKE_SOLENOID = new PCMPort(0, 0, 1); // correct
             // public static final PCMPort SHOOTER_AIM_SOLENOID = new PCMPort(0, -1, -1);
             public static final PCMPort SHIFTER = new PCMPort(0, 2, 3);
         }
